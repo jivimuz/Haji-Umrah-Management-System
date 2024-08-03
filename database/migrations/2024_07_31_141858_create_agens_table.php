@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('alamat')->length(200)->nullable();
             $table->string('nama_bank')->length(20)->nullable();
             $table->string('no_rek')->length(16)->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
 

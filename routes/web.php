@@ -5,7 +5,9 @@ use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\ModuleController;
 use App\Http\Controllers\Website\UserListController;
 use App\Http\Controllers\Website\AuthController;
+use App\Http\Controllers\Website\JamaahController;
 use App\Http\Controllers\Website\PaketController;
+use App\Http\Controllers\website\PaymentController;
 use App\Http\Middleware\CheckModuleAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +52,26 @@ Route::middleware(['auth'])->group(function () {
         Route::post('edit', [PaketController::class, 'edit']);
         Route::post('updateData', [PaketController::class, 'updateData']);
         Route::post('delete', [PaketController::class, 'delete']);
+    });
+
+    Route::middleware(['checkAccess:JMA'])->prefix('jamaah')->group(function () {
+        Route::get('/', [JamaahController::class, 'index']);
+        Route::post('getList', [JamaahController::class, 'getList']);
+        Route::post('add', [JamaahController::class, 'add']);
+        Route::post('saveData', [JamaahController::class, 'saveData']);
+        Route::post('edit', [JamaahController::class, 'edit']);
+        Route::post('updateData', [JamaahController::class, 'updateData']);
+        Route::post('delete', [JamaahController::class, 'delete']);
+        Route::post('payment', [JamaahController::class, 'payment']);
+        Route::post('getListPayment', [JamaahController::class, 'getListPayment']);
+    });
+
+    Route::middleware(['checkAccess:PAY'])->prefix('payment')->group(function () {
+        Route::get('/', [PaymentController::class, 'index']);
+        Route::post('getList', [PaymentController::class, 'getList']);
+        Route::post('add', [PaymentController::class, 'add']);
+        Route::post('getJamaahHistory', [PaymentController::class, 'getJamaahHistory']);
+        Route::post('refund', [PaymentController::class, 'refund']);
+        Route::post('saveData', [PaymentController::class, 'saveData']);
     });
 });

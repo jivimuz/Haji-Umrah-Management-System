@@ -26,7 +26,7 @@
             <label for="">Publish Price: <span class="text-danger">*</span></label>
             <input type="text" disabled class="form-control editable" id="publish_price" placeholder="Publish price"
                 inputmode="numeric" value="{{ $data->publish_price }}" onkeypress="return /[0-9]/i.test(event.key)"
-                maxlength="50">
+                onchange="noMinus(this)" maxlength="50">
         </div>
     </div>
 
@@ -35,7 +35,7 @@
             <label for="">Basic Price: <span class="text-danger">*</span></label>
             <input type="text" disabled class="form-control editable" id="basic_price" placeholder="Basic price"
                 inputmode="numeric" value="{{ $data->basic_price }}" onkeypress="return /[0-9]/i.test(event.key)"
-                maxlength="50">
+                onchange="noMinus(this)" maxlength="50">
         </div>
     </div>
     <div class="col-md-4">

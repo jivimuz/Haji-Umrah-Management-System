@@ -16,7 +16,7 @@ class AgenController extends Controller
 
     public function getList()
     {
-        $data = Agen::get();
+        $data = Agen::orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
     }
 
@@ -29,6 +29,10 @@ class AgenController extends Controller
 
     public function saveAgen(Request $request)
     {
+        $cek = Agen::where('kode_agen', $request->kode_agen)->first();
+        if ($cek) {
+            return response()->json(["error" => 'Kode Agen telah terdaftar, dimohon untuk menggantinya'], 400);
+        }
         $insert = Agen::insert([
             'kode_agen' => $request->kode_agen,
             'nama' => $request->nama,
@@ -37,6 +41,7 @@ class AgenController extends Controller
             'alamat' => $request->alamat,
             'nama_bank' => $request->nama_bank,
             'no_rek' => $request->no_rek,
+            'is_active' => $request->is_active,
         ]);
         if ($insert) {
             return response()->json(["message" => 'success', 'data' => $insert], 200);
@@ -63,6 +68,7 @@ class AgenController extends Controller
                 'alamat' => $request->alamat,
                 'nama_bank' => $request->nama_bank,
                 'no_rek' => $request->no_rek,
+                'is_active' => $request->is_active,
             ]);
             if ($update) {
                 return response()->json(["message" => 'success', 'data' => $update], 200);

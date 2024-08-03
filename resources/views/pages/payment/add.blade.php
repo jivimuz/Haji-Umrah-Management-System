@@ -1,62 +1,33 @@
 <div class="row">
-    <div class="col-md-4">
+    <input type="number" hidden id="is_refund" value="0">
+    <div class="col-md-5">
         <div class="form-group">
-            <label for="">Kode Agen : <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" value="{{ $top }}" id="kode_agen"
-                onkeypress="return event.charCode != 32" placeholder="Kode Agen (Max 5 Digit)" maxlength=5>
+            <label for="">Nama Jamaah: <span class="text-danger">*</span></label>
+            <select id="jamaah" class="form-control select2modal " style="width: 100%">
+                <option value="" disabled selected>Select</option>
+                @foreach ($jamaah as $i)
+                    <option value="{{ $i->id }}" jname="{{ $i->nama }}">Nama: {{ $i->nama }} || KTP:
+                        {{ $i->no_ktp }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Nominal: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="nominal" placeholder="Nominal" inputmode="numeric"
+                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" maxlength="50">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="">Nama Agen: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="nama_agen" placeholder="Nama Agen" maxlength="50">
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="">No Ktp Agen: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]"
-                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" id="noktp"
-                placeholder="No Ktp" maxlength="16">
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="">Alamat Agen: </label>
-            <textarea id="alamat" class="form-control" maxlength="200" rows="4 " placeholder="Alamat"></textarea>
-        </div>
-    </div>
-    <div class="col-md-6">
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">No Hp: </label>
-                    <input type="text" class="form-control" id="no_hp" placeholder="No Hp" maxlength="13">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Agen Aktif? : </label>
-                    <select id="is_active" class="form-control select2modal" style="width: 100%">
-                        <option value="0">Tidak Aktif</option>
-                        <option value="1">Aktif</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Nama Bank: </label>
-                    <input type="text" class="form-control" id="nama_bank" placeholder="Nama Bank" maxlength="16">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">No Rek: </label>
-                    <input type="text" class="form-control" id="no_rek" placeholder="No Rek" maxlength="16">
-                </div>
-            </div>
+            <label for="">Remark: <span class="text-danger">*</span></label>
+            <select id="remark" class="form-control  " style="width: 100%">
+                <option value="" disabled selected>Select or Add</option>
+                <option value="DP">DP</option>
+                <option value="Pembayaran">Pembayaran</option>
+                <option value="Pelunasan">Pelunasan</option>
+            </select>
         </div>
     </div>
 </div>
@@ -91,33 +62,42 @@
     $('.select2modal').select2({
         dropdownParent: $('#ThisModal')
     });
+    $('#remark').select2({
+        dropdownParent: $('#ThisModal'),
+        tags: true
+    })
 
     function pushData() {
-        var kode = $('#kode_agen').val()
-        var nama = $('#nama_agen').val()
-        var noktp = $('#noktp').val()
+        var is_refund = $('#is_refund').val()
+        var nominal = $('#nominal').val()
+        var jamaah_id = $('#jamaah').val()
+        var jamaah_name = $("#jamaah option:selected").attr('jname');
+        var remark = $('#remark').val()
 
-        if (!kode || !nama || !noktp) {
+        if (!nominal || !jamaah_id || !jamaah_name || !remark) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"
             });
         }
+        if (parseFloat(nominal) < 1000) {
+            return Toast.fire({
+                icon: "warning",
+                title: "Nominal minimal 1000!"
+            });
+        }
         $.ajax({
-            url: "{{ url('agen/saveAgen') }}",
+            url: "{{ url('payment/saveData') }}",
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: {
-                kode_agen: kode,
-                nama: nama,
-                noktp: noktp,
-                alamat: $('#alamat').val(),
-                no_hp: $('#no_hp').val(),
-                nama_bank: $('#nama_bank').val(),
-                no_rek: $('#no_rek').val(),
-                is_active: $('#is_active').val(),
+                is_refund: is_refund,
+                jamaah_id: jamaah_id,
+                jamaah_name: jamaah_name,
+                nominal: nominal,
+                remark: remark,
             },
             success: function(data) {
                 Toast.fire({

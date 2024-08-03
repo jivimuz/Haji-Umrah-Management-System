@@ -17,7 +17,7 @@ class PaketController extends Controller
 
     public function getList()
     {
-        $data = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->get();
+        $data = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
     }
 
@@ -66,7 +66,7 @@ class PaketController extends Controller
             }
             return response()->json(["error" => 'Tidak ada perubahan'], 400);
         }
-        return response()->json(["error" => 'Agen Tidak ada'], 400);
+        return response()->json(["error" => 'Paket Tidak ada'], 400);
     }
     public function delete(Request $request)
     {
@@ -79,6 +79,6 @@ class PaketController extends Controller
             }
             return response()->json(["error" => 'Tidak ada perubahan'], 400);
         }
-        return response()->json(["error" => 'Agen Tidak ada'], 400);
+        return response()->json(["error" => 'Paket Tidak ada'], 400);
     }
 }

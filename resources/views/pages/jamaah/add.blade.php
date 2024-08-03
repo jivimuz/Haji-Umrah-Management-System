@@ -1,70 +1,101 @@
 <div class="row">
-    <div class="col-md-4">
+
+    <div class="col-md-6">
         <div class="form-group">
-            <label for="">Kode Agen : <span class="text-danger">*</span></label>
-            <input type="text" disabled class="form-control editable" id="kode_agen" value="{{ $data->kode_agen }}"
-                onkeypress="return event.charCode != 32" placeholder="Kode Agen (Max 5 Digit)" maxlength=5>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="">Nama Agen: <span class="text-danger">*</span></label>
-            <input type="text" disabled class="form-control editable" id="nama_agen" value="{{ $data->nama }}"
-                placeholder="Nama Agen" maxlength="50">
+            <label for="">Nama Jamaah: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="nama_jamaah" placeholder="Nama Jamaah" maxlength="50">
         </div>
     </div>
 
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="">Paket: <span class="text-danger">*</span></label>
+            <select id="paket" class="form-control select2modal " style="width: 100%">
+                <option value="" disabled selected>Select</option>
+                @foreach ($paket as $i)
+                    <option value="{{ $i->id }}">
+                        ☪️ {{ strlen($i->nama) > 20 ? substr($i->nama, 0, 20) . '...' : $i->nama }} ||
+                        🕌 {{ $i->program }}
+                        || 🛫 {{ date('d M Y', strtotime($i->flight_date)) }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="">No Ktp Agen: <span class="text-danger">*</span></label>
-            <input type="text" disabled class="form-control editable" inputmode="numeric" value="{{ $data->no_ktp }}"
-                pattern="[0-9]" onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" id="noktp"
+            <label for="">No Ktp : <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]"
+                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" id="noktp"
                 placeholder="No Ktp" maxlength="16">
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="">No Passport: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="no_passport" placeholder="No Passport" maxlength="50">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="">No Hp: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="no_hp" placeholder="No Hp" maxlength="13">
+        </div>
+    </div>
+
     <div class="col-md-6">
         <div class="form-group">
-            <label for="">Alamat Agen: </label>
-            <textarea id="alamat" disabled class="form-control editable" maxlength="200" rows="4 " placeholder="Alamat">{{ $data->alamat }}</textarea>
+            <label for="">Alamat : </label>
+            <textarea id="alamat" class="form-control" maxlength="200" rows="8" placeholder="Alamat"></textarea>
         </div>
     </div>
     <div class="col-md-6">
+        <div class="form-group">
+            <label for="">Agen yang mendaftarkan: <span class="text-danger">*</span></label>
+            <select id="agen_id" class="form-control select2modal " style="width: 100%">
+                <option value="" selected>Select</option>
+                <option value="0">No Agent</option>
+                @foreach ($agen as $i)
+                    <option value="{{ $i->id }}">
+                        {{ $i->nama }} || {{ $i->no_ktp }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">No Hp: </label>
-                    <input type="text" class="form-control editable" disabled id="no_hp" placeholder="No Hp"
-                        maxlength="13" value="{{ $data->no_hp }}">
+                    <label for="">Tempat Lahir: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="born_place" placeholder="Tempat Lahir"
+                        maxlength="50">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Agen Aktif? : </label>
-                    <select id="is_active" class="form-control select2modal editable" disabled style="width: 100%">
-                        <option value="0" {{ $data->is_active == 0 ? 'selected' : '' }}>Tidak Aktif</option>
-                        <option value="1" {{ $data->is_active == 1 ? 'selected' : '' }}>Aktif</option>
-                    </select>
+                    <label for="">Tanggal Lahir: <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="born_date"
+                        max="{{ date('Y-m-d', strtotime('-2 Years')) }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Nama Bank: </label>
-                    <input type="text" disabled class="form-control editable" id="nama_bank" placeholder="Nama Bank"
-                        maxlength="16" value="{{ $data->nama_bank }}">
+                    <label for="">Nama Ayah: </label>
+                    <input type="text" class="form-control" id="nama_ayah" placeholder="Nama Ayah" maxlength="50">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">No Rek: </label>
-                    <input type="text" disabled class="form-control editable" id="no_rek" placeholder="No Rek"
-                        maxlength="16" value="{{ $data->no_rek }}">
+                    <label for="">Nama Ibu: </label>
+                    <input type="text" class="form-control" id="nama_ibu" placeholder="Nama Ibu" maxlength="50">
                 </div>
             </div>
+
         </div>
     </div>
+
 </div>
-<div class="float-end" id="isHide" hidden>
-    <a class="btn btn-sm btn-outline-warning rounded-pill" onclick="isView(true)">
+<div class="float-end">
+    <a class="btn btn-sm btn-outline-warning rounded-pill" onclick="closeModal('ThisModal')">
 
         <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M16.8397 20.1642V6.54639" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -90,66 +121,48 @@
         </svg>
     </a>
 </div>
-<div class="float-end" id="isShown">
-
-    <a class="btn btn-sm btn-outline-warning rounded-pill" onclick="isView(false)">
-        Edit
-        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path opacity="0.4"
-                d="M19.9927 18.9534H14.2984C13.7429 18.9534 13.291 19.4124 13.291 19.9767C13.291 20.5422 13.7429 21.0001 14.2984 21.0001H19.9927C20.5483 21.0001 21.0001 20.5422 21.0001 19.9767C21.0001 19.4124 20.5483 18.9534 19.9927 18.9534Z"
-                fill="currentColor"></path>
-            <path
-                d="M10.309 6.90385L15.7049 11.2639C15.835 11.3682 15.8573 11.5596 15.7557 11.6929L9.35874 20.0282C8.95662 20.5431 8.36402 20.8344 7.72908 20.8452L4.23696 20.8882C4.05071 20.8903 3.88775 20.7613 3.84542 20.5764L3.05175 17.1258C2.91419 16.4915 3.05175 15.8358 3.45388 15.3306L9.88256 6.95545C9.98627 6.82108 10.1778 6.79743 10.309 6.90385Z"
-                fill="currentColor"></path>
-            <path opacity="0.4"
-                d="M18.1208 8.66544L17.0806 9.96401C16.9758 10.0962 16.7874 10.1177 16.6573 10.0124C15.3927 8.98901 12.1545 6.36285 11.2561 5.63509C11.1249 5.52759 11.1069 5.33625 11.2127 5.20295L12.2159 3.95706C13.126 2.78534 14.7133 2.67784 15.9938 3.69906L17.4647 4.87078C18.0679 5.34377 18.47 5.96726 18.6076 6.62299C18.7663 7.3443 18.597 8.0527 18.1208 8.66544Z"
-                fill="currentColor"></path>
-        </svg>
-    </a>
-</div>
 <script>
     $('.select2modal').select2({
         dropdownParent: $('#ThisModal')
     });
 
-    function isView(bool) {
-        $('.editable').attr('disabled', bool)
-        $('#isHide').attr('hidden', bool)
-
-        if (bool) {
-            $('#isShown').attr('hidden', false)
-        } else {
-            $('#isShown').attr('hidden', true)
-        }
-    }
-
     function pushData() {
-        var kode = $('#kode_agen').val()
-        var nama = $('#nama_agen').val()
-        var noktp = $('#noktp').val()
+        var nama = $('#nama_jamaah').val()
+        var paket_id = $('#paket').val()
+        var no_ktp = $('#noktp').val()
+        var no_passport = $('#no_passport').val()
+        var no_hp = $('#no_hp').val()
+        var alamat = $('#alamat').val()
+        var agen_id = $('#agen_id').val()
+        var born_place = $('#born_place').val()
+        var born_date = $('#born_date').val()
+        var nama_ayah = $('#nama_ayah').val()
+        var nama_ibu = $('#nama_ibu').val()
 
-        if (!kode || !nama || !noktp) {
+        if (!nama || !paket_id || !no_ktp || !no_passport || !no_hp || !agen_id || !born_place) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"
             });
         }
         $.ajax({
-            url: "{{ url('agen/updateAgen') }}",
+            url: "{{ url('jamaah/saveData') }}",
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             data: {
-                id: <?= $id ?>,
-                kode_agen: kode,
                 nama: nama,
-                noktp: noktp,
-                alamat: $('#alamat').val(),
-                no_hp: $('#no_hp').val(),
-                nama_bank: $('#nama_bank').val(),
-                no_rek: $('#no_rek').val(),
-                is_active: $('#is_active').val(),
+                paket_id: paket_id,
+                no_ktp: no_ktp,
+                no_passport: no_passport,
+                no_hp: no_hp,
+                alamat: alamat,
+                agen_id: agen_id,
+                born_place: born_place,
+                born_date: born_date,
+                nama_ayah: nama_ayah,
+                nama_ibu: nama_ibu,
             },
             success: function(data) {
                 Toast.fire({
