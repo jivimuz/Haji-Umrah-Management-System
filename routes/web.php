@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\AuthController;
 use App\Http\Controllers\Website\JamaahController;
 use App\Http\Controllers\Website\PaketController;
 use App\Http\Controllers\website\PaymentController;
+use App\Http\Controllers\Website\profileController;
 use App\Http\Middleware\CheckModuleAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,10 @@ Route::get('error', [AuthController::class, 'error'])->name('error');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('menu', [HomeController::class, 'menu']);
+
+    Route::prefix('profile')->group(function () {
+        Route::post('changePassword', [profileController::class, 'changePassword']);
+    });
 
 
     Route::middleware(['checkAccess:MTA'])->prefix('access')->group(function () {

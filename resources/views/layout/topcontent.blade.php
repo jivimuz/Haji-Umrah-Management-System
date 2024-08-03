@@ -75,49 +75,8 @@ $LoginDesignation = $cek ? $cek->name : '-';
                                     <div class="card-body p-0">
                                         <a href="#" class="iq-sub-card">
                                             <div class="d-flex align-items-center">
-                                                <img class="avatar-40 rounded-pill"
-                                                    src="../assets/images/layouts/01.png" alt="">
-                                                <div class="ms-3 w-100">
-                                                    <h6 class="mb-0 ">Emma Watson Bni</h6>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-0">95 MB</p>
-                                                        <small class="float-end font-size-12">Just Now</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="d-flex align-items-center">
-                                                <div class="">
-                                                    <img class="avatar-40 rounded-pill"
-                                                        src="../assets/images/layouts/02.png" alt="">
-                                                </div>
-                                                <div class="ms-3 w-100">
-                                                    <h6 class="mb-0 ">New customer is join</h6>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-0">Cyst Bni</p>
-                                                        <small class="float-end font-size-12">5 days ago</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="d-flex align-items-center">
-                                                <img class="avatar-40 rounded-pill"
-                                                    src="../assets/images/layouts/03.png" alt="">
-                                                <div class="ms-3 w-100">
-                                                    <h6 class="mb-0 ">Two customer is left</h6>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-0">Cyst Bni</p>
-                                                        <small class="float-end font-size-12">2 days ago</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="iq-sub-card">
-                                            <div class="d-flex align-items-center">
-                                                <img class="avatar-40 rounded-pill"
-                                                    src="../assets/images/layouts/04.png" alt="">
+                                                {{-- <img class="avatar-40 rounded-pill" --}}
+                                                {{-- src="../assets/images/layouts/04.png" alt=""> --}}
                                                 <div class="w-100 ms-3">
                                                     <h6 class="mb-0 ">New Mail from Fenny</h6>
                                                     <div class="d-flex justify-content-between align-items-center">
@@ -142,8 +101,8 @@ $LoginDesignation = $cek ? $cek->name : '-';
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ url('profile') }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="">Privacy Setting</a></li>
+                                <li><a class="dropdown-item" onclick="changePass()">Change Password</a></li>
+                                {{-- <li><a class="dropdown-item" href="">Privacy Setting</a></li> --}}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
