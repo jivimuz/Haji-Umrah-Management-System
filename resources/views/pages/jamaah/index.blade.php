@@ -35,6 +35,7 @@
                                 </svg>
                                 Add Jamaah
                             </a>
+
                         </div>
                         <h4 class="card-title">Jamaah</h4>
                         <small>List of Jamaah</small>
@@ -49,9 +50,10 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
-                                        <th>No Ktp</th>
-                                        <th>No Passport</th>
+                                        <th>No KTP</th>
                                         <th>Paket</th>
+                                        <th>Terbayar</th>
+                                        <th>Status</th>
                                         <th>-</th>
                                     </tr>
                                 </thead>
@@ -86,18 +88,58 @@
                     },
                     className: 'text-center'
                 },
+
                 {
                     data: "nama",
                 },
-
                 {
                     data: "no_ktp",
                 },
                 {
-                    data: "no_passport",
+                    data: "paket",
                 },
                 {
-                    data: "paket",
+                    data: "paid",
+                    render: function(data, b, c) {
+                        var a = ''
+                        if (c.is_done) {
+                            a += "<small class='text-success'>"
+                        } else if (data) {
+                            a += "<small class='text-primary'>"
+                        } else {
+                            a += "<small class='text-warning'>"
+                        }
+                        a += data.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        });
+                        // a += '/'
+                        // a += c.price.toLocaleString("id-ID", {
+                        //     style: "currency",
+                        //     currency: "IDR"
+                        // });
+
+
+                        a += '</small>'
+
+                        return a
+                    },
+                },
+                {
+                    data: "is_firstpaid",
+                    render: function(data, b, c) {
+                        var a = ''
+                        if (c.is_done) {
+                            a += "<span class='badge rounded-pill bg-success'>Lunas</span>"
+                        } else if (data) {
+                            a += "<span class='badge rounded-pill bg-primary'>Kurang Bayar</span>"
+                        } else {
+                            a += "<span class='badge rounded-pill bg-warning'>Belum Bayar</span>"
+                        }
+
+                        return a
+                    },
+                    className: 'text-center'
                 },
                 {
                     width: '150px',

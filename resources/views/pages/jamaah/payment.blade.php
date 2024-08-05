@@ -9,7 +9,7 @@
                         <th>Paket</th>
                         <th>Nominal</th>
                         <th>remark</th>
-                        <th>status</th>
+                        <th>Type</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -55,9 +55,7 @@
             {
                 data: "paket",
             },
-            {
-                data: "remark",
-            },
+
             {
                 data: "nominal",
                 render: function(data, b, c) {
@@ -66,6 +64,9 @@
                         currency: "IDR"
                     });
                 },
+            },
+            {
+                data: "remark",
             },
             {
                 data: "nominal",

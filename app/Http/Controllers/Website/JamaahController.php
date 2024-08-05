@@ -19,7 +19,12 @@ class JamaahController extends Controller
 
     public function getList()
     {
-        $data = Jamaah::select(['t_jamaah.*', 'm_paket.nama as paket'])
+        $data = Jamaah::select([
+            't_jamaah.*',
+            'm_paket.nama as paket',
+            'm_paket.publish_price as price',
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
+        ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
@@ -52,6 +57,8 @@ class JamaahController extends Controller
             'born_date' => $request->born_date,
             'nama_ayah' => $request->nama_ayah,
             'nama_ibu' => $request->nama_ibu,
+            'discount' => $request->discount,
+            'gender' => $request->gender,
         ]);
         if ($insert) {
             return response()->json(["message" => 'success', 'data' => $insert], 200);
@@ -86,6 +93,8 @@ class JamaahController extends Controller
                 'born_date' => $request->born_date,
                 'nama_ayah' => $request->nama_ayah,
                 'nama_ibu' => $request->nama_ibu,
+                'discount' => $request->discount,
+                'gender' => $request->gender,
             ]);
             if ($update) {
                 return response()->json(["message" => 'success', 'data' => $update], 200);

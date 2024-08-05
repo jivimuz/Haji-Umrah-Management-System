@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\AuthController;
 use App\Http\Controllers\Website\JamaahController;
 use App\Http\Controllers\Website\PaketController;
 use App\Http\Controllers\website\PaymentController;
+use App\Http\Controllers\Website\PrintController;
 use App\Http\Controllers\Website\profileController;
 use App\Http\Middleware\CheckModuleAccess;
 use Illuminate\Support\Facades\Route;
@@ -78,5 +79,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('getJamaahHistory', [PaymentController::class, 'getJamaahHistory']);
         Route::post('refund', [PaymentController::class, 'refund']);
         Route::post('saveData', [PaymentController::class, 'saveData']);
+    });
+
+
+
+    Route::prefix('print')->group(function () {
+        Route::get('kwitansi/{id}', [PrintController::class, 'kwitansi']);
     });
 });

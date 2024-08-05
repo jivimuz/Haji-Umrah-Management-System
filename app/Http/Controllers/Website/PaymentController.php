@@ -27,7 +27,17 @@ class PaymentController extends Controller
 
     public function add()
     {
-        $jamaah = Jamaah::where('is_done', false)->get();
+        $jamaah = Jamaah::select([
+            't_jamaah.*',
+            'm_paket.nama as paket',
+            'm_paket.publish_price',
+            'm_paket.flight_date',
+            'm_program.nama as program',
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
+        ])
+            ->join('m_paket', 't_jamaah.paket_id', 'm_paket.id')
+            ->join('m_program', 'm_paket.program_id', 'm_program.id')
+            ->where('t_jamaah.is_done', false)->get();
         return view('pages/payment/add', compact('jamaah'));
     }
 
@@ -82,7 +92,7 @@ class PaymentController extends Controller
             $priceCheck = Paket::select(DB::raw('COALESCE(publish_price, 0) AS price'))->where('id', $check->paket_id)->first();
             $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->jamaah_id)->first();
             $is_done = false;
-            if ($paidCheck->paid >= $priceCheck->price) {
+            if ($paidCheck->paid >= ($priceCheck->price - $check->discount)) {
                 $is_done = true;
             }
             Jamaah::where('id', $request->jamaah_id)->update([

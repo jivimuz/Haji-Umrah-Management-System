@@ -48,13 +48,12 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>No KTP</th>
                                         <th>No HP</th>
+                                        <th>Total Jamaah</th>
                                         <th>-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -87,12 +86,11 @@
                 {
                     data: "nama",
                 },
-
-                {
-                    data: "no_ktp",
-                },
                 {
                     data: "no_hp",
+                },
+                {
+                    data: "tjamaah",
                 },
                 {
                     width: '150px',

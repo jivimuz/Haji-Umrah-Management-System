@@ -6,21 +6,22 @@
             <select id="jamaah" class="form-control select2modal " style="width: 100%">
                 <option value="" disabled selected>Select</option>
                 @foreach ($jamaah as $i)
-                    <option value="{{ $i->id }}" jname="{{ $i->nama }}">Nama: {{ $i->nama }} || KTP:
+                    <option value="{{ $i->id }}" jname="{{ $i->nama }}" jprice="{{ $i->publish_price }}"
+                        jpaid="{{ $i->paid }}"
+                        jpaket="☪️ {{ strlen($i->paket) > 20 ? substr($i->paket, 0, 20) . '...' : $i->paket }} ||
+                        🕌 {{ $i->program }}
+                        || 🛫 {{ date('d M Y', strtotime($i->flight_date)) }}"
+                        jdiscount="{{ $i->discount }}">Nama:
+                        {{ $i->nama }} || KTP:
                         {{ $i->no_ktp }}</option>
                 @endforeach
             </select>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="">Nominal: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="nominal" placeholder="Nominal" inputmode="numeric"
-                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" maxlength="50">
+        <div class="form-group isHide" hidden>
+            <label for="">Nominal Bayar: <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="nominal" placeholder="Nominal" inputmode="numeric">
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
+        <div class="form-group  isHide" hidden>
             <label for="">Remark: <span class="text-danger">*</span></label>
             <select id="remark" class="form-control  " style="width: 100%">
                 <option value="" disabled selected>Select or Add</option>
@@ -30,7 +31,48 @@
             </select>
         </div>
     </div>
+
+    <div class="col-md-7 isHide" hidden>
+        <div class="p-4">
+            <hr>
+            <h6>
+                Information:
+            </h6>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="200px">Paket </th>
+                            <th width="10">:</th>
+                            <td class="text-black" id="cpaket">asda</td>
+                        </tr>
+                        <tr>
+                            <th width="200px">Harga </th>
+                            <th width="10">:</th>
+                            <td class="text-black" id="cprice"></td>
+                        </tr>
+                        <tr>
+                            <th width="200px">Discount </th>
+                            <th width="10">:</th>
+                            <td class="text-black" id="cdiscount"></td>
+                        </tr>
+                        <tr>
+                            <th width="200px">Terbayar </th>
+                            <th width="10">:</th>
+                            <td class="text-black" id="cpaid"></td>
+                        </tr>
+                        <tr>
+                            <th width="200px">Kekurangan </th>
+                            <th width="10">:</th>
+                            <td class="text-black" id="ckurang"></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+<br><br>
 <div class="float-end">
     <a class="btn btn-sm btn-outline-warning rounded-pill" onclick="closeModal('ThisModal')">
 
@@ -65,6 +107,51 @@
     $('#remark').select2({
         dropdownParent: $('#ThisModal'),
         tags: true
+    })
+
+    $('#jamaah').change(function() {
+        var priceAttr = $("#jamaah option:selected").attr('jprice');
+        var price = parseFloat(priceAttr) || 0;
+
+        var paket = $("#jamaah option:selected").attr('jpaket');
+
+        var discountAttr = $("#jamaah option:selected").attr('jdiscount');
+        var discount = parseFloat(discountAttr) || 0;
+
+        var paidAttr = $("#jamaah option:selected").attr('jpaid');
+        var paid = parseFloat(paidAttr) || 0;
+
+        var trueprice = price - discount;
+        var total = trueprice - paid;
+
+
+
+        $('#cpaket').html(paket)
+        $('#cdiscount').html(discount.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }))
+        $('#cprice').html(price.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }))
+        $('#cpaid').html(paid.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }))
+        $('#ckurang').html(total.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }))
+
+        $('#nominal').val(0);
+        $('#nominal').attr('onkeypress',
+            `noMinus(this); maxValue(this, '${total}')`)
+        $('#nominal').attr('onchange',
+            `maxValue(this, '${total}')`)
+        $('.isHide').attr('hidden', false)
+
+
     })
 
     function pushData() {

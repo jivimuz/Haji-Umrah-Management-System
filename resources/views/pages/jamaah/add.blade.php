@@ -1,25 +1,30 @@
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             <label for="">Nama Jamaah: <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="nama_jamaah" placeholder="Nama Jamaah" maxlength="50">
         </div>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             <label for="">Paket: <span class="text-danger">*</span></label>
             <select id="paket" class="form-control select2modal " style="width: 100%">
                 <option value="" disabled selected>Select</option>
                 @foreach ($paket as $i)
-                    <option value="{{ $i->id }}">
+                    <option value="{{ $i->id }}" price="{{ $i->publish_price }}">
                         ☪️ {{ strlen($i->nama) > 20 ? substr($i->nama, 0, 20) . '...' : $i->nama }} ||
                         🕌 {{ $i->program }}
                         || 🛫 {{ date('d M Y', strtotime($i->flight_date)) }}
                     </option>
                 @endforeach
             </select>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="">Discount: (Rp.)</label>
+            <input type="number" class="form-control" id="discount" value="0" disabled>
         </div>
     </div>
     <div class="col-md-4">
@@ -30,16 +35,26 @@
                 placeholder="No Ktp" maxlength="16">
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
-            <label for="">No Passport: <span class="text-danger">*</span></label>
+            <label for="">No Passport:</label>
             <input type="text" class="form-control" id="no_passport" placeholder="No Passport" maxlength="50">
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label for="">No Hp: <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="no_hp" placeholder="No Hp" maxlength="13">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="">L/P: </label>
+            <select id="gender" class="form-control select2modal " style="width: 100%">
+                <option value="" selected>-</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
         </div>
     </div>
 
@@ -80,13 +95,15 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Nama Ayah: </label>
-                    <input type="text" class="form-control" id="nama_ayah" placeholder="Nama Ayah" maxlength="50">
+                    <input type="text" class="form-control" id="nama_ayah" placeholder="Nama Ayah"
+                        maxlength="50">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Nama Ibu: </label>
-                    <input type="text" class="form-control" id="nama_ibu" placeholder="Nama Ibu" maxlength="50">
+                    <input type="text" class="form-control" id="nama_ibu" placeholder="Nama Ibu"
+                        maxlength="50">
                 </div>
             </div>
 
@@ -126,6 +143,20 @@
         dropdownParent: $('#ThisModal')
     });
 
+    $('#paket').change(function() {
+        var max = $("#paket option:selected").attr('price');
+        console.log(max)
+        if (parseFloat($('#discount').val()) > parseFloat(max)) {
+            $('#discount').val(max)
+        }
+        $('#discount').attr('max', max)
+        $('#discount').attr('disabled', false)
+        $('#discount').attr('onkeypress',
+            `noMinus(this); maxValue(this, ${max})`)
+        $('#discount').attr('onchange',
+            `noMinus(this); maxValue(this, ${max})`)
+    })
+
     function pushData() {
         var nama = $('#nama_jamaah').val()
         var paket_id = $('#paket').val()
@@ -138,8 +169,10 @@
         var born_date = $('#born_date').val()
         var nama_ayah = $('#nama_ayah').val()
         var nama_ibu = $('#nama_ibu').val()
+        var discount = $('#discount').val()
+        var gender = $('#gender').val()
 
-        if (!nama || !paket_id || !no_ktp || !no_passport || !no_hp || !agen_id || !born_place) {
+        if (!nama || !paket_id || !no_ktp || !no_hp || !agen_id || !born_place) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"
@@ -163,6 +196,8 @@
                 born_date: born_date,
                 nama_ayah: nama_ayah,
                 nama_ibu: nama_ibu,
+                discount: discount,
+                gender: gender,
             },
             success: function(data) {
                 Toast.fire({

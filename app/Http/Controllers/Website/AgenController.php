@@ -16,7 +16,10 @@ class AgenController extends Controller
 
     public function getList()
     {
-        $data = Agen::orderBy('id', 'desc')->get();
+        $data = Agen::select([
+            'm_agen.*',
+            DB::raw("(SELECT COALESCE(COUNT(id), 0) as tjamaah FROM t_jamaah where t_jamaah.agen_id = m_agen.id) as tjamaah")
+        ])->orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
     }
 

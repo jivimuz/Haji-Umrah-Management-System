@@ -1,7 +1,7 @@
 <div class="row">
 
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             <label for="">Nama Jamaah: <span class="text-danger">*</span></label>
             <input type="text" disabled class="form-control editable" id="nama_jamaah" value="{{ $data->nama }}"
@@ -9,10 +9,10 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             <label for="">Paket: <span class="text-danger">*</span></label>
-            <select id="paket" disabled class="form-control editable select2modal " style="width: 100%">
+            <select id="paket" disabled class="form-control  select2modal " style="width: 100%">
                 <option value="{{ $paket->id }}" selected>
                     ☪️ {{ strlen($paket->nama) > 20 ? substr($paket->nama, 0, 20) . '...' : $paket->nama }} ||
                     🕌 {{ $paket->program }}
@@ -21,6 +21,17 @@
             </select>
         </div>
     </div>
+
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="">Discount: (Rp.)</label>
+            <input type="number" class="form-control {{ !$data->is_firstpaid ? 'editable' : '' }}"
+                onkeypress="noMinus(this); maxValue(this, {{ $paket->publish_price }});"
+                onchange="maxValue(this, {{ $paket->publish_price }});" id="discount" value="{{ $data->discount }}"
+                disabled>
+        </div>
+    </div>
+
     <div class="col-md-4">
         <div class="form-group">
             <label for="">No Ktp : <span class="text-danger">*</span></label>
@@ -29,18 +40,28 @@
                 id="noktp" placeholder="No Ktp" maxlength="16">
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
-            <label for="">No Passport: <span class="text-danger">*</span></label>
+            <label for="">No Passport: </label>
             <input type="text" disabled class="form-control editable" id="no_passport"
                 value="{{ $data->no_passport }}" placeholder="No Passport" maxlength="50">
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label for="">No Hp: <span class="text-danger">*</span></label>
             <input type="text" disabled class="form-control editable" id="no_hp" placeholder="No Hp"
                 value="{{ $data->no_hp }}" maxlength="13">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="">L/P: </label>
+            <select id="gender" class="form-control select2modal " style="width: 100%" disabled>
+                <option value="">-</option>
+                <option value="L" {{ !$data->gender == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ !$data->gender == 'P' ? 'selected' : '' }}>Perempuan</option>
+            </select>
         </div>
     </div>
 
@@ -154,6 +175,7 @@
         }
     }
 
+
     function pushData() {
         var nama = $('#nama_jamaah').val()
         var paket_id = $('#paket').val()
@@ -167,7 +189,7 @@
         var nama_ayah = $('#nama_ayah').val()
         var nama_ibu = $('#nama_ibu').val()
 
-        if (!nama || !paket_id || !no_ktp || !no_passport || !no_hp || !agen_id || !born_place) {
+        if (!nama || !paket_id || !no_ktp || !no_hp || !agen_id || !born_place) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"

@@ -71,8 +71,9 @@
     </a>
 </div>
 <script>
-    $('.select2modal').select2({
-        dropdownParent: $('#ThisModal')
+    $('#program').select2({
+        dropdownParent: $('#ThisModal'),
+        tags: true
     });
 
     function pushData() {

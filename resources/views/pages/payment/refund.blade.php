@@ -139,6 +139,8 @@
                 $('#nominal').val(json.paid);
                 $('#nominal').attr('onkeypress',
                     `noMinus(this); maxValue($('#nominal'), ${json.paid})`)
+                $('#nominal').attr('onchange',
+                    `maxValue(this, '${json.paid}')`)
 
                 if (json.paid <= 0) {
                     $('#saveData').attr('hidden', true)

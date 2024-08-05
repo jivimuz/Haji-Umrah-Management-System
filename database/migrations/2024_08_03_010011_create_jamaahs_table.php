@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('born_place');
             $table->date('born_date');
             $table->string('alamat')->nullable();
+
             $table->string('no_hp');
             $table->string('no_ktp');
-            $table->string('no_passport');
+            $table->string('no_passport')->nullable();
             $table->integer('paket_id');
             $table->string('nama_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
+            $table->double('discount')->default(0);
+            $table->enum('gender', ['L', 'P'])->nullable();
             $table->boolean('is_firstpaid')->default(0);
             $table->boolean('is_done')->default(0);
             $table->timestamps();
