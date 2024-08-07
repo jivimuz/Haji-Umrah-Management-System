@@ -35,7 +35,8 @@
                                 </svg>
                                 Add Payment
                             </a>
-                            <a class="btn btn-sm btn-outline-danger rounded-pill mt-2 ml-2" onclick="refundModal()">
+
+                            <a class="btn btn-sm btn-outline-danger rounded-pill mt-2 ml-2" onclick="outTransaction()">
                                 <svg width="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4"
                                         d="M18.8089 9.021C18.3574 9.021 17.7594 9.011 17.0149 9.011C15.199 9.011 13.7059 7.508 13.7059 5.675V2.459C13.7059 2.206 13.503 2 13.2525 2H7.96337C5.49604 2 3.5 4.026 3.5 6.509V17.284C3.5 19.889 5.59109 22 8.1703 22H16.0455C18.5059 22 20.5 19.987 20.5 17.502V9.471C20.5 9.217 20.298 9.012 20.0465 9.013C19.6238 9.016 19.1168 9.021 18.8089 9.021Z"
@@ -47,15 +48,65 @@
                                         d="M12.9349 12.9854L14.1559 11.7634C14.4469 11.4734 14.4469 11.0024 14.1559 10.7114C13.8649 10.4204 13.3939 10.4204 13.1029 10.7114L11.8819 11.9314L10.6609 10.7114C10.3699 10.4204 9.89792 10.4204 9.60692 10.7114C9.31592 11.0024 9.31592 11.4734 9.60692 11.7634L10.8289 12.9854L9.60692 14.2064C9.31592 14.4974 9.31592 14.9684 9.60692 15.2584C9.75292 15.4044 9.94292 15.4774 10.1339 15.4774C10.3249 15.4774 10.5149 15.4044 10.6609 15.2584L11.8819 14.0384L13.1029 15.2584C13.2479 15.4044 13.4389 15.4774 13.6299 15.4774C13.8199 15.4774 14.0109 15.4044 14.1559 15.2584C14.4469 14.9684 14.4469 14.4974 14.1559 14.2064L12.9349 12.9854Z"
                                         fill="currentColor"></path>
                                 </svg>
-                                Refund Payment
+                                Out Payment
                             </a>
                         </div>
                         <h4 class="card-title">Payment</h4>
                         <small>List of Payment History</small>
                     </div>
+                    <div class="row p-4">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="">Income (Per-Month)</label>
+                                <h4 id="income" class="text-success">Rp.</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="">Expense (Per-Month)</label>
+                                <h4 id="expense" class="text-danger">Rp.</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Total (Per-Month)</label>
+                                <h4 id="ttotal" style="text-decoration-line: underline">Rp.</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Month</label>
+                                <input type="month" class="form-control" id="month" value="{{ date('Y-m') }}"
+                                    max="{{ date('Y-m') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="">&nbsp;</label>
+                                <p>
+                                    <a class="btn btn-sm rounded-pill mt-2 ml-2 btn-outline-warning"
+                                        onclick="openPopup('{{ url('print/monthlyReport?month=') }}'+$('#month').val())">
+                                        <svg width="23" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.4"
+                                                d="M16.8843 5.11485H13.9413C13.2081 5.11969 12.512 4.79355 12.0474 4.22751L11.0782 2.88762C10.6214 2.31661 9.9253 1.98894 9.19321 2.00028H7.11261C3.37819 2.00028 2.00001 4.19201 2.00001 7.91884V11.9474C1.99536 12.3904 21.9956 12.3898 21.9969 11.9474V10.7761C22.0147 7.04924 20.6721 5.11485 16.8843 5.11485Z"
+                                                fill="currentColor"></path>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M20.8321 6.54353C21.1521 6.91761 21.3993 7.34793 21.5612 7.81243C21.8798 8.76711 22.0273 9.77037 21.9969 10.7761V16.0292C21.9956 16.4717 21.963 16.9135 21.8991 17.3513C21.7775 18.1241 21.5057 18.8656 21.0989 19.5342C20.9119 19.8571 20.6849 20.1553 20.4231 20.4215C19.2383 21.5089 17.665 22.0749 16.0574 21.9921H7.93061C6.32049 22.0743 4.74462 21.5086 3.55601 20.4215C3.2974 20.1547 3.07337 19.8566 2.88915 19.5342C2.48475 18.8661 2.21869 18.1238 2.1067 17.3513C2.03549 16.9142 1.99981 16.4721 2 16.0292V10.7761C1.99983 10.3374 2.02357 9.89902 2.07113 9.46288C2.08113 9.38636 2.09614 9.31109 2.11098 9.23659C2.13573 9.11241 2.16005 8.99038 2.16005 8.86836C2.25031 8.34204 2.41496 7.83116 2.64908 7.35101C3.34261 5.86916 4.76525 5.11492 7.09481 5.11492H16.8754C18.1802 5.01401 19.4753 5.4068 20.5032 6.21522C20.6215 6.3156 20.7316 6.4254 20.8321 6.54353ZM6.97033 15.5412H17.0355H17.0533C17.2741 15.5507 17.4896 15.4717 17.6517 15.3217C17.8137 15.1716 17.9088 14.963 17.9157 14.7425C17.9282 14.5487 17.8644 14.3577 17.7379 14.2101C17.5924 14.0118 17.3618 13.8935 17.1155 13.8907H6.97033C6.51365 13.8907 6.14343 14.2602 6.14343 14.7159C6.14343 15.1717 6.51365 15.5412 6.97033 15.5412Z"
+                                                fill="currentColor"></path>
+                                        </svg>
+                                        Print Report
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="card-body" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
                         data-iq-duration=".6" data-iq-delay=".6" data-iq-trigger="scroll" data-iq-ease="none"
                         style="padding-left: 40px; padding-right:40px">
+
 
                         <div class="table-responsive">
                             <table class="table table-striped" id="main-table">
@@ -91,6 +142,9 @@
             getList()
             var table = $('#main-table').DataTable();
         })
+        $('#month').on('change', function() {
+            getList()
+        })
 
         function getList() {
             let noD = 1
@@ -107,10 +161,16 @@
                 },
                 {
                     data: "jamaah",
+                    render: function(data, b, c) {
+                        return data ?? 'System'
+                    },
                 },
 
                 {
                     data: "paket",
+                    render: function(data, b, c) {
+                        return data ?? '-'
+                    },
                 },
                 {
                     data: "remark",
@@ -161,11 +221,42 @@
                     },
                     url: "{{ url('payment/getList') }}",
                     type: "POST",
-                    data: {}
+                    data: {
+                        month: $('#month').val()
+                    }
 
                 },
                 columns: columns,
-                // initComplete: function(data) {}
+                initComplete: function(data, json) {
+                    let td = 0;
+                    let tp = 0;
+                    let tt = 0;
+
+                    json.data.forEach(item => {
+                        const nominal = parseFloat(item.nominal);
+
+                        if (nominal > 0) {
+                            td += nominal;
+                        } else {
+                            tp += nominal;
+                        }
+                        tt += nominal;
+                    });
+
+
+                    $('#income').html(td.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }))
+                    $('#expense').html(tp.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }))
+                    $('#ttotal').html(tt.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }))
+                }
             });
 
         }
@@ -193,15 +284,15 @@
             });
         }
 
-        function refundModal() {
+        function outTransaction() {
             $.ajax({
-                url: "{{ url('payment/refund') }}",
+                url: "{{ url('payment/outTransaction') }}",
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(data) {
-                    $('#ThisModalLabel').html("Refund Transaction")
+                    $('#ThisModalLabel').html("Out Payment")
                     $('#thisModalBody').html(data)
                     $('#ThisModal').modal('show')
                 },

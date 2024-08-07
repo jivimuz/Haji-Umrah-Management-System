@@ -1,5 +1,6 @@
 <?php
 use App\Helpers\WebHelper;
+
 ?>
 <title>Print Kwitansi</title>
 <style>
@@ -37,11 +38,13 @@ use App\Helpers\WebHelper;
         <table style="width: 100%">
             <tr>
                 <td colspan="4">
-                    <img src="{{ public_path('assets/images/logo.png') }}" style="width: 150px" alt=""><br><br>
-                    Cirebon - Jawa Barat
+                    @if ($clogo)
+                        <img src="{{ public_path($clogo) }}" style="width: 150px" alt=""><br><br>
+                    @endif
+                    {{ $caddress }}
                 </td>
                 <td colspan="2" style="text-align: center">
-                    <span style="padding: 10px;background-color: #1f79e7;font-size: 1.5rem">KWITANSI</span>
+                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">KWITANSI</span>
                 </td>
             </tr>
             <tr>
@@ -63,7 +66,8 @@ use App\Helpers\WebHelper;
                 </td>
             </tr>
             <tr>
-                <td>{{ substr($data->nominal, 0, 1) == '-' ? 'Diberikan Kepada' : 'Terima Dari' }} </td>
+                <td>{{ substr($data->nominal, 0, 1) == '-' ? ($data->jamaah_name != 'Out Transaction' ? 'Untuk' : 'Diberikan Kepada') : 'Terima Dari' }}
+                </td>
                 <td style="width: 1%">:</td>
                 <td colspan="4" style="padding-left:10px"> {{ $data->jamaah_name }}
                 </td>
@@ -78,8 +82,11 @@ use App\Helpers\WebHelper;
             <tr>
                 <td>Untuk Pembayaran</td>
                 <td style="width: 1%">:</td>
-                <td colspan="4" style=" border: 1px solid black;padding-left:10px"> {{ $data->remark }} untuk
-                    {{ $data->paket }} keberangkatan {{ date('d M Y', $data->flight_date) }}</td>
+                <td colspan="4" style=" border: 1px solid black;padding-left:10px"> {{ $data->remark }}
+                    @if ($data->jamaah_name != 'Out Transaction')
+                        untuk {{ $data->paket }} keberangkatan {{ date('d M Y', $data->flight_date) }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td colspan="6">

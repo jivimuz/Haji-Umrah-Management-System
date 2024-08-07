@@ -15,16 +15,25 @@ return new class extends Migration
             $table->id();
             $table->integer('agen_id');
             $table->string('nama');
-            $table->string('born_place');
-            $table->date('born_date');
+            $table->string('born_place')->nullable();
+            $table->date('born_date')->nullable();
             $table->string('alamat')->nullable();
 
-            $table->string('no_hp');
+            $table->string('no_hp')->nullable();
             $table->string('no_ktp');
             $table->string('no_passport')->nullable();
+            $table->date('passport_date')->nullable();
+            $table->date('passport_expired')->nullable();
             $table->integer('paket_id');
             $table->string('nama_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
+            $table->string('city_passport')->nullable();
+            $table->string('vaccine1')->nullable();
+            $table->date('vaccine1_date')->nullable();
+            $table->string('vaccine2')->nullable();
+            $table->date('vaccine2_date')->nullable();
+            $table->string('vaccine3')->nullable();
+            $table->date('vaccine3_date')->nullable();
             $table->double('discount')->default(0);
             $table->enum('gender', ['L', 'P'])->nullable();
             $table->boolean('is_firstpaid')->default(0);

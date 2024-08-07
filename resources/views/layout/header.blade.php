@@ -4,7 +4,6 @@
 
     <link rel="stylesheet" href="../assets/css/datatables.min.css">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="../assets/images/favicon.png" />
 
     <!-- Library / Plugin Css Build -->
     <link rel="stylesheet" href="../assets/css/core/libs.min.css">

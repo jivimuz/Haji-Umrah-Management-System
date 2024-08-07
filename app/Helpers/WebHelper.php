@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+
 class WebHelper
 {
     public static function terbilang($number)
@@ -87,5 +89,36 @@ class WebHelper
         }
 
         return trim(preg_replace('/\s{2,}/', ' ', $kalimat)) . " Rupiah";
+    }
+
+    public static function calculateAge($birthDate)
+    {
+        return Carbon::parse($birthDate)->age;
+    }
+
+    public static function bulanTahun($month)
+    {
+        $bulanIndo = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
+        ];
+
+        list($year, $monthNumber) = explode('-', $month);
+
+        if (isset($bulanIndo[$monthNumber])) {
+            return $bulanIndo[$monthNumber] . ' ' . $year;
+        } else {
+            return 'Format bulan tidak valid.';
+        }
     }
 }

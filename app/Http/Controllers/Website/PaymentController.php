@@ -16,11 +16,16 @@ class PaymentController extends Controller
         return view('pages/payment/index');
     }
 
-    public function getList()
+    public function getList(Request $request)
     {
+        $monthYear = $request->month; // '2024-08'
+        list($year, $month) = explode('-', $monthYear);
+
         $data = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_paket.nama as paket'])
-            ->join('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
-            ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->leftJoin('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
+            ->leftJoin('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->whereYear('paid_at', $year)
+            ->whereMonth('paid_at', $month)
             ->orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
     }
@@ -41,10 +46,20 @@ class PaymentController extends Controller
         return view('pages/payment/add', compact('jamaah'));
     }
 
+    public function outTransaction()
+    {
+        return view('pages/payment/tabs-out');
+    }
+
+    public function pengeluaran()
+    {
+        return view('pages/payment/tabs/pengeluaran');
+    }
+
     public function refund()
     {
         $jamaah = Jamaah::where('is_firstpaid', true)->get();
-        return view('pages/payment/refund', compact('jamaah'));
+        return view('pages/payment/tabs/refund', compact('jamaah'));
     }
 
     public function getJamaahHistory(Request $request)
@@ -62,9 +77,6 @@ class PaymentController extends Controller
     public function saveData(Request $request)
     {
         $check = Jamaah::where('id', $request->jamaah_id)->first();
-        if (!$check) {
-            return response()->json(["error" => 'Jamaah tidak terdaftar '], 400);
-        }
         $insert = false;
         if ($request->is_refund == 1) {
             $insert = Payment::insert([
@@ -89,18 +101,21 @@ class PaymentController extends Controller
         }
 
         if ($insert) {
-            $priceCheck = Paket::select(DB::raw('COALESCE(publish_price, 0) AS price'))->where('id', $check->paket_id)->first();
-            $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->jamaah_id)->first();
-            $is_done = false;
-            if ($paidCheck->paid >= ($priceCheck->price - $check->discount)) {
-                $is_done = true;
+            if ($check) {
+                $priceCheck = Paket::select(DB::raw('COALESCE(publish_price, 0) AS price'))->where('id', $check->paket_id)->first();
+                $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->jamaah_id)->first();
+                $is_done = false;
+                if ($paidCheck->paid >= ($priceCheck->price - $check->discount)) {
+                    $is_done = true;
+                }
+                Jamaah::where('id', $request->jamaah_id)->update([
+                    'is_firstpaid' => true,
+                    'is_done' => $is_done,
+                ]);
             }
-            Jamaah::where('id', $request->jamaah_id)->update([
-                'is_firstpaid' => true,
-                'is_done' => $is_done,
-            ]);
             return response()->json(["message" => 'success', 'data' => $insert], 200);
         }
+
         return response()->json(["error" => 'Gagal input'], 400);
     }
 }

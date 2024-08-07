@@ -114,6 +114,17 @@ return new class extends Migration
                 'isheader' => true,
                 'isactive' => true,
             ],
+            [
+                'name' => 'Setting',
+                'code' => 'SET',
+                'group_id' => 5,
+                'group_name' => 'P',
+                'list_no' => 5,
+                'icon' => 'fa fa-cogs',
+                'route' => '/setting',
+                'isheader' => true,
+                'isactive' => true,
+            ],
 
         ];
 

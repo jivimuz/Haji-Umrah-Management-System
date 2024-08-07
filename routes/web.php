@@ -10,6 +10,7 @@ use App\Http\Controllers\Website\PaketController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\Website\PrintController;
 use App\Http\Controllers\Website\profileController;
+use App\Http\Controllers\Website\SettingController;
 use App\Http\Middleware\CheckModuleAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -77,13 +78,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('getList', [PaymentController::class, 'getList']);
         Route::post('add', [PaymentController::class, 'add']);
         Route::post('getJamaahHistory', [PaymentController::class, 'getJamaahHistory']);
+        Route::post('outTransaction', [PaymentController::class, 'outTransaction']);
+        Route::post('pengeluaran', [PaymentController::class, 'pengeluaran']);
         Route::post('refund', [PaymentController::class, 'refund']);
         Route::post('saveData', [PaymentController::class, 'saveData']);
     });
 
-
+    Route::middleware(['checkAccess:SET'])->prefix('setting')->group(function () {
+        Route::get('/', [SettingController::class, 'index']);
+        Route::post('getParameter', [SettingController::class, 'getParameter']);
+        Route::post('saveSettingD', [SettingController::class, 'saveSettingD']);
+        Route::post('saveSettingF', [SettingController::class, 'saveSettingF']);
+    });
 
     Route::prefix('print')->group(function () {
         Route::get('kwitansi/{id}', [PrintController::class, 'kwitansi']);
+        Route::get('manifest/{id}', [PrintController::class, 'manifest']);
+        Route::get('monthlyReport', [PrintController::class, 'monthlyReport']);
     });
 });

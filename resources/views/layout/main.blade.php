@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en" dir="ltr">
+<?php
+use App\Models\Setting;
 
+$logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
+?>
 <!-- Mirrored from templates.iqonic.design/aprycot/html/dashboard/dist/dashboard/admin-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Feb 2024 13:35:24 GMT -->
 
 @include('layout/header')
@@ -12,7 +16,7 @@
     <!-- loader Start -->
     <div id="loading">
         <div class="loader simple-loader">
-            <img src="assets/images/logo.png" style="width: 50%" alt="">
+            <img src="{{ url($logo) }}" style="width: 50%" alt="">
         </div>
     </div>
     <!-- loader END -->

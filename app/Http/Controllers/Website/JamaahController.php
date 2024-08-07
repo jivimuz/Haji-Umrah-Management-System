@@ -50,6 +50,9 @@ class JamaahController extends Controller
             'no_ktp' => $request->no_ktp,
             'no_hp' => $request->no_hp,
             'no_passport' => $request->no_passport,
+            'passport_date' => $request->passport_date,
+            'passport_expired' => $request->passport_expired,
+            'city_passport' => $request->city_passport,
             'alamat' => $request->alamat,
             'alamat' => $request->alamat,
             'agen_id' => $request->agen_id,
@@ -59,6 +62,12 @@ class JamaahController extends Controller
             'nama_ibu' => $request->nama_ibu,
             'discount' => $request->discount,
             'gender' => $request->gender,
+            'vaccine1' => $request->vaccine1,
+            'vaccine1_date' => $request->vaccine1_date,
+            'vaccine2' => $request->vaccine2,
+            'vaccine2_date' => $request->vaccine2_date,
+            'vaccine3' => $request->vaccine3,
+            'vaccine3_date' => $request->vaccine3_date,
         ]);
         if ($insert) {
             return response()->json(["message" => 'success', 'data' => $insert], 200);
@@ -85,6 +94,9 @@ class JamaahController extends Controller
                 'no_ktp' => $request->no_ktp,
                 'no_hp' => $request->no_hp,
                 'no_passport' => $request->no_passport,
+                'passport_date' => $request->passport_date,
+                'passport_expired' => $request->passport_expired,
+                'city_passport' => $request->city_passport,
                 'alamat' => $request->alamat,
                 'alamat' => $request->alamat,
                 'agen_id' => $request->agen_id,
@@ -95,6 +107,12 @@ class JamaahController extends Controller
                 'nama_ibu' => $request->nama_ibu,
                 'discount' => $request->discount,
                 'gender' => $request->gender,
+                'vaccine1' => $request->vaccine1,
+                'vaccine1_date' => $request->vaccine1_date,
+                'vaccine2' => $request->vaccine2,
+                'vaccine2_date' => $request->vaccine2_date,
+                'vaccine3' => $request->vaccine3,
+                'vaccine3_date' => $request->vaccine3_date,
             ]);
             if ($update) {
                 return response()->json(["message" => 'success', 'data' => $update], 200);

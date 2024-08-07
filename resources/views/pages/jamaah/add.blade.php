@@ -1,12 +1,11 @@
 <div class="row">
-
-    <div class="col-md-5">
+    <div class="col-md-3">
         <div class="form-group">
             <label for="">Nama Jamaah: <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="nama_jamaah" placeholder="Nama Jamaah" maxlength="50">
         </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
         <div class="form-group">
             <label for="">Paket: <span class="text-danger">*</span></label>
             <select id="paket" class="form-control select2modal " style="width: 100%">
@@ -27,26 +26,6 @@
             <input type="number" class="form-control" id="discount" value="0" disabled>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="">No Ktp : <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]"
-                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" id="noktp"
-                placeholder="No Ktp" maxlength="16">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="">No Passport:</label>
-            <input type="text" class="form-control" id="no_passport" placeholder="No Passport" maxlength="50">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="">No Hp: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="no_hp" placeholder="No Hp" maxlength="13">
-        </div>
-    </div>
     <div class="col-md-2">
         <div class="form-group">
             <label for="">L/P: </label>
@@ -57,14 +36,72 @@
             </select>
         </div>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-2">
         <div class="form-group">
-            <label for="">Alamat : </label>
-            <textarea id="alamat" class="form-control" maxlength="200" rows="8" placeholder="Alamat"></textarea>
+            <label for="">No Ktp : <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" inputmode="numeric" pattern="[0-9]"
+                onkeypress="return /[0-9]/i.test(event.key)" onchange="noMinus(this)" id="noktp"
+                placeholder="No Ktp" maxlength="16">
         </div>
     </div>
-    <div class="col-md-6">
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">No Passport:</label>
+            <input type="text" class="form-control" id="no_passport" placeholder="No Passport" maxlength="50">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Passport Date (Issued - Expired)</label>
+            <div class="input-group mb-3">
+                <input type="date" class="form-control" id="passport_date">
+                <input type="date" class="form-control" id="passport_expired">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Kota Passport: </label>
+            <input type="text" class="form-control" id="city_passport" placeholder="Kota Passport" maxlength="20">
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">No Hp: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="no_hp" placeholder="No Hp" maxlength="13">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Vaccine 1</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="..." id="vaccine1">
+                <input type="date" class="form-control" id="vaccine1_date">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Vaccine 2</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="..." id="vaccine2">
+                <input type="date" class="form-control" id="vaccine2_date">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="">Vaccine 3</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="..." id="vaccine3">
+                <input type="date" class="form-control" id="vaccine3_date">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
         <div class="form-group">
             <label for="">Agen yang mendaftarkan: <span class="text-danger">*</span></label>
             <select id="agen_id" class="form-control select2modal " style="width: 100%">
@@ -77,6 +114,17 @@
                 @endforeach
             </select>
         </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="">Alamat : </label>
+            <textarea id="alamat" class="form-control" maxlength="200" rows="4" placeholder="Alamat"></textarea>
+        </div>
+    </div>
+    <div class="col-md-6">
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -162,6 +210,9 @@
         var paket_id = $('#paket').val()
         var no_ktp = $('#noktp').val()
         var no_passport = $('#no_passport').val()
+        var passport_date = $('#passport_date').val()
+        var passport_expired = $('#passport_expired').val()
+        var city_passport = $('#city_passport').val()
         var no_hp = $('#no_hp').val()
         var alamat = $('#alamat').val()
         var agen_id = $('#agen_id').val()
@@ -171,6 +222,12 @@
         var nama_ibu = $('#nama_ibu').val()
         var discount = $('#discount').val()
         var gender = $('#gender').val()
+        var vaccine1 = $('#vaccine1').val()
+        var vaccine1_date = $('#vaccine1_date').val()
+        var vaccine2 = $('#vaccine2').val()
+        var vaccine2_date = $('#vaccine2_date').val()
+        var vaccine3 = $('#vaccine3').val()
+        var vaccine3_date = $('#vaccine3_date').val()
 
         if (!nama || !paket_id || !no_ktp || !no_hp || !agen_id || !born_place) {
             return Toast.fire({
@@ -189,6 +246,9 @@
                 paket_id: paket_id,
                 no_ktp: no_ktp,
                 no_passport: no_passport,
+                passport_date: passport_date,
+                passport_expired: passport_expired,
+                city_passport: city_passport,
                 no_hp: no_hp,
                 alamat: alamat,
                 agen_id: agen_id,
@@ -198,6 +258,12 @@
                 nama_ibu: nama_ibu,
                 discount: discount,
                 gender: gender,
+                vaccine1: vaccine1,
+                vaccine1_date: vaccine1_date,
+                vaccine2: vaccine2,
+                vaccine2_date: vaccine2_date,
+                vaccine3: vaccine3,
+                vaccine3_date: vaccine3_date,
             },
             success: function(data) {
                 Toast.fire({

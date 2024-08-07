@@ -1,12 +1,20 @@
 <?php
+use App\Models\Setting;
+
 $LoginName = auth()->user()->load('employee')->employee->fullname;
 $cek = DB::table('m_designation')
     ->where('id', auth()->user()->load('employee')->employee->fk_designation)
     ->first();
 $LoginDesignation = $cek ? $cek->name : '-';
 
+$logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
+$app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
+
 ?>
+
 <main class="main-content">
+    <title>{{ $app_name }}</title>
+    <link rel="shortcut icon" href="{{ url($logo) }}" />
     <div class="position-relative">
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
@@ -14,10 +22,10 @@ $LoginDesignation = $cek ? $cek->name : '-';
                 <a href="/" class="navbar-brand">
                     <!--Logo start-->
                     <div class="logo">
-                        <img src="assets/images/favicon.png" style="width: 40px" alt="">
+                        <img src="{{ url($logo) }}" style="width: 50px;max-height: 50px" alt="">
                     </div>
                     <div class="logo-hover">
-                        <img src="assets/images/logo.png" style="width: 70px" alt="">
+                        <img src="{{ url($logo) }}" style="width: 100px;max-height: 50px" alt="">
                     </div>
 
                     <!--logo End-->
