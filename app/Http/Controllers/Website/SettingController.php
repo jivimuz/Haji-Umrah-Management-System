@@ -39,16 +39,16 @@ class SettingController extends Controller
 
             $cek = Setting::where('id', $request->param[0])->first();
 
-            $upload_dir = 'images/config';
 
             // Delete old file if it exists
             if ($cek && $cek->value) {
-                $filePath = public_path($upload_dir . '/' . $cek->value);
+                $filePath = public_path($cek->value);
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
             }
 
+            $upload_dir = 'images/config';
             // Store the new file
             $file = $request->file('val')[0];
             $file_name = uniqid() . '-' . $file->getClientOriginalName();
