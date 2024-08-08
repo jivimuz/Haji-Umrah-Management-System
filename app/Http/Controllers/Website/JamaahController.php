@@ -7,6 +7,7 @@ use App\Models\Agen;
 use App\Models\Jamaah;
 use App\Models\Paket;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ class JamaahController extends Controller
         $data = Jamaah::select([
             't_jamaah.*',
             'm_paket.nama as paket',
-            'm_paket.publish_price as price',
+            DB::raw("COALESCE(m_paket.publish_price,0) as price"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
@@ -68,6 +69,7 @@ class JamaahController extends Controller
             'vaccine2_date' => $request->vaccine2_date,
             'vaccine3' => $request->vaccine3,
             'vaccine3_date' => $request->vaccine3_date,
+            'created_at' => Carbon::now()
         ]);
         if ($insert) {
             return response()->json(["message" => 'success', 'data' => $insert], 200);
@@ -113,6 +115,7 @@ class JamaahController extends Controller
                 'vaccine2_date' => $request->vaccine2_date,
                 'vaccine3' => $request->vaccine3,
                 'vaccine3_date' => $request->vaccine3_date,
+                'updated_at' => Carbon::now()
             ]);
             if ($update) {
                 return response()->json(["message" => 'success', 'data' => $update], 200);

@@ -30,11 +30,11 @@
     </div>
     <div class="col-md-2">
         <div class="form-group">
-            <label for="">L/P: </label>
-            <select id="gender" class="form-control select2modal " style="width: 100%" disabled>
+            <label for="">L/P: <span class="text-danger">*</span></label>
+            <select id="gender" class="form-control select2modal editable" style="width: 100%" disabled>
                 <option value="">-</option>
-                <option value="L" {{ !$data->gender == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                <option value="P" {{ !$data->gender == 'P' ? 'selected' : '' }}>Perempuan</option>
+                <option value="L" {{ $data->gender == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ $data->gender == 'P' ? 'selected' : '' }}>Perempuan</option>
             </select>
         </div>
     </div>
@@ -254,7 +254,7 @@
         var vaccine3 = $('#vaccine3').val()
         var vaccine3_date = $('#vaccine3_date').val()
 
-        if (!nama || !paket_id || !no_ktp || !no_hp || !agen_id || !born_place) {
+        if (!nama || !paket_id || !no_ktp || !no_hp || !gender || !agen_id || !born_place) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"

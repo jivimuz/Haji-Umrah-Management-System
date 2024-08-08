@@ -72,7 +72,7 @@
                     render: function(a, b, c) {
                         var a = ``
                         if (c.type == "file") {
-                            a += (`${ c.value && c.value != '' ? `  <div class="iq-avatar me-2" id='lab-${c.id}'><img class="avatar-50 rounded" src="<?= url('') ?>/${c.value}"></div>` :
+                            a += (`${ c.value && c.value != '' ? `  <div class="iq-avatar me-2" id='lab-${c.id}'><img style="max-height:50px" src="<?= url('') ?>/${c.value}"></div>` :
                                     `<span id='lab-${c.id}'><i class="fa fa-cube"></i></span>`}`)
 
                             a += `<form id='form-${c.id}'>`

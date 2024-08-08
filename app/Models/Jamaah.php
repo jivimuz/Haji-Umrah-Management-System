@@ -10,5 +10,5 @@ class Jamaah extends Model
     use HasFactory;
     protected $table = "t_jamaah";
     protected $guarded = ["id"];
-    public $timestamps = true;
+    // public $timestamps = true;
 }

@@ -23,6 +23,9 @@ Route::get('error', [AuthController::class, 'error'])->name('error');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('menu', [HomeController::class, 'menu']);
+    Route::post('getJamaahInYear', [HomeController::class, 'getJamaahInYear']);
+    Route::post('getTopAgen', [HomeController::class, 'getTopAgen']);
+    Route::post('get40Days', [HomeController::class, 'get40Days']);
 
     Route::prefix('profile')->group(function () {
         Route::post('changePassword', [profileController::class, 'changePassword']);

@@ -37,11 +37,11 @@
              </div>
              <div class="modal-body" id="changePassBody">
                  <div class="form-group">
-                     <label for="">New Password</label>
+                     <label for="newPass">New Password</label>
                      <input type="password" class="form-control cpinput " id="newPass">
                  </div>
                  <div class="form-group">
-                     <label for="">Confirm Password</label>
+                     <label for="newPassConfirm">Confirm Password</label>
                      <input type="password" class="form-control cpinput " id="newPassConfirm">
                  </div>
                  <div class="float-end">
@@ -68,14 +68,7 @@
  <script src="../assets/js/core/external.min.js"></script>
 
  <!-- Widgetchart JavaScript -->
- <script src="../assets/js/charts/widgetcharts.js"></script>
-
- <!-- Mapchart JavaScript -->
- <script src="../assets/js/charts/vectore-chart.js"></script>
- <script src="../assets/js/charts/dashboard.js"></script>
-
- <!-- Admin Dashboard Chart -->
- <script src="../assets/js/charts/admin.js"></script>
+ {{-- <script src="../assets/js/charts/admin.js"></script> --}}
 
  <!-- fslightbox JavaScript -->
  <script src="../assets/js/fslightbox.js"></script>

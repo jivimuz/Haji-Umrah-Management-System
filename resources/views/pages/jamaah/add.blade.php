@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-2">
         <div class="form-group">
-            <label for="">L/P: </label>
+            <label for="">L/P: <span class="text-danger">*</span></label>
             <select id="gender" class="form-control select2modal " style="width: 100%">
                 <option value="" selected>-</option>
                 <option value="L">Laki-laki</option>
@@ -229,7 +229,7 @@
         var vaccine3 = $('#vaccine3').val()
         var vaccine3_date = $('#vaccine3_date').val()
 
-        if (!nama || !paket_id || !no_ktp || !no_hp || !agen_id || !born_place) {
+        if (!nama || !paket_id || !no_ktp || !gender || !no_hp || !agen_id || !born_place) {
             return Toast.fire({
                 icon: "warning",
                 title: "Silahkan isi data wajib!"
