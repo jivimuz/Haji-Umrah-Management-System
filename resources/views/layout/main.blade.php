@@ -9,6 +9,7 @@ $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
 
 @include('layout/header')
 @yield('style')
+<link rel="shortcut icon" href="{{ url($logo) }}" />
 
 <body class="  "
     style="background:url(../assets/images/dashboard.png);    background-attachment: fixed;

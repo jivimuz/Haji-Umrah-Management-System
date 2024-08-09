@@ -42,6 +42,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [UserListController::class, 'index']);
         Route::post('getList', [UserListController::class, 'getList']);
         Route::post('add', [UserListController::class, 'add']);
+        Route::post('edit', [UserListController::class, 'edit']);
+        Route::post('cekEmail', [UserListController::class, 'cekEmail']);
+        Route::post('cekUsername', [UserListController::class, 'cekUsername']);
+        Route::post('saveData', [UserListController::class, 'saveData']);
+        Route::post('updateData', [UserListController::class, 'updateData']);
+        Route::post('activateUser', [UserListController::class, 'activateUser']);
+        Route::post('deactivateUser ', [UserListController::class, 'deactivateUser']);
     });
 
     Route::middleware(['checkAccess:AGN'])->prefix('agen')->group(function () {

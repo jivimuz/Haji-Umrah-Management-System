@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('nik');
             $table->string('bornloc')->nullable();
             $table->date('borndate')->nullable();
-            $table->enum('gender', ["-", "LAKI-LAKI", "PEREMPUAN"])->default("-");
+            $table->enum('gender', ["-", "LAKI-LAKI", "PEREMPUAN"])->default("-")->nullable();
             $table->string('personalemail')->nullable();
             $table->string('phonenumber')->nullable();
             $table->integer('fk_joblevel')->default(5)->nullable();
@@ -35,6 +35,8 @@ return new class extends Migration
             $table->integer('fk_marialstatus')->nullable();
             $table->integer('fk_religion')->nullable();
             $table->integer('fk_ptkp')->nullable();
+            $table->integer('fk_bank')->nullable();
+            $table->integer('accountnumber')->nullable();
             $table->string('npwp')->nullable();
             $table->string('gajipokok')->default(0);
             $table->timestamps();

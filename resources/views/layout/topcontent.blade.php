@@ -14,7 +14,6 @@ $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName'
 
 <main class="main-content">
     <title>{{ $app_name }}</title>
-    <link rel="shortcut icon" href="{{ url($logo) }}" />
     <div class="position-relative">
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">

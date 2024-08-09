@@ -1,7 +1,8 @@
 <div class="card">
 
     <div class="card-body">
-        <form id="add-form" class="text-center mt-3">
+        <form id="edit-form" class="text-center mt-3">
+            <input type="hidden" name="id" value="{{ $id }}">
             <ul id="top-tab-list" class="p-0 row list-inline">
                 <li class="col-lg-3 col-md-6 text-start mb-2 active" id="account" name="account">
                     <a href="javascript:void();">
@@ -83,28 +84,31 @@
                                 <label class="form-label">Email: <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control required"
                                     onchange="step1();cekEmail(); $('#personal_email').val($(this).val())"
-                                    id="email" name="email" placeholder="Email" />
+                                    id="email" name="email" value="{{ $user->email }}" disabled
+                                    placeholder="Email" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Username: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control required" onchange="step1();cekUsername();"
-                                    id="username" name="username" placeholder="Username" />
+                                    id="username" name="username" disabled value="{{ $user->username }}"
+                                    placeholder="Username" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Password: <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control required" onchange="step1()"
-                                    id="pwd" name="pwd" placeholder="Password" />
+                                <label class="form-label">New Password: <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control " id="pwd" name="pwd"
+                                    placeholder="Password" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Confirm Password: <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control required" onchange="step1()"
-                                    id="cpwd" name="cpwd" placeholder="Confirm Password" />
+                                <label class="form-label">New Confirm Password: <span
+                                        class="text-danger">*</span></label>
+                                <input type="password" class="form-control " id="cpwd" name="cpwd"
+                                    placeholder="Confirm Password" />
                             </div>
                         </div>
                     </div>
@@ -112,7 +116,7 @@
 
 
                 <button type="button" name="next"
-                    class="btn btn-primary next action-button float-end rounded step1" hidden value="Next">Next <svg
+                    class="btn btn-primary next action-button float-end rounded step1" value="Next">Next <svg
                         width="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M16.6308 13.131C16.5743 13.189 16.3609 13.437 16.1622 13.641C14.9971 14.924 11.9576 17.024 10.3668 17.665C10.1252 17.768 9.51437 17.986 9.18802 18C8.8753 18 8.5772 17.928 8.29274 17.782C7.93814 17.578 7.65368 17.257 7.49781 16.878C7.39747 16.615 7.2416 15.828 7.2416 15.814C7.08573 14.953 7 13.554 7 12.008C7 10.535 7.08573 9.193 7.21335 8.319C7.22796 8.305 7.38383 7.327 7.55431 6.992C7.86702 6.38 8.47784 6 9.13151 6H9.18802C9.61374 6.015 10.509 6.395 10.509 6.409C12.0141 7.051 14.9834 9.048 16.1768 10.375C16.1768 10.375 16.5129 10.716 16.659 10.929C16.887 11.235 17 11.614 17 11.993C17 12.416 16.8724 12.81 16.6308 13.131Z"
@@ -140,8 +144,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Full Name: <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control required" id="fullname" name="fullname"
-                                    placeholder="First Name" />
+                                <input type="text" class="form-control required" id="fullname"
+                                    value="{{ $data->fullname }}" name="fullname" placeholder="First Name" />
                             </div>
                         </div>
 
@@ -149,7 +153,7 @@
                             <div class="form-group">
                                 <label class="form-label">NIK: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control required" id="nik" name="nik"
-                                    value="{{ $top }}" placeholder="Contact No." />
+                                    value="{{ $data->nik }}" placeholder="Contact No." />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -159,7 +163,9 @@
                                     name="fk_joblevel" style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($jl as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_joblevel == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -171,7 +177,9 @@
                                     style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($jt as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_jobtype == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -183,7 +191,10 @@
                                     name="fk_designation" style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($ds as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_designation == $i->id ? 'selected' : '' }}>
+                                            {{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -192,7 +203,7 @@
                             <div class="form-group">
                                 <label class="form-label">Basic Salary: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control required" id="gajipokok" name="gajipokok"
-                                    placeholder="Basic Salary (Gaji Pokok)." />
+                                    placeholder="Basic Salary (Gaji Pokok)." value="{{ $data->gajipokok }}" />
                             </div>
                         </div>
 
@@ -203,7 +214,9 @@
                                     style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($ptkp as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_ptkp == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -212,21 +225,23 @@
                             <div class="form-group">
                                 <label class="form-label">NPWP: </label>
                                 <input type="text" class="form-control" id="npwp" name="npwp"
-                                    placeholder="NPWP" />
+                                    value="{{ $data->npwp }}" placeholder="NPWP" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Join Date: <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control required" id="joindate" name="joindate"
-                                    value="{{ date('Y-m-d') }}" />
+                                    value="{{ date('Y-m-d', strtotime($data->joindate)) }}" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Out Date: <small>(*only if the employee
                                         resign)</small></label>
-                                <input type="date" class="form-control" id="outdate" name="outdate" />
+                                <input type="date" class="form-control" id="outdate"
+                                    value="{{ $data->outdate ? date('Y-m-d', strtotime($data->outdate)) : '' }}"
+                                    name="outdate" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -244,7 +259,7 @@
                             <div class="form-group">
                                 <label class="form-label">Born Date: </label>
                                 <input type="date" class="form-control" id="born_date" name="born_date"
-                                    max="{{ date('Y-m-d', strtotime('-10 Years')) }}" />
+                                    max="{{ date('Y-m-d', strtotime($data->borndate)) }}" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -253,8 +268,10 @@
                                 <select class="form-control select2modal " id="gender" name="gender"
                                     style="width:100% !important">
                                     <option hidden value="" selected>-</option>
-                                    <option value="LAKI-LAKI">LAKI-LAKI</option>
-                                    <option value="PEREMPUAN">PEREMPUAN</option>
+                                    <option value="LAKI-LAKI" {{ $data->fk_ptkp == 'LAKI-LAKI' ? 'selected' : '' }}>
+                                        LAKI-LAKI</option>
+                                    <option value="PEREMPUAN" {{ $data->fk_ptkp == 'PEREMPUAN' ? 'selected' : '' }}>
+                                        PEREMPUAN</option>
                                 </select>
                             </div>
                         </div>
@@ -262,13 +279,14 @@
                             <div class="form-group">
                                 <label class="form-label">Personal Email:</label>
                                 <input type="text" class="form-control" id="personal_email" name="personal_email"
-                                    placeholder="Personal Email" />
+                                    placeholder="Personal Email" {{ $data->personal_email }} />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Phone Number: </label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" />
+                                <input type="text" class="form-control" id="phone_number"
+                                    {{ $data->phone_number }} name="phone_number" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -278,7 +296,9 @@
                                     name="fk_marialstatus" style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($ms as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_marialstatus == $i->id ? 'selected' : '' }}>
+                                            {{ $i->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -290,7 +310,9 @@
                                     style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($rl as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_religion == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -324,7 +346,9 @@
                                     style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>
                                     @foreach ($bk as $i)
-                                        <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                        <option value="{{ $i->id }}"
+                                            {{ $data->fk_bank == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -333,7 +357,7 @@
                             <div class="form-group">
                                 <label class="form-label">Account Number: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control required" id="accountnumber"
-                                    name="accountnumber" placeholder="..." />
+                                    name="accountnumber" placeholder="..." value="{{ $data->accountnumber }}" />
                             </div>
                         </div>
                     </div>
@@ -436,7 +460,7 @@
         }
     }
 
-    $('#add-form').on('submit', function(e) {
+    $('#edit-form').on('submit', function(e) {
         e.preventDefault();
 
         var form = $(this);
@@ -456,7 +480,7 @@
             var formData = new FormData(form[0]);
 
             $.ajax({
-                url: "{{ url('users/saveData') }}",
+                url: "{{ url('users/updateData') }}",
                 method: 'POST',
                 data: formData,
                 processData: false,

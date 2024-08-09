@@ -37,6 +37,11 @@
              </div>
              <div class="modal-body" id="changePassBody">
                  <div class="form-group">
+                     <label for="accLog">Username</label>
+                     <input type="text" disabled class="form-control" value="{{ auth()->user()->username }}"
+                         id="accLog">
+                 </div>
+                 <div class="form-group">
                      <label for="newPass">New Password</label>
                      <input type="password" class="form-control cpinput " id="newPass">
                  </div>
