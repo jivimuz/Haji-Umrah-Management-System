@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,19 +11,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    
+
     public function index()
     {
         if (Auth::check()) {
             return redirect('/');
         }
-        return view('auth/login');
+
+        $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
+        $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
+
+        return view('auth/login', compact('logo', 'app_name'));
     }
 
     public function login(Request $request)
     {
         $DataUser = User::where('username', $request->username)->orWhere('email', $request->username)->first();
-        if(!$DataUser){
+        if (!$DataUser) {
             return response()->json(['error' => 'Unknown Username / Email'], 401);
         }
         $credentials = [
@@ -47,8 +52,8 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function error(){
+    public function error()
+    {
         return view('layout/error');
     }
-
 }

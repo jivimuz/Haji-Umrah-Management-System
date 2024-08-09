@@ -6,11 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>HRIS System | Login</title>
+    <title>{{ $app_name }}| Login</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon"
-        href="https://templates.iqonic.design/aprycot/html/dashboard/dist/assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ $logo }}" />
 
     <!-- Library / Plugin Css Build -->
     <link rel="stylesheet" href="assets/css/core/libs.min.css">
@@ -24,7 +23,7 @@
     <!-- loader Start -->
     <div id="loading">
         <div class="loader simple-loader">
-            <img src="assets/images/logo.png" style="width: 50%" alt="">
+            <img src="{{ $logo }}" style="width: 50%" alt="">
         </div>
     </div>
     <!-- loader END -->
@@ -35,7 +34,7 @@
                 <div class="col-md-12 col-lg-7 col-xl-4">
                     <div class="card-body" style="text-align: center; padding:20px">
                         <a>
-                            <img src="assets/images/logo.png" class="img-fluid logo-img" style="max-width: 200px">
+                            <img src="{{ $logo }}" class="img-fluid logo-img" style="max-width: 200px">
                         </a>
                         <br>
                         <br>
