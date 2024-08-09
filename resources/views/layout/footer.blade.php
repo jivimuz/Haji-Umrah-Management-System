@@ -99,6 +99,7 @@
  <script src="../assets/js/sweetalert2.min.js"></script>
  <script src="../assets/js/select2.min.js"></script>
  <script src="../assets/js/responsive.dataTables.min.js"></script>
+ <script src="../assets/js/dropify.min.js"></script>
  <script src="../assets/js/customFunction.js"></script>
 
  <script>

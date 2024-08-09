@@ -38,6 +38,7 @@ return new class extends Migration
             $table->enum('gender', ['L', 'P'])->nullable();
             $table->boolean('is_firstpaid')->default(0);
             $table->boolean('is_done')->default(0);
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }

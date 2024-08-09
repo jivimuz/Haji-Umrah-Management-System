@@ -9,7 +9,7 @@
     <title>{{ $app_name }}| Login</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ $logo }}" />
+    <link rel="shortcut icon" href="{{ $logo ?: url('assets/images/logo.png') }}" />
 
     <!-- Library / Plugin Css Build -->
     <link rel="stylesheet" href="assets/css/core/libs.min.css">
@@ -23,7 +23,7 @@
     <!-- loader Start -->
     <div id="loading">
         <div class="loader simple-loader">
-            <img src="{{ $logo }}" style="width: 50%" alt="">
+            <img src="{{ $logo ?: url('assets/images/logo.png') }}" style="width: 50%" alt="">
         </div>
     </div>
     <!-- loader END -->
@@ -33,11 +33,12 @@
             <div class="row align-items-center">
                 <div class="col-md-12 col-lg-7 col-xl-4">
                     <div class="card-body" style="text-align: center; padding:20px">
-                        <a>
-                            <img src="{{ $logo }}" class="img-fluid logo-img" style="max-width: 200px">
+                        {{-- <a>
+                            <img src="{{ $logo ?: url('assets/images/logo.png') }}" class="img-fluid logo-img"
+                                style="max-width: 200px">
                         </a>
                         <br>
-                        <br>
+                        <br> --}}
                         <h2 class="mb-2 text-center">Sign In</h2>
                         <form id="login-form">
                             <div class="row">
@@ -65,7 +66,9 @@
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-5 col-xl-8 d-lg-block d-none vh-100 overflow-hidden">
-                    <img src="assets/images/auth/1.png" class="img-fluid sign-in-img" alt="images">
+
+                    <img src="{{ $logo ?: url('assets/images/auth/1.png') }}" class="img-fluid sign-in-img"
+                        alt="images">
 
                 </div>
             </div>

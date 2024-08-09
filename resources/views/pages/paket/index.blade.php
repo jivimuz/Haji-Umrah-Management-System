@@ -42,6 +42,14 @@
                     <div class="card-body" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
                         data-iq-duration=".6" data-iq-delay=".6" data-iq-trigger="scroll" data-iq-ease="none"
                         style="padding-left: 40px; padding-right:40px">
+                        <div class="col-md-3">
+                            <label for="">Type</label>
+                            <select id="typeMod" class="form-control" onchange="getList()">
+                                <option value="" selected>All</option>
+                                <option value="Umrah">Umrah</option>
+                                <option value="Haji">Haji</option>
+                            </select>
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-striped" id="main-table">
@@ -49,6 +57,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
+                                        <th>Type</th>
                                         <th>Program</th>
                                         <th>Publish Price</th>
                                         <th>Jamaah Registered</th>
@@ -72,6 +81,7 @@
 
 @section('script')
     <script>
+        $('#typeMod').select2()
         $(document).ready(function() {
             getList()
             var table = $('#main-table').DataTable();
@@ -89,6 +99,9 @@
                 },
                 {
                     data: "nama",
+                },
+                {
+                    data: "type",
                 },
 
                 {
@@ -165,7 +178,9 @@
                     },
                     url: "{{ url('paket/getList') }}",
                     type: "POST",
-                    data: {}
+                    data: {
+                        type: $('#typeMod').val()
+                    }
 
                 },
                 columns: columns,

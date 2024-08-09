@@ -74,7 +74,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['checkAccess:JMA'])->prefix('jamaah')->group(function () {
         Route::get('/', [JamaahController::class, 'index']);
         Route::post('getList', [JamaahController::class, 'getList']);
-        Route::post('add', [JamaahController::class, 'add']);
+        Route::post('addUmrah', [JamaahController::class, 'addUmrah']);
+        Route::post('addHaji', [JamaahController::class, 'addHaji']);
         Route::post('saveData', [JamaahController::class, 'saveData']);
         Route::post('edit', [JamaahController::class, 'edit']);
         Route::post('updateData', [JamaahController::class, 'updateData']);

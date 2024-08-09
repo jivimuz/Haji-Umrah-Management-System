@@ -19,6 +19,10 @@ return new class extends Migration
             $table->double('publish_price');
             $table->double('basic_price');
             $table->date('flight_date');
+            $table->date('return_date');
+            $table->enum('type', ['Haji', 'Umrah']);
+            $table->enum('paket_type', ['Umrah', 'Haji Reguler', 'Haji Plus', 'Haji Furoda', 'Haji Khusus']);
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
 

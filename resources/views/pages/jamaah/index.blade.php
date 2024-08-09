@@ -21,7 +21,7 @@
                     data-iq-delay=".4" data-iq-trigger="scroll" data-iq-ease="none">
                     <div class="card-header">
                         <div class="float-end">
-                            <a class="btn btn-sm btn-outline-primary rounded-pill mt-2 ml-2" onclick="addModal()">
+                            <a class="btn btn-sm btn-outline-primary rounded-pill mt-2 ml-2" onclick="addModal('Umrah')">
                                 <svg width="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4"
                                         d="M21.101 9.58786H19.8979V8.41162C19.8979 7.90945 19.4952 7.5 18.999 7.5C18.5038 7.5 18.1 7.90945 18.1 8.41162V9.58786H16.899C16.4027 9.58786 16 9.99731 16 10.4995C16 11.0016 16.4027 11.4111 16.899 11.4111H18.1V12.5884C18.1 13.0906 18.5038 13.5 18.999 13.5C19.4952 13.5 19.8979 13.0906 19.8979 12.5884V11.4111H21.101C21.5962 11.4111 22 11.0016 22 10.4995C22 9.99731 21.5962 9.58786 21.101 9.58786Z"
@@ -33,8 +33,23 @@
                                         d="M9.50023 12.5542C12.2548 12.5542 14.4629 10.3177 14.4629 7.52761C14.4629 4.73754 12.2548 2.5 9.50023 2.5C6.74566 2.5 4.5376 4.73754 4.5376 7.52761C4.5376 10.3177 6.74566 12.5542 9.50023 12.5542Z"
                                         fill="currentColor"></path>
                                 </svg>
-                                Add Jamaah
+                                Add Umrah
                             </a>
+                            <a class="btn btn-sm btn-outline-warning rounded-pill mt-2 ml-2" onclick="addModal('Haji')">
+                                <svg width="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.4"
+                                        d="M21.101 9.58786H19.8979V8.41162C19.8979 7.90945 19.4952 7.5 18.999 7.5C18.5038 7.5 18.1 7.90945 18.1 8.41162V9.58786H16.899C16.4027 9.58786 16 9.99731 16 10.4995C16 11.0016 16.4027 11.4111 16.899 11.4111H18.1V12.5884C18.1 13.0906 18.5038 13.5 18.999 13.5C19.4952 13.5 19.8979 13.0906 19.8979 12.5884V11.4111H21.101C21.5962 11.4111 22 11.0016 22 10.4995C22 9.99731 21.5962 9.58786 21.101 9.58786Z"
+                                        fill="currentColor"></path>
+                                    <path
+                                        d="M9.5 15.0156C5.45422 15.0156 2 15.6625 2 18.2467C2 20.83 5.4332 21.5001 9.5 21.5001C13.5448 21.5001 17 20.8533 17 18.269C17 15.6848 13.5668 15.0156 9.5 15.0156Z"
+                                        fill="currentColor"></path>
+                                    <path opacity="0.4"
+                                        d="M9.50023 12.5542C12.2548 12.5542 14.4629 10.3177 14.4629 7.52761C14.4629 4.73754 12.2548 2.5 9.50023 2.5C6.74566 2.5 4.5376 4.73754 4.5376 7.52761C4.5376 10.3177 6.74566 12.5542 9.50023 12.5542Z"
+                                        fill="currentColor"></path>
+                                </svg>
+                                Add Haji
+                            </a>
+
 
                         </div>
                         <h4 class="card-title">Jamaah</h4>
@@ -43,16 +58,24 @@
                     <div class="card-body" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
                         data-iq-duration=".6" data-iq-delay=".6" data-iq-trigger="scroll" data-iq-ease="none"
                         style="padding-left: 40px; padding-right:40px">
-
+                        <div class="col-md-3">
+                            <label for="">Type</label>
+                            <select id="typeMod" class="form-control" onchange="getList()">
+                                <option value="" selected>All</option>
+                                <option value="Umrah">Umrah</option>
+                                <option value="Haji">Haji</option>
+                            </select>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped" id="main-table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Type</th>
                                         <th>Name</th>
                                         <th>No KTP</th>
                                         <th>Paket</th>
-                                        <th>Terbayar</th>
+                                        <th>Total</th>
                                         <th>Status</th>
                                         <th>-</th>
                                     </tr>
@@ -73,6 +96,7 @@
 
 @section('script')
     <script>
+        $('#typeMod').select2()
         $(document).ready(function() {
             getList()
             var table = $('#main-table').DataTable();
@@ -87,6 +111,10 @@
                         return `${noD++}.`
                     },
                     className: 'text-center'
+                },
+
+                {
+                    data: "type",
                 },
 
                 {
@@ -109,6 +137,7 @@
                         } else {
                             a += "<small class='text-warning'>"
                         }
+                        a += 'Terbayar '
                         a += data.toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
@@ -119,8 +148,22 @@
                         //     currency: "IDR"
                         // });
 
-
                         a += '</small>'
+                        a += "<small class='text-black'>"
+
+                        a += '<br> Dari ' + c.price.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        });
+                        a += '</small>'
+                        a += "<small class='text-danger'>"
+                        if (!c.is_done) {
+                            a += '<br> Sisa ' + (parseFloat(c.price) - parseFloat(data)).toLocaleString("id-ID", {
+                                style: "currency",
+                                currency: "IDR"
+                            });
+                            a += '</small>'
+                        }
 
                         return a
                     },
@@ -187,7 +230,9 @@
                     },
                     url: "{{ url('jamaah/getList') }}",
                     type: "POST",
-                    data: {}
+                    data: {
+                        type: $('#typeMod').val()
+                    }
 
                 },
                 columns: columns,
@@ -197,15 +242,15 @@
         }
 
 
-        function addModal() {
+        function addModal(type) {
             $.ajax({
-                url: "{{ url('jamaah/add') }}",
+                url: "{{ url('jamaah/add') }}" + type,
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(data) {
-                    $('#ThisModalLabel').html("Add Jamaah")
+                    $('#ThisModalLabel').html("Add Jamaah " + type)
                     $('#thisModalBody').html(data)
                     $('#ThisModal').modal('show')
                 },
@@ -218,6 +263,7 @@
                 }
             });
         }
+
 
         function editModal(id, Name) {
             $.ajax({

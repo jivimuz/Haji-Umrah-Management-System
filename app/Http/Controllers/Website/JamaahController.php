@@ -18,90 +18,69 @@ class JamaahController extends Controller
         return view('pages/jamaah/index');
     }
 
-    public function getList()
+    public function getList(Request $request)
     {
+        $type = $request->type;
         $data = Jamaah::select([
             't_jamaah.*',
             'm_paket.nama as paket',
+            'm_paket.type',
             DB::raw("COALESCE(m_paket.publish_price,0) as price"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->when($type, function ($q) use ($type) {
+                return $q->where('m_paket.type', $type);
+            })
             ->orderBy('id', 'desc')->get();
         return response()->json(["message" => 'success', 'data' => $data], 200);
     }
 
-    public function add()
+    public function addUmrah()
     {
-        $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('flight_date', '>', date('Y-m-d'))->get();
+        $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.type', 'Umrah')->where('flight_date', '>=', date('Y-m-d'))->get();
+        $agen = Agen::where('is_active', true)->get();
+        return view('pages/jamaah/add', compact('paket', 'agen'));
+    }
+
+    public function addHaji()
+    {
+        $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.type', 'Haji')->where('flight_date', '>=', date('Y-m-d'))->get();
         $agen = Agen::where('is_active', true)->get();
         return view('pages/jamaah/add', compact('paket', 'agen'));
     }
 
     public function saveData(Request $request)
     {
-        $check = Jamaah::where('no_ktp', $request->no_ktp)
-            ->where('paket_id', $request->paket_id)->first();
-        if ($check) {
-            return response()->json(["error" => 'No KTP Jamaah sudah terdaftar di Paket ini'], 400);
-        }
-        $insert = Jamaah::insert([
-            'nama' => $request->nama,
-            'paket_id' => $request->paket_id,
-            'no_ktp' => $request->no_ktp,
-            'no_hp' => $request->no_hp,
-            'no_passport' => $request->no_passport,
-            'passport_date' => $request->passport_date,
-            'passport_expired' => $request->passport_expired,
-            'city_passport' => $request->city_passport,
-            'alamat' => $request->alamat,
-            'alamat' => $request->alamat,
-            'agen_id' => $request->agen_id,
-            'born_place' => $request->born_place,
-            'born_date' => $request->born_date,
-            'nama_ayah' => $request->nama_ayah,
-            'nama_ibu' => $request->nama_ibu,
-            'discount' => $request->discount,
-            'gender' => $request->gender,
-            'vaccine1' => $request->vaccine1,
-            'vaccine1_date' => $request->vaccine1_date,
-            'vaccine2' => $request->vaccine2,
-            'vaccine2_date' => $request->vaccine2_date,
-            'vaccine3' => $request->vaccine3,
-            'vaccine3_date' => $request->vaccine3_date,
-            'created_at' => Carbon::now()
-        ]);
-        if ($insert) {
-            return response()->json(["message" => 'success', 'data' => $insert], 200);
-        }
-        return response()->json(["error" => 'Gagal input'], 400);
-    }
+        DB::beginTransaction();
+        try {
+            $check = Jamaah::where('no_ktp', $request->no_ktp)
+                ->where('paket_id', $request->paket_id)
+                ->first();
 
-    public function edit(Request $request)
-    {
-        $id = $request->id;
-        $data = Jamaah::where('id', $request->id)->first();
-        $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.id', $data->paket_id)->first();
-        $agen = Agen::where('is_active', true)->get();
-        return view('pages/jamaah/edit', compact('data', 'id', 'paket', 'agen'));
-    }
+            if ($check) {
+                DB::rollback();
+                return response()->json(["error" => 'No KTP Jamaah sudah terdaftar di Paket ini'], 400);
+            }
 
-    public function updateData(Request $request)
-    {
-        $check = Jamaah::where('id', $request->id)->first();
-        if ($check) {
-            $update = Jamaah::where('id', $request->id)->update([
-                'nama' => $request->nama,
-                'paket_id' => $request->paket_id,
-                'no_ktp' => $request->no_ktp,
+            $file_path = null;
+            if ($request->hasFile('attachment')) {
+                $upload_dir = 'images/jamaah';
+                $file = $request->file('attachment')[0];
+                $file_name = uniqid() . '-' . $file->getClientOriginalName();
+                $file_path = $upload_dir . '/' . $file_name;
+            }
+
+            $insert = Jamaah::create([
+                'nama' => $request->nama_jamaah,
+                'paket_id' => $request->paket,
+                'no_ktp' => $request->noktp,
                 'no_hp' => $request->no_hp,
                 'no_passport' => $request->no_passport,
                 'passport_date' => $request->passport_date,
                 'passport_expired' => $request->passport_expired,
                 'city_passport' => $request->city_passport,
                 'alamat' => $request->alamat,
-                'alamat' => $request->alamat,
-                'agen_id' => $request->agen_id,
                 'agen_id' => $request->agen_id,
                 'born_place' => $request->born_place,
                 'born_date' => $request->born_date,
@@ -115,14 +94,89 @@ class JamaahController extends Controller
                 'vaccine2_date' => $request->vaccine2_date,
                 'vaccine3' => $request->vaccine3,
                 'vaccine3_date' => $request->vaccine3_date,
-                'updated_at' => Carbon::now()
+                'attachment' => $file_path,
+                'created_at' => Carbon::now()
             ]);
-            if ($update) {
-                return response()->json(["message" => 'success', 'data' => $update], 200);
+
+            if ($file_path) {
+                $file->move(public_path($upload_dir), $file_name);
             }
-            return response()->json(["error" => 'Tidak ada perubahan'], 400);
+
+            DB::commit();
+            return response()->json(["message" => 'success', 'data' => $insert], 200);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(["message" => 'error', 'data' => null, 'error' => $th->getMessage()], 400);
         }
-        return response()->json(["error" => 'Jamaah Tidak ada'], 400);
+    }
+
+
+    public function edit(Request $request)
+    {
+        $id = $request->id;
+        $data = Jamaah::where('id', $request->id)->first();
+        $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.id', $data->paket_id)->first();
+        $agen = Agen::where('is_active', true)->get();
+        return view('pages/jamaah/edit', compact('data', 'id', 'paket', 'agen'));
+    }
+
+    public function updateData(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $check = Jamaah::where('id', $request->id)->first();
+            if ($check) {
+                $file_path = $check->attachment;
+                if ($request->file()) {
+                    if (file_exists($check->attachment)) {
+                        unlink($check->attachment);
+                    }
+                    $upload_dir = 'images/jamaah';
+                    $file = $request->file('attachment')[0];
+                    $file_name = uniqid() . '-' . $file->getClientOriginalName();
+                    $file_path = $upload_dir . '/' . $file_name;
+                }
+
+                $update = Jamaah::where('id', $request->id)->update([
+                    'nama' => $request->nama_jamaah,
+                    'paket_id' => $request->paket,
+                    'no_ktp' => $request->noktp,
+                    'no_hp' => $request->no_hp,
+                    'no_passport' => $request->no_passport,
+                    'passport_date' => $request->passport_date,
+                    'passport_expired' => $request->passport_expired,
+                    'city_passport' => $request->city_passport,
+                    'alamat' => $request->alamat,
+                    'agen_id' => $request->agen_id,
+                    'born_place' => $request->born_place,
+                    'born_date' => $request->born_date,
+                    'nama_ayah' => $request->nama_ayah,
+                    'nama_ibu' => $request->nama_ibu,
+                    'discount' => $request->discount,
+                    'gender' => $request->gender,
+                    'vaccine1' => $request->vaccine1,
+                    'vaccine1_date' => $request->vaccine1_date,
+                    'vaccine2' => $request->vaccine2,
+                    'vaccine2_date' => $request->vaccine2_date,
+                    'vaccine3' => $request->vaccine3,
+                    'vaccine3_date' => $request->vaccine3_date,
+                    'attachment' => $file_path,
+                    'updated_at' => Carbon::now()
+                ]);
+
+                if ($request->file() && $update) {
+                    $file->move(public_path($upload_dir), $file_name);
+                }
+                if ($update) {
+                    DB::commit();
+                    return response()->json(["message" => 'success', 'data' => $update], 200);
+                }
+            }
+            return response()->json(["error" => 'Gagal input'], 400);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(["message" => 'error', 'data' => null, 'error' => $th->getMessage()], 400);
+        }
     }
 
     public function delete(Request $request)

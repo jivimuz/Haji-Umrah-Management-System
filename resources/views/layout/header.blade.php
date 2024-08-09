@@ -14,5 +14,6 @@
     <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../assets/css/dropify.min.css">
     <link rel="stylesheet" href="../assets/css/customStyle.css">
 </head>

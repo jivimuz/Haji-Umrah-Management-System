@@ -18,8 +18,8 @@ class AuthController extends Controller
             return redirect('/');
         }
 
-        $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
-        $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
+        $logo = Setting::where('parameter', 'company_logo')->first()->value ?: '';
+        $app_name = Setting::where('parameter', 'app_name')->first()->value ?: '';
 
         return view('auth/login', compact('logo', 'app_name'));
     }
