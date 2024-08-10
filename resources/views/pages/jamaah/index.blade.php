@@ -158,7 +158,8 @@
                         a += '</small>'
                         a += "<small class='text-danger'>"
                         if (!c.is_done) {
-                            a += '<br> Sisa ' + (parseFloat(c.price) - parseFloat(data)).toLocaleString("id-ID", {
+                            a += '<br> Sisa ' + ((parseFloat(c.price) + parseFloat(c.morepayment)) - parseFloat(
+                                data)).toLocaleString("id-ID", {
                                 style: "currency",
                                 currency: "IDR"
                             });

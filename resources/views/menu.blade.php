@@ -56,55 +56,56 @@
                             {{-- <div class="row" id="menuList">
                                 Loading...
                             </div> --}}
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="card" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
                                     data-iq-duration=".6" data-iq-delay=".4" data-iq-trigger="scroll" data-iq-ease="none">
                                     <div class="card-header">
-                                        <h4 class="card-title">Total Jamaah</h4>
+                                        <h4 class="card-title">Total Jamaah Umrah</h4>
                                         <small>This Year</small>
                                     </div>
                                     <div class="card-body" data-iq-gsap="onStart" data-iq-opacity="0"
                                         data-iq-position-y="-40" data-iq-duration=".6" data-iq-delay=".6"
                                         data-iq-trigger="scroll" data-iq-ease="none">
-                                        <div id="admin-chart-1" class="admin-chart-1"></div>
+                                        <div id="admin-chart-1" class="admin-chart-1 apexcharts-active"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card bg-soft-dark">
+                                <div class="card bg-soft-success">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="bg-soft-dark rounded p-3">
+                                            <div class="bg-soft-success rounded p-3">
                                                 IDR
                                             </div>
                                             <div class="text-end">
-                                                <h2 class="counter"id="earn">Rp. 0</h2>
-                                                Total earning
+                                                <h2 class="counter"id="earn" style="text-decoration-line: underline">Rp. 0
+                                                </h2>
+                                                Current Asset
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card bg-soft-primary">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="bg-soft-primary rounded p-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                            <div class="text-end">
-                                                <h2 class="counter"id="ctp">0</h2>
-                                                Total Jamaah
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
 
+                                <div class="row">
                                     <div class="col-md-6">
+                                        <div class="card bg-soft-primary">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="bg-soft-primary rounded p-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px"
+                                                            height="20px" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <h2 class="counter"id="utp">0</h2>
+                                                        Total Umrah
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="card bg-soft-warning">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
@@ -115,15 +116,33 @@
                                                             clip-rule="evenodd" />
                                                     </svg>
                                                     <div class="text-end">
-                                                        <h2 class="counter" id="cjp">0</h2>
-                                                        Laki-laki
+                                                        <h2 class="counter" id="ulp">0</h2>
+                                                        Umrah L/P
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="card bg-soft-success">
+                                        <div class="card bg-soft-primary">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="bg-soft-primary rounded p-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px"
+                                                            height="20px" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <h2 class="counter"id="htp">0</h2>
+                                                        Total Haji
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card bg-soft-warning">
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
@@ -133,8 +152,8 @@
                                                             clip-rule="evenodd" />
                                                     </svg>
                                                     <div class="text-end">
-                                                        <h2 class="counter"id="cjl">0</h2>
-                                                        Perempuan
+                                                        <h2 class="counter"id="hlp">0</h2>
+                                                        Haji L/P
                                                     </div>
                                                 </div>
                                             </div>
@@ -142,12 +161,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="card" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
+                                    data-iq-duration=".6" data-iq-delay=".4" data-iq-trigger="scroll"
+                                    data-iq-ease="none">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Total Jamaah Haji</h4>
+                                        <small>This Year</small>
+                                    </div>
+                                    <div class="card-body" data-iq-gsap="onStart" data-iq-opacity="0"
+                                        data-iq-position-y="-40" data-iq-duration=".6" data-iq-delay=".6"
+                                        data-iq-trigger="scroll" data-iq-ease="none">
+                                        <div id="admin-chart-2" class="admin-chart-2 apexcharts-active"
+                                            style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-7 ">
+            <div class="col-md-6 ">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card bg-soft-primary">
@@ -236,7 +270,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5 ">
+            <div class="col-md-6 ">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card bg-soft-warning">
@@ -256,8 +290,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Jamaah </h4>
-                                <small>Paket</small>
+                                <h4 class="card-title">Jamaah Haji & Umrah</h4>
+                                <small>Deficiency Alert</small>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -265,6 +299,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama</th>
+                                                <th>Type</th>
                                                 <th>Deficiency</th>
                                                 <th>Flight Date</th>
                                             </tr>
@@ -327,7 +362,7 @@
                     }
                     if (jQuery('#admin-chart-1').length) {
                         $.ajax({
-                            url: "{{ url('getJamaahInYear') }}",
+                            url: "{{ url('getJamaahUmrahInYear') }}",
                             method: 'post',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -339,9 +374,8 @@
                                     style: "currency",
                                     currency: "IDR"
                                 }))
-                                $('#cjp').html(data.cjp)
-                                $('#cjl').html(data.cjl)
-                                $('#ctp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
+                                $('#ulp').html(data.cjp + "/" + data.cjl)
+                                $('#utp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
 
                                 const options = {
                                     series: [{
@@ -459,6 +493,134 @@
                         });
                     }
 
+                    if (jQuery('#admin-chart-2').length) {
+                        $.ajax({
+                            url: "{{ url('getJamaahHajiInYear') }}",
+                            method: 'post',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+
+                            success: function(data) {
+                                $('#hlp').html(data.cjp + "/" + data.cjl)
+                                $('#htp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
+
+                                const options = {
+                                    series: [{
+                                            type: 'column',
+                                            name: 'Laki-laki',
+                                            data: data.jl,
+                                        }, {
+                                            type: 'column',
+                                            name: 'Perempuan',
+                                            data: data.jp
+                                        },
+                                        {
+                                            type: 'line',
+                                            curve: 'smooth',
+                                            name: 'higher',
+                                            data: data.tt
+                                        }
+                                    ],
+
+                                    chart: {
+                                        height: 350,
+                                        type: 'line',
+                                        animations: {
+                                            enabled: true,
+                                            easing: 'easeinout',
+                                            speed: 800,
+                                            animateGradually: {
+                                                enabled: false,
+                                                delay: 150
+                                            },
+                                            dynamicAnimation: {
+                                                enabled: true,
+                                                speed: 350
+                                            }
+                                        },
+                                        zoom: {
+                                            enabled: false,
+                                        },
+                                        toolbar: {
+                                            show: false
+                                        }
+                                    },
+                                    tooltip: {
+                                        enabled: true,
+                                    },
+                                    stroke: {
+                                        width: [0, 2]
+                                    },
+                                    dataLabels: {
+                                        enabled: true,
+                                        enabledOnSeries: [1],
+                                        offsetX: 3.0,
+                                        offsetY: -1.6,
+                                        style: {
+                                            fontSize: '1px',
+                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                            fontWeight: 'bold',
+                                        },
+                                        background: {
+                                            enabled: true,
+                                            foreColor: '#fff',
+                                            color: '#fff',
+                                            padding: 10,
+                                            borderRadius: 10,
+                                            borderWidth: 0,
+                                            borderColor: '#fff',
+                                            opacity: 1,
+                                        }
+
+                                    },
+                                    colors: ["#ECC812", "#EA6A12", "#8EEC12"],
+                                    plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            columnWidth: '16%',
+                                            endingShape: 'rounded',
+                                            borderRadius: 5,
+                                        },
+                                    },
+                                    legend: {
+                                        show: false,
+                                        offsetY: -25,
+                                        offsetX: -5
+                                    },
+                                    xaxis: {
+                                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                            'Jul', 'Aug',
+                                            'Sep', 'Oct', 'Nov',
+                                            'Dec'
+                                        ],
+                                        labels: {
+                                            minHeight: 20,
+                                            maxHeight: 20,
+                                        }
+                                    },
+                                    yaxis: {
+                                        labels: {
+                                            minWidth: 20,
+                                            maxWidth: 20,
+                                        }
+                                    },
+                                };
+
+                                const chart2 = new ApexCharts(document.querySelector("#admin-chart-2"),
+                                    options);
+                                chart2.render();
+                            },
+                            error: function(xhr, status, error) {
+                                Toast.fire({
+                                    icon: "error",
+                                    title: JSON.parse(xhr.responseText).error
+                                });
+
+                            }
+                        });
+                    }
+
                 })(jQuery)
 
                 getList()
@@ -539,6 +701,18 @@
                         },
                     },
                     {
+                        data: "type",
+                        render: function(data, b, c) {
+                            var a = ''
+                            if (data == 'Umrah') {
+                                a += `<span class="btn btn-xs rounded-pill btn-warning">Umrah</span>`
+                            } else {
+                                a += `<span class="btn btn-xs rounded-pill btn-primary">Haji</span>`
+                            }
+                            return a
+                        }
+                    },
+                    {
                         data: "nama",
                         render: function(data, b, c) {
                             let a = parseFloat(c.price) - parseFloat(c.paid);
@@ -555,14 +729,14 @@
                 ]
 
                 var tabled = $('#jamaah-table').DataTable({
-                    searching: false,
+                    searching: true,
                     destroy: true,
                     lengthChange: false,
                     responsive: true,
-                    sort: false,
+                    sort: true,
                     // pageLength: 2,
                     info: false,
-                    paging: false,
+                    paging: true,
                     ajax: {
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'

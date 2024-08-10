@@ -39,6 +39,8 @@ return new class extends Migration
             $table->boolean('is_firstpaid')->default(0);
             $table->boolean('is_done')->default(0);
             $table->string('attachment')->nullable();
+            $table->date('firstpaid_date')->nullable();
+            $table->date('donepaid_date')->nullable();
             $table->timestamps();
         });
     }

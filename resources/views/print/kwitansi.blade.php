@@ -29,7 +29,7 @@ use App\Helpers\WebHelper;
     }
 
     td {
-        padding: 10px;
+        padding: 5px;
     }
 </style>
 
@@ -37,14 +37,21 @@ use App\Helpers\WebHelper;
     <div style="  max-height: 100vh !important;">
         <table style="width: 100%">
             <tr>
-                <td colspan="4">
+                <td style="vertical-align: top; width: 10px">
                     @if ($clogo)
-                        <img src="{{ public_path($clogo) }}" style="width: 150px" alt=""><br><br>
+                        <img src="{{ public_path($clogo) }}" style="max-width: 100px; max-height:50px" alt="">
+                        <br><br>
+                    @endif
+                </td>
+                <td style="vertical-align: top">
+                    @if ($cname)
+                        <span style="font-size: 24px"> {{ $cname }}</span><br>
                     @endif
                     {{ $caddress }}
                 </td>
-                <td colspan="2" style="text-align: center">
-                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">KWITANSI</span>
+                <td style="text-align: right">
+                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Payment
+                        Information</span>
                 </td>
             </tr>
             <tr>

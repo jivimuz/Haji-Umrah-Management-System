@@ -23,7 +23,8 @@ Route::get('error', [AuthController::class, 'error'])->name('error');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('menu', [HomeController::class, 'menu']);
-    Route::post('getJamaahInYear', [HomeController::class, 'getJamaahInYear']);
+    Route::post('getJamaahUmrahInYear', [HomeController::class, 'getJamaahUmrahInYear']);
+    Route::post('getJamaahHajiInYear', [HomeController::class, 'getJamaahHajiInYear']);
     Route::post('getTopAgen', [HomeController::class, 'getTopAgen']);
     Route::post('get40Days', [HomeController::class, 'get40Days']);
 
@@ -106,5 +107,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('kwitansi/{id}', [PrintController::class, 'kwitansi']);
         Route::get('manifest/{id}', [PrintController::class, 'manifest']);
         Route::get('monthlyReport', [PrintController::class, 'monthlyReport']);
+        Route::get('jamaahInfo/{id}', [PrintController::class, 'jamaahInfo']);
     });
 });

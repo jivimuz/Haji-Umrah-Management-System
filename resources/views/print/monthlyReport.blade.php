@@ -28,7 +28,7 @@ use App\Helpers\WebHelper;
     }
 
     td {
-        padding: 10px;
+        padding: 5px;
     }
 
     table {
@@ -52,13 +52,21 @@ use App\Helpers\WebHelper;
     <div style="  max-height: 100vh !important;">
         <table style="width: 100%">
             <tr>
-                <td>
-                    <img src="{{ public_path($clogo) }}" style="width: 150px; max-height:100px" alt=""><br><br>
+                <td style="vertical-align: top; width: 10px">
+                    @if ($clogo)
+                        <img src="{{ public_path($clogo) }}" style="max-width: 100px; max-height:50px" alt="">
+                        <br><br>
+                    @endif
+                </td>
+                <td style="vertical-align: top">
+                    @if ($cname)
+                        <span style="font-size: 24px"> {{ $cname }}</span><br>
+                    @endif
                     {{ $caddress }}
                 </td>
                 <td style="text-align: right">
-                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Report
-                        {{ WebHelper::bulanTahun($monthYear) }}</span>
+                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Payment
+                        Information</span>
                 </td>
             </tr>
             <tr>
@@ -81,19 +89,30 @@ use App\Helpers\WebHelper;
                 </tr>
             </thead>
             <tbody class="text-center">
-                <?php $no = 1; ?>
+                <?php
+                $no = 1;
+                $total = 0;
+                ?>
                 @foreach ($data as $i)
+                    <?php $total += $i->nominal; ?>
                     <tr>
                         <td class="bd">{{ $no++ }}</td>
                         <td class="bd">{{ date('d-m-Y', strtotime($i->paid_at)) }}</td>
                         <td class="bd">{{ $i->jamaah ?: 'System' }}</td>
                         <td class="bd">{{ $i->paket ?: '-' }}</td>
                         <td class="bd">{{ $i->remark }}</td>
-                        <td class="bd">Rp. {{ number_format($i->nominal, 2) }}</td>
+                        <td class="bd">Rp {{ number_format($i->nominal, 2) }}</td>
                         <td class="bd">{{ $i->nominal < 0 ? 'Refund' : 'Payment' }}</td>
                     </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="bd text-right">Total</td>
+                    <td class="bd">Rp {{ number_format($total, 2) }}</td>
+                    <td class="bd"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </body>

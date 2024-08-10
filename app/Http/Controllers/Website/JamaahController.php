@@ -26,7 +26,8 @@ class JamaahController extends Controller
             'm_paket.nama as paket',
             'm_paket.type',
             DB::raw("COALESCE(m_paket.publish_price,0) as price"),
-            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as total FROM t_morepayment where t_morepayment.jamaah_id = t_jamaah.id) as morepayment")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->when($type, function ($q) use ($type) {
@@ -196,7 +197,22 @@ class JamaahController extends Controller
     public function payment(Request $request)
     {
         $id = $request->id;
-        return view('pages/jamaah/payment', compact('id'));
+        $data = Jamaah::select([
+            't_jamaah.*',
+            'm_paket.nama as paket',
+            'm_paket.publish_price as price',
+            'm_paket.type',
+            'm_program.nama as program',
+            DB::raw("COALESCE(m_paket.publish_price,0) as price"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as total FROM t_morepayment where t_morepayment.jamaah_id = t_jamaah.id) as morepayment")
+        ])
+            ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->join('m_program', 'm_program.id', 'm_paket.program_id')
+            ->where('t_jamaah.id', $id)
+            ->first();
+
+        return view('pages/jamaah/payment', compact('id', 'data'));
     }
 
     public function getListPayment(Request $request)

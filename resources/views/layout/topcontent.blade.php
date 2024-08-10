@@ -9,6 +9,7 @@ $LoginDesignation = $cek ? $cek->name : '-';
 
 $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
 $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
+$company_name = Setting::where('parameter', 'company_name')->first()->value ?: 'Company Name';
 
 ?>
 
@@ -47,6 +48,7 @@ $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName'
             </span>
             <input type="search" class="form-control" placeholder="Search...">
           </div> --}}
+                <h4>{{ $company_name }}</h4>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">

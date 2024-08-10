@@ -1,4 +1,8 @@
  <!-- Footer Section Start -->
+ <?php
+ use App\Models\Setting;
+ $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
+ ?>
  <footer class="footer">
      <div class="footer-body">
          <ul class="left-panel list-inline mb-0 p-0">
@@ -6,7 +10,7 @@
             <li class="list-inline-item"><a href="extra/terms-of-service.html">Terms of Use</a></li> --}}
          </ul>
          <div class="right-panel">
-             PayNotes ©
+             {{ $app_name }} ©
              <script>
                  document.write(new Date().getFullYear())
              </script>
@@ -20,9 +24,8 @@
          </div>
      </div>
  </footer>
- <!-- Footer Section End --> </main>
- <!-- Wrapper End-->
- <!-- offcanvas start -->
+ </main>
+
 
  <div class="modal fade" id="changePass" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">

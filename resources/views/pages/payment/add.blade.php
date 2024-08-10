@@ -6,8 +6,8 @@
             <select id="jamaah" class="form-control select2modal " style="width: 100%">
                 <option value="" disabled selected>Select</option>
                 @foreach ($jamaah as $i)
-                    <option value="{{ $i->id }}" jname="{{ $i->nama }}" jprice="{{ $i->publish_price }}"
-                        jpaid="{{ $i->paid }}"
+                    <option value="{{ $i->id }}" jname="{{ $i->nama }}"
+                        jprice="{{ $i->publish_price + $i->morepayment }}" jpaid="{{ $i->paid }}"
                         jpaket="☪️ {{ strlen($i->paket) > 20 ? substr($i->paket, 0, 20) . '...' : $i->paket }} ||
                         🕌 {{ $i->program }}
                         || 🛫 {{ date('d M Y', strtotime($i->flight_date)) }}"

@@ -29,7 +29,7 @@ class HomeController extends Controller
         return view('layout/menuList', compact('menuList'));
     }
 
-    public function getJamaahInYear()
+    public function getJamaahUmrahInYear()
     {
         $jl = [];
         $jp = [];
@@ -42,18 +42,22 @@ class HomeController extends Controller
 
 
         for ($i = 1; $i <= 12; $i++) {
-            $cek = Jamaah::select(DB::raw('count(id) as total'))
+            $cek = Jamaah::select(DB::raw('count(m_paket.id) as total'))
+                ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
                 ->where('gender', 'L')
-                ->whereMonth('created_at', sprintf('%02s', $i))
+                ->where('m_paket.type', 'Umrah')
+                ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
                 ->first();
 
             array_push($jl, ($cek ? $cek->total : 0));
             $cjl += ($cek ? $cek->total : 0);
         }
         for ($i = 1; $i <= 12; $i++) {
-            $cek = Jamaah::select(DB::raw('count(id) as total'))
+            $cek = Jamaah::select(DB::raw('count(m_paket.id) as total'))
+                ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
                 ->where('gender', 'P')
-                ->whereMonth('created_at', sprintf('%02s', $i))
+                ->where('m_paket.type', 'Umrah')
+                ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
                 ->first();
             array_push($jp, ($cek ? $cek->total : 0));
             $cjp += ($cek ? $cek->total : 0);
@@ -64,6 +68,44 @@ class HomeController extends Controller
         }
 
         return response()->json(["message" => 'success', 'jp' => $jp, 'jl' => $jl, 'tt' => $tt, 'cjl' => $cjl, 'cjp' => $cjp, 'earn' => $earn], 200);
+    }
+    public function getJamaahHajiInYear()
+    {
+        $jl = [];
+        $jp = [];
+        $tt = [];
+
+        $cjl = 0;
+        $cjp = 0;
+
+
+        for ($i = 1; $i <= 12; $i++) {
+            $cek = Jamaah::select(DB::raw('count(m_paket.id) as total'))
+                ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+                ->where('gender', 'L')
+                ->where('m_paket.type', 'Haji')
+                ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->first();
+
+            array_push($jl, ($cek ? $cek->total : 0));
+            $cjl += ($cek ? $cek->total : 0);
+        }
+        for ($i = 1; $i <= 12; $i++) {
+            $cek = Jamaah::select(DB::raw('count(m_paket.id) as total'))
+                ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+                ->where('gender', 'P')
+                ->where('m_paket.type', 'Haji')
+                ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->first();
+            array_push($jp, ($cek ? $cek->total : 0));
+            $cjp += ($cek ? $cek->total : 0);
+        }
+        for ($i = 0; $i < 12; $i++) {
+            $cek = $jp[$i] > $jl[$i] ? $jp[$i] : $jl[$i];
+            array_push($tt, $cek);
+        }
+
+        return response()->json(["message" => 'success', 'jp' => $jp, 'jl' => $jl, 'tt' => $tt, 'cjl' => $cjl, 'cjp' => $cjp], 200);
     }
 
     public function getTopAgen(Request $request)
@@ -93,6 +135,7 @@ class HomeController extends Controller
     {
         $data = Jamaah::select([
             't_jamaah.nama',
+            'm_paket.type',
             'm_paket.flight_date as tgl',
             DB::raw("COALESCE(m_paket.publish_price,0) as price"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
