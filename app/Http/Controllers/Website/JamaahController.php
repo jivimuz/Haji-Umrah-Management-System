@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Models\Agen;
 use App\Models\Jamaah;
+use App\Models\MorePayment;
 use App\Models\Paket;
 use App\Models\Payment;
 use Carbon\Carbon;
@@ -224,5 +225,64 @@ class JamaahController extends Controller
             ->orderBy('id', 'desc')->get();
         $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->id)->first()->paid;
         return response()->json(["message" => 'success', 'data' => $history, 'paid' => $paidCheck], 200);
+    }
+
+    public function morePayment(Request $request)
+    {
+        $id = $request->id;
+        $data = MorePayment::where('jamaah_id', $id)->get();
+        $jamaah = Jamaah::select([
+            't_jamaah.nama',
+            't_jamaah.is_done',
+            'm_paket.nama as paket',
+            'm_paket.publish_price as price',
+            'm_paket.type',
+            DB::raw("COALESCE(m_paket.publish_price,0) as price"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as total FROM t_morepayment where t_morepayment.jamaah_id = t_jamaah.id) as morepayment")
+        ])
+            ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->where('t_jamaah.id', $id)
+            ->first();
+
+        return view('pages/jamaah/morePayment', compact('id', 'data', 'jamaah'));
+    }
+
+    function saveAddBiaya(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $check = Jamaah::where('id', $request->id)->first();
+            if ($check) {
+                $insert = MorePayment::insert([
+                    'jamaah_id' => $request->id,
+                    'jamaah_name' => $request->nama,
+                    'nominal' =>  $request->nominal ?: 0,
+                    'remark' => $request->remark,
+                ]);
+                if ($insert) {
+                    DB::commit();
+                    return response()->json(["message" => 'success', 'data' => $insert], 200);
+                }
+            }
+            return response()->json(["error" => 'Gagal input'], 400);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(["message" => 'error', 'data' => null, 'error' => $th->getMessage()], 400);
+        }
+    }
+
+    public function deleteMorePayment(Request $request)
+    {
+        $check = MorePayment::where('id', $request->id)->first();
+        if ($check) {
+            $delete = MorePayment::where('id', $request->id)->delete();
+
+            if ($delete) {
+                return response()->json(["message" => 'success', 'data' => null], 200);
+            }
+            return response()->json(["error" => 'Tidak ada perubahan'], 400);
+        }
+        return response()->json(["error" => 'Data Tidak ada'], 400);
     }
 }

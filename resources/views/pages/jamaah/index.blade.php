@@ -71,8 +71,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Type</th>
                                         <th>Name</th>
+                                        <th>Type</th>
                                         <th>No KTP</th>
                                         <th>Paket</th>
                                         <th>Total</th>
@@ -112,14 +112,13 @@
                     },
                     className: 'text-center'
                 },
-
+                {
+                    data: "nama",
+                },
                 {
                     data: "type",
                 },
 
-                {
-                    data: "nama",
-                },
                 {
                     data: "no_ktp",
                 },
@@ -291,6 +290,31 @@
             });
         }
 
+        function morePayment(id) {
+            $.ajax({
+                url: "{{ url('jamaah/morePayment') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#SubModalLabel').html("Biaya Lain-lain Jamaah ")
+                    $('#SubModalBody').html(data)
+                    $('#SubModal').modal('show')
+                },
+                error: function(xhr, status, error) {
+                    Toast.fire({
+                        icon: "error",
+                        title: JSON.parse(xhr.responseText).error
+                    });
+
+                }
+            });
+        }
+
         function checkPayment(id, name) {
             $.ajax({
                 url: "{{ url('jamaah/payment') }}",
@@ -302,7 +326,7 @@
                     id: id
                 },
                 success: function(data) {
-                    $('#ThisModalLabel').html("Payment List " + name)
+                    $('#ThisModalLabel').html("Payment Information: " + name)
                     $('#thisModalBody').html(data)
                     $('#ThisModal').modal('show')
                 },

@@ -83,6 +83,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('delete', [JamaahController::class, 'delete']);
         Route::post('payment', [JamaahController::class, 'payment']);
         Route::post('getListPayment', [JamaahController::class, 'getListPayment']);
+        Route::post('morePayment', [JamaahController::class, 'morePayment']);
+        Route::post('saveAddBiaya', [JamaahController::class, 'saveAddBiaya']);
+        Route::post('deleteMorePayment', [JamaahController::class, 'deleteMorePayment']);
     });
 
     Route::middleware(['checkAccess:PAY'])->prefix('payment')->group(function () {

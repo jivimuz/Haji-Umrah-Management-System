@@ -75,8 +75,7 @@ use App\Helpers\WebHelper;
                     {{ $caddress }}
                 </td>
                 <td style="text-align: right">
-                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Payment
-                        Information</span>
+                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Manifest</span>
                 </td>
             </tr>
             <tr>

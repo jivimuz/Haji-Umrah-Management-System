@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -148,7 +148,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -188,7 +188,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <div class="float-end"> : </div>
+                                    <label for="">Biaya Lain-lain </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <a class="btn btn-sm btn-outline-dark rounded-pill"
+                                        onclick="morePayment({{ $data->id }})">Rp
+                                        {{ number_format($data->morepayment ?: 0, 2) }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
+                        </div>
+                        <div class="col-xl-6" style="border-right: 1px solid grey">
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <div class="float-end"> : </div>
@@ -201,21 +217,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
-                        </div>
-                        <div class="col-md-6" style="border-right: 1px solid grey">
-                            <div class="form-group row">
-                                <div class="col-md-4">
-                                    <div class="float-end"> : </div>
-                                    <label for="">Biaya Lain-lain </label>
-                                </div>
-                                <div class="col-md-8">
-                                    <label for="">Rp
-                                        {{ number_format($data->morepayment ?: 0, 2) }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -266,6 +268,8 @@
     </a>
 
 </div>
+@include('component/submodal')
+
 <script>
     $(document).ready(function() {
 
