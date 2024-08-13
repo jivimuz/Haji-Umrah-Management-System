@@ -57,7 +57,7 @@ return new class extends Migration
                 'icon' => '',
                 'route' => '/access',
                 'isheader' => false,
-                'isactive' => false,
+                'isactive' => true,
             ],
             [
                 'name' => 'Users',
@@ -68,7 +68,7 @@ return new class extends Migration
                 'icon' => '',
                 'route' => '/users',
                 'isheader' => false,
-                'isactive' => false,
+                'isactive' => true,
             ],
             [
                 'name' => 'Agen',

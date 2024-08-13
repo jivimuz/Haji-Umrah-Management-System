@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthApiMiddleware;
 use App\Http\Middleware\CheckModuleAccess;
+use App\Http\Middleware\SerialAuthorization;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(AuthApiMiddleware::class);
         $middleware->alias([
             'checkAccess' => CheckModuleAccess::class,
+            'p' => SerialAuthorization::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

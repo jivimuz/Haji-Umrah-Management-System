@@ -30,11 +30,21 @@
                         <img src="../../assets/images/error/01.png" class="img-fluid w-25" alt="">
                         <img src="../../assets/images/error/02.png" class="img-fluid w-25 px-5" alt="">
                         <img src="../../assets/images/error/01.png" class="img-fluid w-25" alt="">
-                        <h2 class="mb-0 mt-4">Page Not Found.</h2>
-                        <p class="mt-2">This page is not in your area or under maintenance. </p>
-                        <div class="d-flex justify-content-center">
-                            <a href="/" class="btn btn-primary">Back to Home</a>
-                        </div>
+                        @if (session('isExpired'))
+                            <h2 class="mb-0 mt-4">Application Locked.</h2>
+                            <p class="mt-2">Application is locked. Please contact admin. </p>
+                            <small class="">+6282120741970: Jivi </small>
+                            <br>
+                            <div class="d-flex justify-content-center">
+                                <a href="/logout" class="btn btn-primary">Logout</a>
+                            </div>
+                        @else
+                            <h2 class="mb-0 mt-4">Page Not Found.</h2>
+                            <p class="mt-2">This page is not in your area or under maintenance. </p>
+                            <div class="d-flex justify-content-center">
+                                <a href="/" class="btn btn-primary">Back to Home</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

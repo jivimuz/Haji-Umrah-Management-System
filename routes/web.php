@@ -20,7 +20,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('error', [AuthController::class, 'error'])->name('error');
 
 //Group By Auth
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'p'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('menu', [HomeController::class, 'menu']);
     Route::post('getJamaahUmrahInYear', [HomeController::class, 'getJamaahUmrahInYear']);
