@@ -18,6 +18,7 @@ Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('error', [AuthController::class, 'error'])->name('error');
+Route::post('serialActivation', [AuthController::class, 'serialActivation'])->withoutMiddleware('auth');
 
 //Group By Auth
 Route::middleware(['auth'])->group(function () {

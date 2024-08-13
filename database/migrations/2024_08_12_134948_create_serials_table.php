@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('serial', function (Blueprint $table) {
             $table->string('serial_code');
             $table->date('valid_until');
-            $table->string('contact_number');
-            $table->string('contact_name');
         });
     }
 
