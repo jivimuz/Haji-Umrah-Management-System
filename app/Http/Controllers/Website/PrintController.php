@@ -61,7 +61,7 @@ class PrintController extends Controller
             't_jamaah.*',
             'm_paket.nama as paket',
             'm_paket.publish_price as price',
-            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id and t_payment.void_by IS NULL) as paid")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->where('paket_id', $id)
@@ -117,7 +117,7 @@ class PrintController extends Controller
             'm_paket.type',
             'm_program.nama as program',
             DB::raw("COALESCE(m_paket.publish_price,0) as price"),
-            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id and t_payment.void_by IS NULL) as paid"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as total FROM t_morepayment where t_morepayment.jamaah_id = t_jamaah.id) as morepayment")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')

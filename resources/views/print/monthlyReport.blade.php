@@ -102,7 +102,8 @@ use App\Helpers\WebHelper;
                         <td class="bd">{{ $i->paket ?: '-' }}</td>
                         <td class="bd">{{ $i->remark }}</td>
                         <td class="bd">Rp {{ number_format($i->nominal, 2) }}</td>
-                        <td class="bd">{{ $i->nominal < 0 ? 'Refund' : 'Payment' }}</td>
+                        <td class="bd">{{ $i->void_by ? 'Canceled' : ($i->nominal < 0 ? 'Refund' : 'Payment') }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

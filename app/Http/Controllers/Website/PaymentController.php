@@ -40,7 +40,7 @@ class PaymentController extends Controller
             'm_paket.publish_price',
             'm_paket.flight_date',
             'm_program.nama as program',
-            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid"),
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id  and t_payment.void_by IS NULL) as paid"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as total FROM t_morepayment where t_morepayment.jamaah_id = t_jamaah.id) as morepayment")
         ])
             ->join('m_paket', 't_jamaah.paket_id', 'm_paket.id')
@@ -72,7 +72,7 @@ class PaymentController extends Controller
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->where('t_jamaah.id', $request->id)
             ->orderBy('id', 'desc')->get();
-        $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->id)->first()->paid;
+        $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->whereNull('t_payment.void_by')->where('jamaah_id', $request->id)->first()->paid;
 
         return response()->json(["message" => 'success', 'data' => $history, 'paid' => $paidCheck], 200);
     }
@@ -88,8 +88,8 @@ class PaymentController extends Controller
                 'nominal' => (0 - $request->nominal),
                 'remark' => $request->remark,
                 'paid_at' => Carbon::now(),
-                'void_at' => Carbon::now(),
-                'void_by' => auth()->user()->id,
+                'void_at' => null,
+                'void_by' => null,
             ]);
         } else {
             $insert = Payment::insert([
@@ -106,7 +106,8 @@ class PaymentController extends Controller
         if ($insert) {
             if ($check) {
                 $priceCheck = Paket::select(DB::raw('COALESCE(publish_price, 0) AS price'))->where('id', $check->paket_id)->first();
-                $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->jamaah_id)->first();
+
+                $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->jamaah_id)->whereNull('t_payment.void_by')->first();
                 $morePaymentCheck = MorePayment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('jamaah_id', $request->jamaah_id)->first();
                 $is_done = false;
                 $donepaid_date = null;
@@ -127,5 +128,23 @@ class PaymentController extends Controller
         }
 
         return response()->json(["error" => 'Gagal input'], 400);
+    }
+
+
+    public function cancelPayment(Request $request)
+    {
+        $check = Payment::where('id', $request->id)->first();
+        if ($check) {
+            $cancel = Payment::where('id', $request->id)->update([
+                'void_at' => Carbon::now(),
+                'void_by' => auth()->user()->id,
+            ]);
+
+            if ($cancel) {
+                return response()->json(["message" => 'success', 'data' => null], 200);
+            }
+            return response()->json(["error" => 'Tidak ada perubahan'], 400);
+        }
+        return response()->json(["error" => 'Data Tidak ada'], 400);
     }
 }

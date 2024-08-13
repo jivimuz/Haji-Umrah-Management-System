@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('pengeluaran', [PaymentController::class, 'pengeluaran']);
         Route::post('refund', [PaymentController::class, 'refund']);
         Route::post('saveData', [PaymentController::class, 'saveData']);
+        Route::post('cancelPayment', [PaymentController::class, 'cancelPayment']);
     });
 
     Route::middleware(['checkAccess:SET'])->prefix('setting')->group(function () {

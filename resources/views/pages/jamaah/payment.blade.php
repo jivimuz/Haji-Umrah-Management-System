@@ -306,9 +306,15 @@
                 data: "nominal",
                 render: function(data, b, c) {
                     // return "<span class='badge rounded-pill bg-success'>Success</span>"
-                    return parseFloat(data) <= 0 ?
-                        "<span class='badge rounded-pill bg-danger'>Refund</span>" :
-                        "<span class='badge rounded-pill bg-success'>Payment</span>"
+                    var a = '';
+                    if (c.void_by) {
+                        a += "<span class='badge rounded-pill bg-danger'>Canceled</span>"
+                    } else {
+                        a += parseFloat(data) <= 0 ?
+                            "<span class='badge rounded-pill bg-warning'>Refund</span>" :
+                            "<span class='badge rounded-pill bg-success'>Payment</span>"
+                    }
+                    return a
                 },
             },
 

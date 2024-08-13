@@ -138,7 +138,7 @@ class HomeController extends Controller
             'm_paket.type',
             'm_paket.flight_date as tgl',
             DB::raw("COALESCE(m_paket.publish_price,0) as price"),
-            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id) as paid")
+            DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.jamaah_id = t_jamaah.id and t_payment.void_by IS NULL) as paid")
         ])
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->whereBetween('m_paket.flight_date', [
