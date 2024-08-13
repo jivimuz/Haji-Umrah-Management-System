@@ -134,36 +134,44 @@
  <script src="../assets/js/responsive.dataTables.min.js"></script>
  <script src="../assets/js/dropify.min.js"></script>
  <script src="../assets/js/customFunction.js"></script>
-
  @if (session('expiredAlert'))
      <script>
          $(document).ready(function() {
+             // Tampilkan modal
              showModal('expiredAlert');
-             var nu = 5;
 
+             // Inisialisasi penghitung mundur
+             var nu = 5;
              $('#expiredCount').html(nu);
 
+             // Interval untuk menghitung mundur
              var aInt = setInterval(() => {
                  nu--;
                  $('#expiredCount').html(nu);
+
                  if (nu <= 3) {
                      $('#expiredCount').addClass('text-danger');
                  }
 
                  if (nu <= 0) {
-                     clearInterval(aInt);
+                     clearInterval(aInt); // Hentikan interval jika sudah mencapai 0
                      closeModal('expiredAlert');
                  }
              }, 1000);
 
+             // Penutupan modal dan penghentian interval setelah durasi
              setTimeout(() => {
+                 clearInterval(aInt); // Pastikan interval dihentikan
                  closeModal('expiredAlert');
-                 clearInterval(aInt);
-             }, nu * 1000 + 1000);
-
-         })
+             }, 5000); // Ini akan menutup modal setelah 5 detik
+         });
      </script>
+
+     @php
+         session()->forget('expiredAlert');
+     @endphp
  @endif
+
 
  <script>
      function changePass() {
