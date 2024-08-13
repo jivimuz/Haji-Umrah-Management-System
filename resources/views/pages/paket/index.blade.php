@@ -110,7 +110,7 @@
                 {
                     data: "publish_price",
                     render: function(data, b, c) {
-                        return data.toLocaleString("id-ID", {
+                        return parseFloat(data).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         });

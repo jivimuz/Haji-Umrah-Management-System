@@ -127,19 +127,19 @@
 
 
         $('#cpaket').html(paket)
-        $('#cdiscount').html(discount.toLocaleString("id-ID", {
+        $('#cdiscount').html(parseFloat(discount).toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR"
         }))
-        $('#cprice').html(price.toLocaleString("id-ID", {
+        $('#cprice').html(parseFloat(price).toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR"
         }))
-        $('#cpaid').html(paid.toLocaleString("id-ID", {
+        $('#cpaid').html(parseFloat(paid).toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR"
         }))
-        $('#ckurang').html(total.toLocaleString("id-ID", {
+        $('#ckurang').html(parseFloat(total).toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR"
         }))

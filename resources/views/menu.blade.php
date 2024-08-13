@@ -370,7 +370,7 @@
 
                             success: function(data) {
                                 $('#earn').attr('class', data.earn > 0 ? 'text-success' : 'text-danger')
-                                $('#earn').html(data.earn.toLocaleString("id-ID", {
+                                $('#earn').html(parseFloat(data.earn).toLocaleString("id-ID", {
                                     style: "currency",
                                     currency: "IDR"
                                 }))
@@ -675,15 +675,15 @@
                     },
                     columns: columns,
                     initComplete: function(data, json) {
-                        $('#mIncome').html(json.income.toLocaleString("id-ID", {
+                        $('#mIncome').html(parseFloat(json.income).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         }))
-                        $('#mExpense').html(json.expense.toLocaleString("id-ID", {
+                        $('#mExpense').html(parseFloat(json.expense).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         }))
-                        $('#mTotal').html(json.total.toLocaleString("id-ID", {
+                        $('#mTotal').html(parseFloat(json.total).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         }))
@@ -716,7 +716,7 @@
                         data: "nama",
                         render: function(data, b, c) {
                             let a = parseFloat(c.price) - parseFloat(c.paid);
-                            return a.toLocaleString("id-ID", {
+                            return parseFloat(a).toLocaleString("id-ID", {
                                 style: "currency",
                                 currency: "IDR"
                             })

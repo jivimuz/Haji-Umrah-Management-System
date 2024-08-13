@@ -137,7 +137,7 @@
                             a += "<small class='text-warning'>"
                         }
                         a += 'Terbayar '
-                        a += data.toLocaleString("id-ID", {
+                        a += parseFloat(data).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         });
@@ -150,7 +150,7 @@
                         a += '</small>'
                         a += "<small class='text-black'>"
 
-                        a += '<br> Dari ' + c.price.toLocaleString("id-ID", {
+                        a += '<br> Dari ' + parseFloat(c.price).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         });

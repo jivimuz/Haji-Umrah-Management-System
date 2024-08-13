@@ -178,7 +178,7 @@
                 {
                     data: "nominal",
                     render: function(data, b, c) {
-                        return data.toLocaleString("id-ID", {
+                        return parseFloat(data).toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         });
@@ -271,15 +271,15 @@
                     });
 
 
-                    $('#income').html(td.toLocaleString("id-ID", {
+                    $('#income').html(parseFloat(td).toLocaleString("id-ID", {
                         style: "currency",
                         currency: "IDR"
                     }))
-                    $('#expense').html(tp.toLocaleString("id-ID", {
+                    $('#expense').html(parseFloat(tp).toLocaleString("id-ID", {
                         style: "currency",
                         currency: "IDR"
                     }))
-                    $('#ttotal').html(tt.toLocaleString("id-ID", {
+                    $('#ttotal').html(parseFloat(tt).toLocaleString("id-ID", {
                         style: "currency",
                         currency: "IDR"
                     }))
