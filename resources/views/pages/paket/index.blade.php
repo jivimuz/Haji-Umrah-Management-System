@@ -115,6 +115,7 @@
                             currency: "IDR"
                         });
                     },
+                    className: 'text-end'
                 },
                 {
                     data: "total",

@@ -7,7 +7,7 @@ use App\Http\Controllers\Website\UserListController;
 use App\Http\Controllers\Website\AuthController;
 use App\Http\Controllers\Website\JamaahController;
 use App\Http\Controllers\Website\PaketController;
-use App\Http\Controllers\website\PaymentController;
+use App\Http\Controllers\Website\PaymentController;
 use App\Http\Controllers\Website\PrintController;
 use App\Http\Controllers\Website\profileController;
 use App\Http\Controllers\Website\SettingController;

@@ -117,11 +117,12 @@ class PaymentController extends Controller
                     $is_done = true;
                     $donepaid_date = Carbon::now();
                 }
+
                 Jamaah::where('id', $request->jamaah_id)->update([
                     'is_firstpaid' => true,
                     'is_done' => $is_done,
                     'firstpaid_date' => $check->firstpaid_date ?: Carbon::now(),
-                    'donepaid_date' =>  $donepaid_date,
+                    'donepaid_date' =>  $check->donepaid_date ?: $donepaid_date,
                 ]);
             }
             return response()->json(["message" => 'success', 'data' => $insert], 200);
@@ -134,13 +135,37 @@ class PaymentController extends Controller
     public function cancelPayment(Request $request)
     {
         $check = Payment::where('id', $request->id)->first();
+
         if ($check) {
+            if ($check->jamaah_id != 0) {
+                $priceCheck = Paket::select(DB::raw('COALESCE(publish_price, 0) AS price'))->where('id', $check->paket_id)->first();
+                $morePaymentCheck = MorePayment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('jamaah_id', $check->jamaah_id)->first();
+                $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $check->jamaah_id)->whereNull('t_payment.void_by')->first();
+
+                $is_done = false;
+                if ($paidCheck->paid >= (($priceCheck->price + $morePaymentCheck->total) - $check->discount)) {
+                    $is_done = true;
+                }
+
+                $is_firstpaid = false;
+                if ($paidCheck->paid >= 0) {
+                    $is_firstpaid = true;
+                }
+                Jamaah::where('id', $check->jamaah_id)->update([
+                    'is_firstpaid' => $is_firstpaid,
+                    'is_done' => $is_done,
+                    'firstpaid_date' => $check->firstpaid_date ?: null,
+                    'donepaid_date' =>  $check->donepaid_date ?: null,
+                ]);
+            }
+
             $cancel = Payment::where('id', $request->id)->update([
                 'void_at' => Carbon::now(),
                 'void_by' => auth()->user()->id,
             ]);
 
             if ($cancel) {
+
                 return response()->json(["message" => 'success', 'data' => null], 200);
             }
             return response()->json(["error" => 'Tidak ada perubahan'], 400);

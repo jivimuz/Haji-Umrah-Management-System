@@ -222,7 +222,8 @@ class JamaahController extends Controller
             ->join('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->where('t_jamaah.id', $request->id)
-            ->orderBy('id', 'desc')->get();
+            ->whereNull('t_payment.void_by')
+            ->orderBy('t_payment.id', 'desc')->get();
         $paidCheck = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as paid'))->where('jamaah_id', $request->id)->whereNull('void_by')->first()->paid;
         return response()->json(["message" => 'success', 'data' => $history, 'paid' => $paidCheck], 200);
     }

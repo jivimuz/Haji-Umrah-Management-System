@@ -183,6 +183,8 @@
                             currency: "IDR"
                         });
                     },
+                    className: 'text-end'
+
                 },
                 {
                     data: "nominal",
@@ -261,13 +263,15 @@
 
                     json.data.forEach(item => {
                         const nominal = parseFloat(item.nominal);
-
-                        if (nominal > 0) {
-                            td += nominal;
-                        } else {
-                            tp += nominal;
+                        if (!item.void_by) {
+                            if (nominal > 0) {
+                                td += nominal;
+                            } else {
+                                tp += nominal;
+                            }
+                            tt += nominal;
                         }
-                        tt += nominal;
+
                     });
 
 

@@ -87,7 +87,8 @@ class PrintController extends Controller
             ->leftJoin('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->whereYear('paid_at', $year)
             ->whereMonth('paid_at', $month)
-            ->orderBy('id', 'desc')->get();
+            ->whereNull('t_payment.void_by')
+            ->orderBy('t_payment.id', 'desc')->get();
 
 
 
@@ -128,8 +129,9 @@ class PrintController extends Controller
         $history = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_paket.nama as paket'])
             ->join('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
             ->join('m_paket', 'm_paket.id', 't_jamaah.paket_id')
+            ->whereNull('t_payment.void_by')
             ->where('t_jamaah.id', $id)
-            ->orderBy('id', 'desc')->get();
+            ->orderBy('t_payment.id', 'desc')->get();
 
         $cname = Setting::where('parameter', 'company_name')->first()->value ?: '';
         $caddress = Setting::where('parameter', 'company_address')->first()->value ?: '';

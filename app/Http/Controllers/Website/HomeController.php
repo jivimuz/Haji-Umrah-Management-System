@@ -38,7 +38,7 @@ class HomeController extends Controller
         $cjl = 0;
         $cjp = 0;
 
-        $earn = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->first()->total;
+        $earn = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->whereNull('void_by')->first()->total;
 
 
         for ($i = 1; $i <= 12; $i++) {
@@ -47,6 +47,7 @@ class HomeController extends Controller
                 ->where('gender', 'L')
                 ->where('m_paket.type', 'Umrah')
                 ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->whereYear('t_jamaah.created_at', date('Y'))
                 ->first();
 
             array_push($jl, ($cek ? $cek->total : 0));
@@ -58,6 +59,7 @@ class HomeController extends Controller
                 ->where('gender', 'P')
                 ->where('m_paket.type', 'Umrah')
                 ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->whereYear('t_jamaah.created_at', date('Y'))
                 ->first();
             array_push($jp, ($cek ? $cek->total : 0));
             $cjp += ($cek ? $cek->total : 0);
@@ -85,6 +87,7 @@ class HomeController extends Controller
                 ->where('gender', 'L')
                 ->where('m_paket.type', 'Haji')
                 ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->whereYear('t_jamaah.created_at', date('Y'))
                 ->first();
 
             array_push($jl, ($cek ? $cek->total : 0));
@@ -96,6 +99,7 @@ class HomeController extends Controller
                 ->where('gender', 'P')
                 ->where('m_paket.type', 'Haji')
                 ->whereMonth('t_jamaah.created_at', sprintf('%02s', $i))
+                ->whereYear('t_jamaah.created_at', date('Y'))
                 ->first();
             array_push($jp, ($cek ? $cek->total : 0));
             $cjp += ($cek ? $cek->total : 0);
@@ -119,13 +123,13 @@ class HomeController extends Controller
             ->havingRaw('tjamaah > 0')
             ->orderBy('tjamaah', 'desc')->get(5);
 
-        $income = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('nominal', '>=', 0)->whereYear('paid_at', $year)
+        $income = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('nominal', '>=', 0)->whereYear('paid_at', $year)->whereNull('void_by')
             ->whereMonth('paid_at', $month)->first()->total;
 
-        $expense = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('nominal', '<=', 0)->whereYear('paid_at', $year)
+        $expense = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->where('nominal', '<=', 0)->whereYear('paid_at', $year)->whereNull('void_by')
             ->whereMonth('paid_at', $month)->first()->total;
 
-        $total = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->whereYear('paid_at', $year)
+        $total = Payment::select(DB::raw('COALESCE(SUM(nominal), 0) as total'))->whereYear('paid_at', $year)->whereNull('void_by')
             ->whereMonth('paid_at', $month)->first()->total;
 
         return response()->json(["message" => 'success', 'data' => $data, 'income' => $income, 'expense' => $expense, 'total' => $total], 200);

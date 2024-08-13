@@ -298,6 +298,7 @@
                         currency: "IDR"
                     });
                 },
+                className: 'text-end'
             },
             {
                 data: "remark",

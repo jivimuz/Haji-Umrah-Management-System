@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('t_payment', function (Blueprint $table) {
             $table->id();
-            $table->integer('jamaah_id');
+            $table->integer('agen_id')->default(0);
+            $table->integer('jamaah_id')->default(0);
             $table->string('jamaah_name');
             $table->double('nominal');
             $table->string('remark');
