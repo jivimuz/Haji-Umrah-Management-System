@@ -47,7 +47,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Name</th>
+                                        <th>Unpaid Fee</th>
                                         <th>No HP</th>
                                         <th>Total Jamaah</th>
                                         <th>-</th>
@@ -83,14 +84,38 @@
                     },
                     className: 'text-center'
                 },
+
                 {
                     data: "nama",
+                },
+                {
+                    data: 'id',
+                    render: function(data, b, c) {
+                        var a = '';
+                        let total = (parseFloat(c.fee) - parseFloat(c.paidFee));
+                        if (total > 0) {
+                            a += "<span class='text-warning'>"
+                        } else {
+                            a += "<span class='text-success'>"
+                        }
+                        a += total.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        });
+                        a += "</span>"
+
+                        return a
+                    },
+                    className: 'text-end'
                 },
                 {
                     data: "no_hp",
                 },
                 {
                     data: "tjamaah",
+                    render: function(data, b, c) {
+                        return `<span class='badge rounded-pill bg-success'>${data} People</span>`
+                    },
                 },
                 {
                     width: '150px',

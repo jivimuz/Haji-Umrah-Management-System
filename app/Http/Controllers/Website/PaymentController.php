@@ -83,6 +83,7 @@ class PaymentController extends Controller
         $insert = false;
         if ($request->is_refund == 1) {
             $insert = Payment::insert([
+                'agen_id' => 0,
                 'jamaah_id' => $request->jamaah_id,
                 'jamaah_name' => $request->jamaah_name,
                 'nominal' => (0 - $request->nominal),
@@ -93,6 +94,7 @@ class PaymentController extends Controller
             ]);
         } else {
             $insert = Payment::insert([
+                'agen_id' => 0,
                 'jamaah_id' => $request->jamaah_id,
                 'jamaah_name' => $request->jamaah_name,
                 'nominal' => $request->nominal,
