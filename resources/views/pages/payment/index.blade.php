@@ -162,7 +162,7 @@
                 {
                     data: "jamaah",
                     render: function(data, b, c) {
-                        return data ?? 'System'
+                        return data ?? (c.agen ?? 'System')
                     },
                 },
 
@@ -195,8 +195,8 @@
                             a += "<span class='badge rounded-pill bg-danger'>Canceled</span>"
                         } else {
                             a += parseFloat(data) <= 0 ?
-                                "<span class='badge rounded-pill bg-warning'>Refund</span>" :
-                                "<span class='badge rounded-pill bg-success'>Payment</span>"
+                                "<span class='badge rounded-pill bg-warning'>Out</span>" :
+                                "<span class='badge rounded-pill bg-success'>In</span>"
                         }
                         return a
                     },

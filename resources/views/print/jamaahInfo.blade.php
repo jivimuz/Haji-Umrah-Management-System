@@ -199,7 +199,7 @@ use App\Helpers\WebHelper;
                         <td class="bd">{{ date('d-m-Y', strtotime($i->paid_at)) }}</td>
                         <td class="bd">{{ $i->paket ?: '-' }}</td>
                         <td class="bd">Rp {{ number_format($i->nominal, 2) }}</td>
-                        <td class="bd">{{ $i->void_by ? 'Canceled' : ($i->nominal < 0 ? 'Refund' : 'Payment') }}
+                        <td class="bd">{{ $i->void_by ? 'Canceled' : ($i->nominal < 0 ? 'Out' : 'In') }}
                         </td>
                         <td class="bd">{{ $i->remark }}</td>
                     </tr>

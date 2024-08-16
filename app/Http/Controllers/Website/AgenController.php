@@ -95,4 +95,11 @@ class AgenController extends Controller
         }
         return response()->json(["error" => 'Agen Tidak ada'], 400);
     }
+
+    public function feeAgen(Request $request)
+    {
+        $id = $request->id;
+        $data = Agen::where('id', $request->id)->first();
+        return view('pages/agen/feeAgent', compact('data', 'id'));
+    }
 }

@@ -98,11 +98,11 @@ use App\Helpers\WebHelper;
                     <tr>
                         <td class="bd">{{ $no++ }}</td>
                         <td class="bd">{{ date('d-m-Y', strtotime($i->paid_at)) }}</td>
-                        <td class="bd">{{ $i->jamaah ?: 'System' }}</td>
+                        <td class="bd">{{ $i->jamaah ?: ($i->agen ?: 'System') }}</td>
                         <td class="bd">{{ $i->paket ?: '-' }}</td>
                         <td class="bd">{{ $i->remark }}</td>
                         <td class="bd">Rp {{ number_format($i->nominal, 2) }}</td>
-                        <td class="bd">{{ $i->void_by ? 'Canceled' : ($i->nominal < 0 ? 'Refund' : 'Payment') }}
+                        <td class="bd">{{ $i->void_by ? 'Canceled' : ($i->nominal < 0 ? 'Out' : 'In') }}
                         </td>
                     </tr>
                 @endforeach

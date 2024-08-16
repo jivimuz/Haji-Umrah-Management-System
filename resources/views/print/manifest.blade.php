@@ -75,7 +75,8 @@ use App\Helpers\WebHelper;
                     {{ $caddress }}
                 </td>
                 <td style="text-align: right">
-                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Manifest</span>
+                    <span style="padding: 10px;background-color: #1f79e7;color:white;font-size: 1.5rem">Manifest
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -95,6 +96,16 @@ use App\Helpers\WebHelper;
                     <td style="width: 1%">:</td>
                     <td style="width: 35%" style=" border: 1px solid black;padding-left:10px">
                         {{ $cname }}</td>
+                </tr>
+                <tr>
+                    <td style="width: 15%">PAKET</td>
+                    <td style="width: 1%">:</td>
+                    <td style="width: 35%" style=" border: 1px solid black;padding-left:10px">
+                        {{ $paket->nama }}</td>
+                    <td style="width: 15%">TYPE</td>
+                    <td style="width: 1%">:</td>
+                    <td style="width: 35%" style=" border: 1px solid black;padding-left:10px">
+                        {{ $paket->type }}</td>
                 </tr>
                 <tr>
                     <td style="width: 15%">PROGRAM</td>

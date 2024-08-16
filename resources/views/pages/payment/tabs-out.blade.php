@@ -3,6 +3,7 @@
         <div class="nav nav-pills" style="text-align: center; align-items:center; justify-content: center">
             <a href="#" class="nav-link btn-outline-primary btn" id="tab1">Transaction Out</a>
             <a href="#" class="nav-link btn-outline-primary btn" id="tab2">Jamaah Refund</a>
+            <a href="#" class="nav-link btn-outline-primary btn" id="tab3">Fee Jamaah</a>
         </div>
 
         <hr>
@@ -25,7 +26,6 @@
 
     function Sider(tabId) {
         var url = '';
-        var id = $('#idF').attr('value')
 
         switch (tabId) {
             case 'tab1':
@@ -33,6 +33,9 @@
                 break;
             case 'tab2':
                 url = "<?= url('payment/refund') ?>";
+                break;
+            case 'tab3':
+                url = "<?= url('payment/feeAgen') ?>";
                 break;
         }
 

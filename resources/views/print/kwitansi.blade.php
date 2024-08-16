@@ -72,10 +72,10 @@ use App\Helpers\WebHelper;
                 </td>
             </tr>
             <tr>
-                <td>{{ substr($data->nominal, 0, 1) == '-' ? ($data->jamaah_name != 'Out Transaction' ? 'Untuk' : 'Diberikan Kepada') : 'Terima Dari' }}
+                <td>{{ substr($data->nominal, 0, 1) == '-' ? 'Diberikan Kepada' : 'Terima Dari' }}
                 </td>
                 <td style="width: 1%">:</td>
-                <td colspan="4" style="padding-left:10px"> {{ $data->jamaah_name }}
+                <td colspan="4" style="padding-left:10px"> {{ $data->jamaah ?: ($data->agen ?: '-') }}
                 </td>
             </tr>
             <tr>
@@ -86,7 +86,7 @@ use App\Helpers\WebHelper;
                 </td>
             </tr>
             <tr>
-                <td>Untuk Pembayaran</td>
+                <td>Untuk </td>
                 <td style="width: 1%">:</td>
                 <td colspan="4" style=" border: 1px solid black;padding-left:10px"> {{ $data->remark }}
                     @if ($data->jamaah_name != 'Out Transaction')

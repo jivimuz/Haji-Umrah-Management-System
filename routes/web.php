@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('edit', [AgenController::class, 'edit']);
         Route::post('updateAgen', [AgenController::class, 'updateAgen']);
         Route::post('delete', [AgenController::class, 'delete']);
+        Route::post('feeAgen', [AgenController::class, 'feeAgen']);
     });
 
     Route::middleware(['checkAccess:PKT'])->prefix('paket')->group(function () {
@@ -96,9 +97,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('getJamaahHistory', [PaymentController::class, 'getJamaahHistory']);
         Route::post('outTransaction', [PaymentController::class, 'outTransaction']);
         Route::post('pengeluaran', [PaymentController::class, 'pengeluaran']);
+        Route::post('feeAgen', [PaymentController::class, 'feeAgen']);
         Route::post('refund', [PaymentController::class, 'refund']);
         Route::post('saveData', [PaymentController::class, 'saveData']);
         Route::post('cancelPayment', [PaymentController::class, 'cancelPayment']);
+        Route::post('getAgenFee', [PaymentController::class, 'getAgenFee']);
+        Route::post('getAgenHistory', [PaymentController::class, 'getAgenHistory']);
     });
 
     Route::middleware(['checkAccess:SET'])->prefix('setting')->group(function () {

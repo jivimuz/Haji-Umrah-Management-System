@@ -22,7 +22,8 @@ class PrintController extends Controller
         }
 
         $id =  htmlspecialchars($decodedId, ENT_QUOTES, 'UTF-8');
-        $data = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_paket.nama as paket'])
+        $data = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_agen.nama as agen',  'm_paket.nama as paket'])
+            ->leftJoin('m_agen', 'm_agen.id', 't_payment.agen_id')
             ->leftJoin('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
             ->leftJoin('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->where('t_payment.id', $id)
@@ -82,15 +83,14 @@ class PrintController extends Controller
         $monthYear = $request->month; // '2024-08'
         list($year, $month) = explode('-', $monthYear);
 
-        $data = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_paket.nama as paket'])
+        $data = Payment::select(['t_payment.*', 't_jamaah.nama as jamaah', 'm_agen.nama as agen', 'm_paket.nama as paket'])
             ->leftJoin('t_jamaah', 't_jamaah.id', 't_payment.jamaah_id')
+            ->leftJoin('m_agen', 'm_agen.id', 't_payment.agen_id')
             ->leftJoin('m_paket', 'm_paket.id', 't_jamaah.paket_id')
             ->whereYear('paid_at', $year)
             ->whereMonth('paid_at', $month)
             ->whereNull('t_payment.void_by')
             ->orderBy('t_payment.id', 'desc')->get();
-
-
 
         $cname = Setting::where('parameter', 'company_name')->first()->value ?: '';
         $caddress = Setting::where('parameter', 'company_address')->first()->value ?: '';

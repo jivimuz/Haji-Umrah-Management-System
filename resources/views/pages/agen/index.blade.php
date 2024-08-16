@@ -92,17 +92,17 @@
                     data: 'id',
                     render: function(data, b, c) {
                         var a = '';
-                        let total = (parseFloat(c.fee) - parseFloat(c.paidFee));
+                        let total = (parseFloat(c.fee) + parseFloat(c.paidFee));
                         if (total > 0) {
-                            a += "<span class='text-warning'>"
+                            a += `<a onclick="seeFee(${data} , '${c.nama}')" class='btn btn-xs rounded-pill btn-outline-sm btn-warning'>`
                         } else {
-                            a += "<span class='text-success'>"
+                            a += "<a class='btn btn-xs rounded-pill btn-outline-sm btn-success'>"
                         }
                         a += total.toLocaleString("id-ID", {
                             style: "currency",
                             currency: "IDR"
                         });
-                        a += "</span>"
+                        a += "</a>"
 
                         return a
                     },
@@ -195,6 +195,32 @@
                 },
                 success: function(data) {
                     $('#ThisModalLabel').html("Agen " + Name)
+                    $('#thisModalBody').html(data)
+                    $('#ThisModal').modal('show')
+                },
+                error: function(xhr, status, error) {
+                    Toast.fire({
+                        icon: "error",
+                        title: JSON.parse(xhr.responseText).error
+                    });
+
+                }
+            });
+        }
+
+
+        function seeFee(id, Name) {
+            $.ajax({
+                url: "{{ url('agen/feeAgen') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#ThisModalLabel').html("See Fee " + Name)
                     $('#thisModalBody').html(data)
                     $('#ThisModal').modal('show')
                 },
