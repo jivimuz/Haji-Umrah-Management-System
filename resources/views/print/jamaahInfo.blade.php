@@ -195,6 +195,18 @@ use App\Helpers\WebHelper;
                     <td colspan="2" class="bd"></td>
                 </tr>
             </tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="2" style="vertical-align: top; text-align: center">
+                    <br><br>
+                    Hormat Kami, <br>
+                    {{ $ccity ?: '-' }}, {{ WebHelper::bulanTahun(date('Y-m')) }} <br>
+                    <b>{{ $cname }}</b>
+                    <br><br><br><br>
+                    <b style="text-decoration-line: underline">{{ $employee->fullname ?: '-' }} </b><br>
+                    {{ $employee->jabatan ?: '-' }}
+                </td>
+            </tr>
         </table>
     </div>
 </body>

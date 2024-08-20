@@ -36,7 +36,7 @@ return new class extends Migration
             $table->integer('fk_religion')->nullable();
             $table->integer('fk_ptkp')->nullable();
             $table->integer('fk_bank')->nullable();
-            $table->integer('accountnumber')->nullable();
+            $table->string('accountnumber')->nullable();
             $table->string('npwp')->nullable();
             $table->string('gajipokok')->default(0);
             $table->string('alamat')->nullable();

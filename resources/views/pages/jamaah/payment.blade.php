@@ -212,7 +212,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <label for="" class="text-danger">Rp
-                                        {{ number_format($data->price + $data->morepayment - $data->paid ?: 0, 2) }}
+                                        {{ number_format($data->price - $data->discount + $data->morepayment - $data->paid ?: 0, 2) }}
                                     </label>
                                 </div>
                             </div>

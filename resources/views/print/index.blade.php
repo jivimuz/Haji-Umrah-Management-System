@@ -39,7 +39,7 @@
                                     <label for="">Print Type</label>
                                     <select class="select2" id="printType" style="width: 100%">
                                         <option value="" selected disabled>Choose One</option>
-                                        <option value="jamaahInfo" is-signature="0" is-to="0">Payment Information
+                                        <option value="jamaahInfo" is-signature="1" is-to="0">Payment Information
                                         </option>
                                         <option value="surat_rekomendasi" is-signature="1" is-to="0">Surat Rekomendasi
                                             Passport

@@ -110,9 +110,11 @@ class PrintController extends Controller
         return $pdf->stream();
     }
 
-    public function jamaahInfo($id)
+    public function jamaahInfo(Request $request, $id)
     {
         $decodedId = base64_decode($id);
+        $decodedBy = $request->by ? base64_decode($request->by) : auth()->user()->id;
+        $iduser =  htmlspecialchars($decodedBy, ENT_QUOTES, 'UTF-8');
 
         if ($decodedId === false) {
             echo "Error Unique code";
@@ -144,8 +146,10 @@ class PrintController extends Controller
         $cname = Setting::where('parameter', 'company_name')->first()->value ?: '';
         $caddress = Setting::where('parameter', 'company_address')->first()->value ?: '';
         $clogo = Setting::where('parameter', 'company_logo')->first()->value ?: '';
+        $employee = Employee::select('m_employee.*', 'm_designation.name as jabatan')->join('m_designation', 'm_employee.fk_designation', 'm_designation.id')->where('m_employee.id', $iduser)->first();
+        $ccity = Setting::where('parameter', 'company_city')->first()->value ?: '';
 
-        $pdf = PDF::loadView('print/jamaahInfo', array('data' =>  $data, 'history' =>  $history, 'cname' => $cname, 'caddress' => $caddress, 'clogo' => $clogo))
+        $pdf = PDF::loadView('print/jamaahInfo', array('data' =>  $data, 'history' =>  $history, 'cname' => $cname, 'caddress' => $caddress, 'clogo' => $clogo, 'ccity' => $ccity, 'employee' => $employee))
             ->setPaper('a5', 'landscape');
 
         return $pdf->stream();

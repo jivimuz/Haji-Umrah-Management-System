@@ -6,7 +6,8 @@ use App\Helpers\WebHelper;
     @page {
         margin: 10px;
         max-height: 100vh !important;
-        font-size: 14px
+        font-size: 14px;
+        line-height: 1.2;
     }
 
     body {
@@ -27,11 +28,6 @@ use App\Helpers\WebHelper;
         padding: 5px;
     }
 
-    table {
-        width: 100%;
-    }
-
-
     .bd {
         border: 0.3px solid grey;
     }
@@ -43,15 +39,17 @@ use App\Helpers\WebHelper;
             <tr>
                 <td style="vertical-align: top; width: 10px">
                     @if ($clogo)
-                        <img src="{{ public_path($clogo) }}" style="max-width: 100px; max-height:50px" alt="">
+                        <img src="{{ public_path($clogo) }}" style="max-width: 200px; max-height:70px" alt="">
                         <br><br>
                     @endif
                 </td>
                 <td style="vertical-align: top">
-                    @if ($cname)
-                        <span style="font-size: 24px"> {{ $cname }}</span><br>
+                    @if (!$clogo)
+                        @if ($cname)
+                            <span style="font-size: 20px"> {{ $cname }}</span><br>
+                        @endif
+                        {{ $caddress }}
                     @endif
-                    {{ $caddress }}
                 </td>
 
             </tr>
@@ -65,28 +63,14 @@ use App\Helpers\WebHelper;
             <table style="width: 100%">
                 <tr>
                     <td style="vertical-align: top; width: 100px">
-                        Nomor
-                    </td>
-                    <td style="vertical-align: top; width: 5px">:</td>
-                    <td style="vertical-align: top" colspan="2">
-                        SPI/{{ date('m') }}/AWH/{{ $no_surat }}/{{ date('Y') }}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align: top; width: 100px">
-                        Lampiran
-                    </td>
-                    <td style="vertical-align: top; width: 5px">:</td>
-                    <td style="vertical-align: top" colspan="2">
-                        ...
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align: top; width: 100px">
+                        Nomor <br>
+                        Lampiran <br>
                         Perihal
                     </td>
                     <td style="vertical-align: top; width: 5px">:</td>
                     <td style="vertical-align: top" colspan="2">
+                        SPI/{{ date('m') }}/AWH/{{ $no_surat }}/{{ date('Y') }} <br>
+                        ... <br>
                         Permohonan Ijin Umrah
                     </td>
                 </tr>
@@ -99,12 +83,16 @@ use App\Helpers\WebHelper;
                         Di Tempat
                     </td>
                 </tr>
+
                 <tr>
                     <td style="vertical-align: top;" colspan="4">
-
                         Yang bertanda tangan dibawah ini :
                     </td>
                 </tr>
+            </table>
+        </div>
+        <div style="padding-left: 30px">
+            <table style="width: 100%">
                 <tr>
                     <td style="vertical-align: top; width: 100px">
                         Nama
@@ -132,12 +120,20 @@ use App\Helpers\WebHelper;
                         {{ $employee->alamat ?: '-' }}
                     </td>
                 </tr>
+            </table>
+        </div>
+        <div style="padding-left: 20px">
+            <table style="width: 100%">
                 <tr>
                     <td style="vertical-align: top;" colspan="4">
                         <br>
                         Bersama ini menerangkan dengan sesungguhnya bahwa :
                     </td>
                 </tr>
+            </table>
+        </div>
+        <div style="padding-left: 30px">
+            <table style="width: 100%">
                 <tr>
                     <td style="vertical-align: top; width: 100px">
                         Nama
@@ -174,6 +170,10 @@ use App\Helpers\WebHelper;
                         {{ $data->alamat ?: '-' }}
                     </td>
                 </tr>
+            </table>
+        </div>
+        <div style="padding-left: 20px">
+            <table style="width: 100%">
                 <tr>
                     <td style="vertical-align: top; word-wrap: break-word;max-width: 100%;" colspan="4">
                         <p style="word-wrap: break-word; ">
@@ -200,8 +200,8 @@ use App\Helpers\WebHelper;
                         {{ $ccity ?: '-' }}, {{ WebHelper::bulanTahun(date('Y-m')) }} <br>
                         <b>{{ $cname }}</b>
                         <br><br><br><br>
-                        <b> <span style="text-decoration-line: underline">{{ $employee->fullname ?: '-' }} </span><br>
-                            {{ $employee->jabatan ?: '-' }}</b>
+                        <b style="text-decoration-line: underline">{{ $employee->fullname ?: '-' }} </b><br>
+                        {{ $employee->jabatan ?: '-' }}
                     </td>
                 </tr>
             </table>

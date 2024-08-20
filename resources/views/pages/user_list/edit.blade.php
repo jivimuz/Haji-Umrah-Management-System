@@ -247,7 +247,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Born place: </label>
-                                <input type="date" class="form-control" id="bornloc" name="bornloc" />
+                                <input type="text" class="form-control" id="bornloc" name="bornloc" />
                                 {{-- <select class="form-control select2modal " id="bornloc" name="bornloc"
                                     style="width:100% !important">
                                     <option hidden value="" selected>Choose one</option>

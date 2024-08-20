@@ -51,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('updateData', [UserListController::class, 'updateData']);
         Route::post('activateUser', [UserListController::class, 'activateUser']);
         Route::post('deactivateUser ', [UserListController::class, 'deactivateUser']);
+        Route::post('deleteUser ', [UserListController::class, 'deleteUser']);
+        Route::post('jabatan ', [UserListController::class, 'jabatan']);
+        Route::post('getJabatanList ', [UserListController::class, 'getJabatanList']);
+        Route::post('saveJabatan ', [UserListController::class, 'saveJabatan']);
+        Route::post('deleteJabatan ', [UserListController::class, 'deleteJabatan']);
     });
 
     Route::middleware(['checkAccess:AGN'])->prefix('agen')->group(function () {

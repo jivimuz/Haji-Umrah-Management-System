@@ -49,6 +49,7 @@ return new class extends Migration
             ["name" => "Human Resource", 'code' => "HR"],
             ["name" => "Chief Executife Officer", 'code' => "CEO"],
             ["name" => "Information Technology", 'code' => "IT"],
+            ["name" => "Marketing", 'code' => "MKT"],
         ];
         Department::insert($data);
 
@@ -59,9 +60,12 @@ return new class extends Migration
         });
         $data = [
             ["name" => "Unplaced", 'fk_department' => 0],
+            ["name" => "Director", 'fk_department' => 1],
             ["name" => "Human Resource Development", 'fk_department' => 1],
             ["name" => "Chief Executife Officer", 'fk_department' => 2],
             ["name" => "Full Stack Developer", 'fk_department' => 3],
+            ["name" => "Marketing", 'fk_department' => 4],
+            ["name" => "Finance", 'fk_department' => 4],
         ];
         Designation::insert($data);
     }

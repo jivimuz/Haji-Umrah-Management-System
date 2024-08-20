@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Employee;
 use App\Models\JobLevel;
@@ -184,5 +185,68 @@ class UserListController extends Controller
             'is_active' => false,
         ]);
         return response()->json(["message" => 'success', 'data' => null], 200);
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $check = User::where('id', $request->id)->first();
+        if ($check) {
+            User::where('id', $request->id)->delete();
+            return response()->json(["message" => 'success', 'data' => null], 200);
+        }
+        return response()->json(["error" => 'Delete Failure', 'data' => null], 400);
+    }
+
+    public function jabatan()
+    {
+        $department = Department::get();
+        return view('pages/user_list/jabatan', compact('department'));
+    }
+
+    public function getJabatanList()
+    {
+        $data = Designation::select([
+            'm_designation.*',
+            'm_department.name as department',
+            DB::raw("(SELECT COALESCE(COUNT(id), 0) FROM m_employee WHERE fk_designation = m_designation.id LIMIT 1) as used")
+        ])->join('m_department', 'm_designation.fk_department', 'm_department.id')->get();
+        return response()->json(["message" => 'success', 'data' => $data], 200);
+    }
+
+    public function saveJabatan(Request $request)
+    {
+        $name = $request->name;
+        $department = $request->department;
+        $departmentId = $department;
+        if (!is_numeric($department)) {
+            $code = substr($department, 0, 3);
+            $cekDep = Department::select(DB::raw('COALESCE(COUNT(id), 0) as count'))->where('code', $code)->first();
+            $insertId = Department::insertGetID([
+                'name' => $department,
+                'code' => $cekDep && $cekDep->count > 0 ? $code . $cekDep->count + 1 : $code
+            ]);
+            $departmentId = $insertId;
+        }
+
+        $insert = Designation::insertGetID([
+            'name' => $name,
+            'fk_department' => $departmentId ?: 0
+        ]);
+
+        if ($insert) {
+            return response()->json(["message" => 'success', 'data' => null], 200);
+        }
+        return response()->json(["error" => 'Insert Failure', 'data' => null], 400);
+    }
+
+    public function deleteJabatan(Request $request)
+    {
+
+        $check = Designation::where('id', $request->id)->first();
+        if ($check) {
+            Designation::where('id', $request->id)->delete();
+            return response()->json(["message" => 'success', 'data' => null], 200);
+        }
+        return response()->json(["error" => 'Delete Failure', 'data' => null], 400);
     }
 }
