@@ -1,7 +1,7 @@
 <?php
 use App\Helpers\WebHelper;
 ?>
-<title>Print Manifest</title>
+<title>Print {{ WebHelper::bulanTahun($monthYear) }} Report</title>
 <style>
     @page {
         margin: 10px;

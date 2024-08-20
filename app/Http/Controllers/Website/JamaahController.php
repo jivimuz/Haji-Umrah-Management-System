@@ -286,4 +286,16 @@ class JamaahController extends Controller
         }
         return response()->json(["error" => 'Data Tidak ada'], 400);
     }
+
+    public function jamaahListByParams(Request $request)
+    {
+        $data = Jamaah::where('nama', 'like', '%' . $request->params . '%')
+            ->orWhere('nama', 'like', '%' . $request->params . '%')
+            ->limit(20)
+            ->get();
+        $selectTitle = $request->selectTitle ?: null;
+        $selectVal = $request->selectVal ?: null;
+
+        return response()->json(["message" => 'success', 'data' => $data, 'selectTitle' => $selectTitle, 'selectVal' => $selectVal], 200);
+    }
 }

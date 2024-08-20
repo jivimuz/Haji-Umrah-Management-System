@@ -31,6 +31,11 @@ return new class extends Migration
                 "type" => 'text',
             ],
             [
+                "parameter" => 'company_city',
+                "value" => 'Cirebon',
+                "type" => 'text',
+            ],
+            [
                 "parameter" => 'company_address',
                 "value" => 'Cirebon - Jawa Barat',
                 "type" => 'text',
@@ -39,6 +44,11 @@ return new class extends Migration
                 "parameter" => 'company_logo',
                 "value" => null,
                 "type" => 'file',
+            ],
+            [
+                "parameter" => 'no_surat',
+                "value" => 0,
+                "type" => 'number',
             ],
         ]);
     }

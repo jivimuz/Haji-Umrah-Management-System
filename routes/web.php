@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('morePayment', [JamaahController::class, 'morePayment']);
         Route::post('saveAddBiaya', [JamaahController::class, 'saveAddBiaya']);
         Route::post('deleteMorePayment', [JamaahController::class, 'deleteMorePayment']);
+        Route::post('jamaahListByParams', [JamaahController::class, 'jamaahListByParams']);
     });
 
     Route::middleware(['checkAccess:PAY'])->prefix('payment')->group(function () {
@@ -113,9 +114,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('print')->group(function () {
+        Route::get('/', [PrintController::class, 'index']);
         Route::get('kwitansi/{id}', [PrintController::class, 'kwitansi']);
         Route::get('manifest/{id}', [PrintController::class, 'manifest']);
         Route::get('monthlyReport', [PrintController::class, 'monthlyReport']);
         Route::get('jamaahInfo/{id}', [PrintController::class, 'jamaahInfo']);
+        Route::get('surat_rekomendasi/{id}', [PrintController::class, 'suratRekomendasi']);
+        Route::get('surat_ijin/{id}', [PrintController::class, 'suratIjin']);
     });
 });

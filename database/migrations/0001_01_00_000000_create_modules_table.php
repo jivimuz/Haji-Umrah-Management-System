@@ -24,12 +24,13 @@ return new class extends Migration
             $table->boolean('isheader');
             $table->boolean('isactive');
         });
-
+        $no = 1;
         $data = [
+            //  group 1
             [
                 'name' => 'Dashboard',
                 'code' => 'DB',
-                'group_id' => 1,
+                'group_id' => $no++,
                 'group_name' => 'db',
                 'list_no' => 1,
                 'icon' => 'fa fa-home',
@@ -37,10 +38,12 @@ return new class extends Migration
                 'isheader' => true,
                 'isactive' => true,
             ],
+
+            //  group 2
             [
                 'name' => 'Master',
                 'code' => 'MT',
-                'group_id' => 2,
+                'group_id' => $no,
                 'group_name' => 'M',
                 'list_no' => 2,
                 'icon' => 'fa fa-briefcase',
@@ -51,7 +54,7 @@ return new class extends Migration
             [
                 'name' => 'Access',
                 'code' => 'MTA',
-                'group_id' => 2,
+                'group_id' => $no,
                 'group_name' => 'M',
                 'list_no' => 1,
                 'icon' => '',
@@ -62,7 +65,7 @@ return new class extends Migration
             [
                 'name' => 'Users',
                 'code' => 'MTU',
-                'group_id' => 2,
+                'group_id' => $no,
                 'group_name' => 'M',
                 'list_no' => 1,
                 'icon' => '',
@@ -73,7 +76,7 @@ return new class extends Migration
             [
                 'name' => 'Agen',
                 'code' => 'AGN',
-                'group_id' => 2,
+                'group_id' => $no,
                 'group_name' => 'M',
                 'list_no' => 1,
                 'icon' => '',
@@ -84,7 +87,7 @@ return new class extends Migration
             [
                 'name' => 'Paket',
                 'code' => 'PKT',
-                'group_id' => 2,
+                'group_id' => $no++,
                 'group_name' => 'M',
                 'list_no' => 2,
                 'icon' => '',
@@ -92,10 +95,12 @@ return new class extends Migration
                 'isheader' => false,
                 'isactive' => true,
             ],
+
+            //  group 3
             [
                 'name' => 'Jamaah',
                 'code' => 'JMA',
-                'group_id' => 3,
+                'group_id' => $no++,
                 'group_name' => 'J',
                 'list_no' => 3,
                 'icon' => 'fa fa-address-book',
@@ -103,10 +108,12 @@ return new class extends Migration
                 'isheader' => true,
                 'isactive' => true,
             ],
+
+            //  group 4
             [
                 'name' => 'Payment',
                 'code' => 'PAY',
-                'group_id' => 4,
+                'group_id' => $no++,
                 'group_name' => 'P',
                 'list_no' => 4,
                 'icon' => 'fa fa-money',
@@ -114,18 +121,33 @@ return new class extends Migration
                 'isheader' => true,
                 'isactive' => true,
             ],
+
+            //  group 6
+
+
+            //  group 7
+            [
+                'name' => 'Print',
+                'code' => 'PRT',
+                'group_id' => $no++,
+                'group_name' => 'PR',
+                'list_no' => 5,
+                'icon' => 'fa fa-print',
+                'route' => '/print',
+                'isheader' => true,
+                'isactive' => true,
+            ],
             [
                 'name' => 'Setting',
                 'code' => 'SET',
-                'group_id' => 5,
+                'group_id' => $no++,
                 'group_name' => 'P',
-                'list_no' => 5,
+                'list_no' => 6,
                 'icon' => 'fa fa-cogs',
                 'route' => '/setting',
                 'isheader' => true,
                 'isactive' => true,
             ],
-
         ];
 
         Module::insert($data);

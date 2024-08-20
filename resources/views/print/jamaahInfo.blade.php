@@ -1,7 +1,7 @@
 <?php
 use App\Helpers\WebHelper;
 ?>
-<title>Print Manifest</title>
+<title>Print Jamaah infor</title>
 <style>
     @page {
         margin: 10px;
@@ -22,25 +22,8 @@ use App\Helpers\WebHelper;
         width: 100%;
     }
 
-    tr td {
-        white-space: nowrap;
-
-    }
-
     td {
         padding-left: 10px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        page-break-inside: auto;
-        /* Agar tabel tidak terputus di tengah halaman */
-    }
-
-    tr {
-        page-break-inside: avoid;
-        /* Hindari pemutusan baris tabel di tengah halaman */
     }
 
     .bd {

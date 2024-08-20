@@ -8,16 +8,17 @@ $AccessList = explode(',', auth()->user()->access);
 $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
 $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
 $menu = [];
-$menuList = Module::where('isheader', 1)->whereIn('id', $AccessList)->orderBy('group_id')->orderBy('list_no')->get();
+$menuList = Module::where('isheader', 1)->where('isactive', true)->whereIn('id', $AccessList)->orderBy('group_id')->orderBy('list_no')->get();
 foreach ($menuList as $i) {
     $submenu = Module::where('isheader', 0)
-        ->where('group_id', $i->id)
+        ->where('group_id', $i->group_id)
         ->whereIn('id', $AccessList)
         ->whereNot('id', $i->id)
         ->where('isactive', true)
         ->orderBy('list_no')
         ->get();
     $menu[] = [
+        'group_id' => $i->group_id,
         'name' => $i->name,
         'icon' => $i->icon,
         'route' => $i->route,
@@ -61,8 +62,8 @@ $currentRouteName = Request::getPathInfo();
                 @foreach ($menu as $b)
                     <?php if(count($b['child']) >= 1){?>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#home" role="button"
-                            aria-expanded="false" aria-controls="home">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#group-{{ $b['group_id'] }}" role="button"
+                            aria-expanded="false" aria-controls="group-{{ $b['group_id'] }}">
                             <i class="{{ $b['icon'] }}" style="font-size: 23px">
                             </i>
                             {{-- <i class="sidenav-mini-icon">{{ substr($c['name'], 0,1)}}</i> --}}
@@ -75,7 +76,7 @@ $currentRouteName = Request::getPathInfo();
                                 </svg>
                             </i>
                         </a>
-                        <ul class="sub-nav collapse" id="home" data-bs-parent="#sidebar">
+                        <ul class="sub-nav collapse" id="group-{{ $b['group_id'] }}" data-bs-parent="#sidebar">
                             @foreach ($b['child'] as $c)
                                 <li class="nav-item">
                                     <a class="nav-link {{ $c['route'] == $currentRouteName ? 'active' : '' }}"

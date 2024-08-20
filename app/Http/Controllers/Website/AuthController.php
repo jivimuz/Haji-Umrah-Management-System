@@ -33,6 +33,9 @@ class AuthController extends Controller
         if (!$DataUser) {
             return response()->json(['error' => 'Unknown Username / Email'], 401);
         }
+        if (!$DataUser->is_active) {
+            return response()->json(['error' => "User isn't active, please chat admin to activate."], 401);
+        }
         $credentials = [
             'email' => $DataUser->email,
             'password' => $request->password
@@ -41,7 +44,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Login Success'], 200);
         }
 
-        return response()->json(['error' => 'Login Failed'], 401);
+        return response()->json(['error' => 'Please insert the right Username/Password!!'], 401);
     }
 
     /**

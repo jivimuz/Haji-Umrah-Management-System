@@ -39,6 +39,7 @@ return new class extends Migration
             $table->integer('accountnumber')->nullable();
             $table->string('npwp')->nullable();
             $table->string('gajipokok')->default(0);
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
 
