@@ -114,9 +114,10 @@ class UserListController extends Controller
                 "borndate" => $request->born_date,
                 "gender" => $request->gender ?: '-',
                 "personalemail" =>  $request->personal_email,
-                "phone_number" => $request->phone_number,
+                "phonenumber" => $request->phone_number,
                 "fk_marialstatus" => $request->fk_marialstatus,
                 "fk_religion" => $request->fk_religion,
+                "alamat" => $request->alamat,
                 "fk_bank" => $request->fk_bank,
                 "accountnumber" =>  $request->accountnumber,
             ]);
@@ -133,9 +134,11 @@ class UserListController extends Controller
         try {
             DB::beginTransaction();
 
-            User::where('id', $request->id)->update([
-                'password' =>  Hash::make($request->pwd),
-            ],);
+            if ($request->pwd) {
+                User::where('id', $request->id)->update([
+                    'password' =>  Hash::make($request->pwd),
+                ],);
+            }
 
             Employee::where('fk_user', $request->id)->update([
                 'nik' => $request->nik,
@@ -152,8 +155,9 @@ class UserListController extends Controller
                 "borndate" => $request->born_date,
                 "gender" => $request->gender ?: '-',
                 "personalemail" =>  $request->personal_email,
-                "phone_number" => $request->phone_number,
+                "phonenumber" => $request->phone_number,
                 "fk_marialstatus" => $request->fk_marialstatus,
+                "alamat" => $request->alamat,
                 "fk_religion" => $request->fk_religion,
                 "fk_bank" => $request->fk_bank,
                 "accountnumber" =>  $request->accountnumber,

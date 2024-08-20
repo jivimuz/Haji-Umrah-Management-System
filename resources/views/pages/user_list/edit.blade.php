@@ -317,6 +317,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Alamat: </label>
+                                <textarea rows="1" type="text" class="form-control" id="alamat" name="alamat">{{ $data->alamat }}</textarea>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -493,7 +499,7 @@
                     closeModal('ThisModal')
                     Swal.fire({
                         icon: 'success',
-                        title: 'User Created!',
+                        title: 'User Updated!',
                     });
                 },
                 error: function(xhr, status, error) {

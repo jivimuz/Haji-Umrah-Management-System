@@ -295,6 +295,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Alamat: </label>
+                                <textarea rows="1" type="text" class="form-control" id="alamat" name="alamat"></textarea>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
