@@ -125,7 +125,7 @@
                                         style="height: 900px; border: 0; width: 450px; margin-top: -60px; margin-left: -24px; position: relative; z-index: 1;">
                                     </iframe>
                                     <div
-                                        style="position: absolute; left: 0;margin-top: -500px; width: 450px; height: 500px; background-color: rgba(255, 255, 255, 0); z-index: 2;">
+                                        style="position: absolute; margin-top: -500px; width: 450px; height: 500px; background-color: rgba(255, 255, 255, 0); z-index: 2;">
                                     </div>
                                 </div>
                             </div>
