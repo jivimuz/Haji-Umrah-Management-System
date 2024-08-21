@@ -21,6 +21,7 @@ return new class extends Migration
             $table->datetime('paid_at')->nullable();
             $table->datetime('void_at')->nullable();
             $table->integer('void_by')->nullable();
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }

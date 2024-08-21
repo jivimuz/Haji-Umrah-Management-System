@@ -95,6 +95,8 @@ class PaymentController extends Controller
                     'paid_at' => Carbon::now(),
                     'void_at' => null,
                     'void_by' => null,
+                    'created_at' => Carbon::now(),
+                    'created_by' => auth()->user()->id,
                 ]);
             } else {
                 $insert = Payment::insert([
@@ -106,6 +108,8 @@ class PaymentController extends Controller
                     'paid_at' => Carbon::now(),
                     'void_at' => null,
                     'void_by' => null,
+                    'created_at' => Carbon::now(),
+                    'created_by' => auth()->user()->id,
                 ]);
             }
 
