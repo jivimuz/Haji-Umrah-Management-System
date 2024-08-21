@@ -5,6 +5,7 @@ use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\ModuleController;
 use App\Http\Controllers\Website\UserListController;
 use App\Http\Controllers\Website\AuthController;
+use App\Http\Controllers\Website\InfoController;
 use App\Http\Controllers\Website\JamaahController;
 use App\Http\Controllers\Website\PaketController;
 use App\Http\Controllers\Website\PaymentController;
@@ -126,5 +127,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('jamaahInfo/{id}', [PrintController::class, 'jamaahInfo']);
         Route::get('surat_rekomendasi/{id}', [PrintController::class, 'suratRekomendasi']);
         Route::get('surat_ijin/{id}', [PrintController::class, 'suratIjin']);
+    });
+
+    Route::middleware(['checkAccess:INF'])->prefix('info')->group(function () {
+        Route::get('/', [InfoController::class, 'index']);
     });
 });
