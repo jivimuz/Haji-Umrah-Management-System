@@ -50,6 +50,11 @@ return new class extends Migration
                 "value" => 0,
                 "type" => 'number',
             ],
+            [
+                "parameter" => 'apikey_estimasi_haji',
+                "value" => '',
+                "type" => 'text',
+            ],
         ]);
     }
 

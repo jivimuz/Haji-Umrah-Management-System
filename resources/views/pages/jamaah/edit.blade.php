@@ -181,6 +181,39 @@
                 class=" dropify editable" disabled id="attachment" name="attachment[]">
         </div>
 
+        @if ($isHaji)
+            <div class="col-md-6">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">No Porsi: <span class="text-danger">*</span></label>
+                            <input type="text" disabled class="form-control editable" id="no_porsi"
+                                name="no_porsi" value="{{ $data->no_porsi }}" placeholder="No Porsi"
+                                maxlength="50">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Registration Date: <span class="text-danger">*</span></label>
+                            <input type="date" disabled class="form-control editable" min="{{ date('Y-m-d') }}"
+                                id="regis_date" name="regis_date"
+                                value="{{ date('Y-m-d', strtotime($data->regis_date)) }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Estimate Date: <span class="text-danger">*</span></label>
+                            <input type="date" disabled class="form-control editable" min="{{ date('Y-m-d') }}"
+                                id="est_date" name="est_date"
+                                value="{{ date('Y-m-d', strtotime($data->est_date)) }}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        @endif
+
     </div>
     <div class="float-end" id="isHide" hidden>
         <a class="btn btn-sm btn-outline-warning rounded-pill" onclick="isView(true)">

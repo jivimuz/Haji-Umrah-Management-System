@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('nama_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
             $table->string('city_passport')->nullable();
+            $table->string('no_porsi')->nullable();
+            $table->date('regis_date')->nullable();
+            $table->date('est_date')->nullable();
             $table->string('vaccine1')->nullable();
             $table->date('vaccine1_date')->nullable();
             $table->string('vaccine2')->nullable();

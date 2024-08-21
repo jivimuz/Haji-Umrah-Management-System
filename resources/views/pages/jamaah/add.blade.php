@@ -166,6 +166,35 @@
             <label for="">Image: </label>
             <input type="file" accept="image/*" class=" dropify " id="attachment" name="attachment[]">
         </div>
+        @if ($isHaji)
+            <div class="col-md-6">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">No Porsi: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="no_porsi" name="no_porsi"
+                                placeholder="No Porsi" maxlength="50">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Registration Date: <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="regis_date"
+                                name="regis_date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Estimate Date: <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="est_date"
+                                name="est_date">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        @endif
 
     </div>
     <div class="float-end">

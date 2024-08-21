@@ -42,14 +42,16 @@ class JamaahController extends Controller
     {
         $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.type', 'Umrah')->where('flight_date', '>=', date('Y-m-d'))->get();
         $agen = Agen::where('is_active', true)->get();
-        return view('pages/jamaah/add', compact('paket', 'agen'));
+        $isHaji = false;
+        return view('pages/jamaah/add', compact('paket', 'agen', 'isHaji'));
     }
 
     public function addHaji()
     {
         $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.type', 'Haji')->where('flight_date', '>=', date('Y-m-d'))->get();
         $agen = Agen::where('is_active', true)->get();
-        return view('pages/jamaah/add', compact('paket', 'agen'));
+        $isHaji = true;
+        return view('pages/jamaah/add', compact('paket', 'agen', 'isHaji'));
     }
 
     public function saveData(Request $request)
@@ -90,6 +92,9 @@ class JamaahController extends Controller
                 'nama_ibu' => $request->nama_ibu,
                 'discount' => $request->discount,
                 'gender' => $request->gender,
+                'no_porsi' => $request->no_porsi ?: null,
+                'regis_date' => $request->regis_date ?: null,
+                'est_date' => $request->est_date ?: null,
                 'vaccine1' => $request->vaccine1,
                 'vaccine1_date' => $request->vaccine1_date,
                 'vaccine2' => $request->vaccine2,
@@ -119,8 +124,10 @@ class JamaahController extends Controller
         $data = Jamaah::where('id', $request->id)->first();
         $paket = Paket::select(['m_paket.*', 'm_program.nama as program'])->join('m_program', 'm_program.id', 'm_paket.program_id')->where('m_paket.id', $data->paket_id)->first();
         $agen = Agen::where('is_active', true)->get();
-        return view('pages/jamaah/edit', compact('data', 'id', 'paket', 'agen'));
+        $isHaji = $request->isHaji ?: false;
+        return view('pages/jamaah/edit', compact('data', 'id', 'paket', 'agen', 'isHaji'));
     }
+
 
     public function updateData(Request $request)
     {
@@ -156,6 +163,9 @@ class JamaahController extends Controller
                     'nama_ibu' => $request->nama_ibu,
                     'discount' => $request->discount,
                     'gender' => $request->gender,
+                    'no_porsi' => $request->no_porsi ?: null,
+                    'regis_date' => $request->regis_date ?: null,
+                    'est_date' => $request->est_date ?: null,
                     'vaccine1' => $request->vaccine1,
                     'vaccine1_date' => $request->vaccine1_date,
                     'vaccine2' => $request->vaccine2,
