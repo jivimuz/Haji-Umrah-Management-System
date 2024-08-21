@@ -89,7 +89,14 @@
                     <div class="card-body" style="padding-left: 40px; padding-right:40px" id="haji">
                         <div class="row">
                             <div class="col-xl-7">
-                                <h4 for="">Hajj Waiting List </h4>
+                                <div>
+
+                                    <h4 for="">Hajj Waiting List (Kemenag) <a
+                                            class="btn btn-sm btn-outline-warning rounded-pill mt-2 ml-2"
+                                            onclick="getWaitingList()">
+                                            Refresh
+                                        </a> </h4>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover" id="wait-table">
                                         <thead>
