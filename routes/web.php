@@ -131,5 +131,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['checkAccess:INF'])->prefix('info')->group(function () {
         Route::get('/', [InfoController::class, 'index']);
+        Route::post('getNusukPackages', [InfoController::class, 'getNusukPackages']);
     });
 });

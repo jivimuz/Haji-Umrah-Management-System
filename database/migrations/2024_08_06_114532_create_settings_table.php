@@ -51,9 +51,9 @@ return new class extends Migration
                 "type" => 'number',
             ],
             [
-                "parameter" => 'apikey_estimasi_haji',
-                "value" => '',
-                "type" => 'text',
+                "parameter" => 'price_1_sar_in_idr',
+                "value" => 4000,
+                "type" => 'number',
             ],
         ]);
     }

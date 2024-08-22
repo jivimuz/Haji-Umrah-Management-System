@@ -3,7 +3,7 @@
         <div class="nav nav-pills" style="text-align: center; align-items:center; justify-content: center">
             <a href="#" class="nav-link btn-outline-primary btn" id="tab1">Transaction Out</a>
             <a href="#" class="nav-link btn-outline-primary btn" id="tab2">Jamaah Refund</a>
-            <a href="#" class="nav-link btn-outline-primary btn" id="tab3">Fee Jamaah</a>
+            <a href="#" class="nav-link btn-outline-primary btn" id="tab3">Fee Agen</a>
         </div>
 
         <hr>
