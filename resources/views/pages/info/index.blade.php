@@ -491,7 +491,7 @@
                             currency: "IDR"
                         })} </h3>
               <p class="text-warning"> (Kurs : IDR <?= number_format($idrToSar, 2) ?>) </small>
-                <p>${iData.attributes.Price_Per_Person ? 'Per': iData.attributes.Price_Per_Person} Person ${iData.attributes.Visa_Included || iData.attributes.Vat_Included ? '(' : ''}  ${iData.attributes.Visa_Included ? '' : 'Visa Excluded'} ${iData.attributes.Visa_Included && iData.attributes.Vat_Included ? '&' : ''} ${iData.attributes.Vat_Included ? '' : 'Visa Excluded'} ${iData.attributes.Visa_Included || iData.attributes.Vat_Included ? ')' : ''}</p>
+                <p>${iData.attributes.Price_Per_Person ? 'Per': iData.attributes.Price_Per_Person} Person ${iData.attributes.Visa_Included || iData.attributes.Vat_Included ? '(' : ''}  ${iData.attributes.Visa_Included ? '' : 'Visa Excluded'} ${iData.attributes.Visa_Included && iData.attributes.Vat_Included ? '&' : ''} ${iData.attributes.Vat_Included ? '' : 'Vat Excluded'} ${iData.attributes.Visa_Included || iData.attributes.Vat_Included ? ')' : ''}</p>
                 <div class="row" style="width:100%; overflow-x: hidden">${sosmed}</div>
                 `
                 $('#nusukModalVal').html(n);
