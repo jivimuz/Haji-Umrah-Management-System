@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="content-inner mt-5 py-0">
+    <div class="content-inner mt-5 py-0" style="overflow-x: hidden">
         <div class="row">
             <div class="col-md-12">
                 <div class="card" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40" data-iq-duration=".6"
@@ -89,6 +89,7 @@
                     <div class="card-body fieldArea" style="padding-left: 40px; padding-right:40px" id="haji">
                         <div class="row">
                             <div class="col-xl-7">
+                                <br>
                                 <div>
                                     <h4 for="">Hajj Waiting List ( Kemenag ) <a
                                             class="btn btn-sm btn-outline-warning rounded-pill mt-2 ml-2"
@@ -112,16 +113,17 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-xl-5">
+                            <div class="col-xl-5" style="overflow-x: hidden">
+                                <br>
                                 <h4 for="">Hajj Depature Estimation </h4>
                                 <br>
                                 <div
-                                    style="overflow: hidden; left: 0px; top: 0px;  width:454px; height:702px;  position: relatice">
+                                    style="overflow: hidden; left: 0px; top: 0px;  width:404px; height:702px;  position: relatice">
                                     <div style="overflow: hidden; margin-top: -100px; margin-left: -25px;">
                                     </div>
 
                                     <iframe src="https://haji.kemenag.go.id/v5/?search=estimation" scrolling="no"
-                                        style="height: 900px; border: 0; width: 450px; margin-top: -60px; margin-left: -24px; position: relative; z-index: 1;">
+                                        style="height: 900px; border: 0; width: 400px; margin-top: -60px; margin-left: -24px; position: relative; z-index: 1;">
                                     </iframe>
                                     <div
                                         style="position: absolute; margin-top: -500px; width: 450px; height: 500px; background-color: rgba(255, 255, 255, 0); z-index: 2;">

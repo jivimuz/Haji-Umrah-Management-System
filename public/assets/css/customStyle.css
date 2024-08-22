@@ -37,3 +37,9 @@
     width: 100% !important;
 }
 /* Stop Datatables CSS */
+
+@media only screen and (max-width: 768px) {
+    .mobileHide {
+        display: none;
+    }
+}

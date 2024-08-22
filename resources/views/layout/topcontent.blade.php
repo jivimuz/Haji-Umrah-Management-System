@@ -48,7 +48,7 @@ $company_name = Setting::where('parameter', 'company_name')->first()->value ?: '
             </span>
             <input type="search" class="form-control" placeholder="Search...">
           </div> --}}
-                <h4>{{ $company_name }}</h4>
+                <h4 class="mobileHide">{{ $company_name }}</h4>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
