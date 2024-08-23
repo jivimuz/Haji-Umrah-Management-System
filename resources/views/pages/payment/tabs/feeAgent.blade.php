@@ -118,18 +118,28 @@
 
             {
                 data: "paket",
+                render: function(data, b, c) {
+                    return data ?? "Belum Ada Paket"
+                },
             },
             {
                 data: "tjamaah",
+                render: function(data, b, c) {
+                    return data ?? 0
+                },
             },
 
             {
                 data: "fee",
                 render: function(data, b, c) {
-                    return (parseFloat(data) + parseFloat(c.paidFee)).toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR"
-                    });
+                    if (data) {
+                        return (parseFloat(data) + parseFloat(c.paidFee)).toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        });
+                    }
+                    return 0
+
                 },
             },
         ]
@@ -155,13 +165,14 @@
             initComplete: function(settings, json) {
                 let tfee = 0;
                 json.data.map((item) => {
-                    tfee = parseFloat(tfee) + (parseFloat(item.fee) + parseFloat(item
-                        .paidFee))
+                    tfee = parseFloat(tfee ?? 0) + (parseFloat(item.fee ?? 0) + parseFloat(
+                        item.paidFee ?? 0))
                 })
-                $('#unpaid').val(tfee.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR"
-                }))
+                $('#unpaid').val((tfee < 0 ? "Kelebihan Pencairan : " : '') + tfee.toLocaleString(
+                    "id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }))
 
 
             },
