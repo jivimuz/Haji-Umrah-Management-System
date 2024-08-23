@@ -15,7 +15,7 @@
         <div class="form-group isHide" hidden>
             <label for="">Nominal Fee: <span class="text-danger">*</span></label>
             <input type="number" class="form-control" id="nominal" onkeypress="noMinus(this)"
-                placeholder="Nominal Refund" inputmode="numeric" maxlength="50">
+                placeholder="Nominal Pencairan" inputmode="numeric" maxlength="50">
         </div>
         <div class="form-group isHide" hidden>
             <label for="">Remark: <span class="text-danger">*</span></label>

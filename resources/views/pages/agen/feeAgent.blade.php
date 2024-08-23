@@ -86,13 +86,14 @@
             initComplete: function(settings, json) {
                 let tfee = 0;
                 json.data.map((item) => {
-                    tfee = parseFloat(tfee) + (parseFloat(item.fee) + parseFloat(item
-                        .paidFee))
+                    tfee = parseFloat(tfee ?? 0) + (parseFloat(item.fee ?? 0) + parseFloat(
+                        item.paidFee ?? 0))
                 })
-                $('#unpaid').val(tfee.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR"
-                }))
+                $('#unpaid').val((tfee < 0 ? "Kelebihan Pencairan :" : '') + tfee.toLocaleString(
+                    "id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                    }))
 
 
             },

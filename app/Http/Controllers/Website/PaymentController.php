@@ -204,7 +204,7 @@ class PaymentController extends Controller
             DB::raw("(SELECT COALESCE(COUNT(id), 0) as tjamaah FROM t_jamaah where t_jamaah.agen_id = m_agen.id) as tjamaah"),
             DB::raw("(SELECT COALESCE(SUM(nominal), 0) as paid FROM t_payment where t_payment.agen_id = m_agen.id and t_payment.void_by IS NULL) as paidFee"),
         ])
-            ->join(DB::raw("(SELECT COALESCE(SUM(publish_price - basic_price), 0) as fee,agen_id,paket_id, m_paket.nama as paket  FROM t_jamaah join m_paket on m_paket.id = t_jamaah.paket_id where agen_id = '$request->id' and publish_price - basic_price > 0 group by agen_id,paket_id, m_paket.nama) as dt"), 'dt.agen_id', 'm_agen.id')
+            ->leftJoin(DB::raw("(SELECT COALESCE(SUM(publish_price - basic_price), 0) as fee,agen_id,paket_id, m_paket.nama as paket  FROM t_jamaah join m_paket on m_paket.id = t_jamaah.paket_id where agen_id = '$request->id' group by agen_id,paket_id, m_paket.nama) as dt"), 'dt.agen_id', 'm_agen.id')
             ->where('m_agen.id', $request->id)->get();
 
 

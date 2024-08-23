@@ -93,10 +93,10 @@
                     render: function(data, b, c) {
                         var a = '';
                         let total = (parseFloat(c.fee) + parseFloat(c.paidFee));
-                        if (total > 0) {
-                            a += `<a onclick="seeFee(${data} , '${c.nama}')" class='btn btn-xs rounded-pill btn-outline-sm btn-warning'>`
+                        if (total > 0 || total < 0) {
+                            a += `<a onclick="seeFee(${data} , '${c.nama}')" class="btn btn-xs rounded-pill btn-sm btn-outline-${total > 0 ? 'success':'danger'}">`
                         } else {
-                            a += "<a class='btn btn-xs rounded-pill btn-outline-sm btn-success'>"
+                            a += "<a class='btn btn-xs rounded-pill btn-sm btn-outline-warning'>"
                         }
                         a += total.toLocaleString("id-ID", {
                             style: "currency",
