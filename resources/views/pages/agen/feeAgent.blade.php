@@ -49,18 +49,28 @@
 
             {
                 data: "paket",
+                render: function(data, b, c) {
+                    return data ?? "Belum Ada Paket"
+                },
             },
             {
                 data: "tjamaah",
+                render: function(data, b, c) {
+                    return data ?? 0
+                },
             },
 
             {
                 data: "fee",
                 render: function(data, b, c) {
-                    return (parseFloat(data) + parseFloat(c.paidFee)).toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR"
-                    });
+                    if (data) {
+                        return (parseFloat(data) + parseFloat(c.paidFee)).toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        });
+                    }
+                    return 0
+
                 },
             },
         ]
