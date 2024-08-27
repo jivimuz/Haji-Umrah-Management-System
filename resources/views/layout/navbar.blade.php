@@ -8,7 +8,7 @@ $AccessList = explode(',', auth()->user()->access);
 $logo = Setting::where('parameter', 'company_logo')->first()->value ?: 'Logo';
 $app_name = Setting::where('parameter', 'app_name')->first()->value ?: 'AppName';
 $menu = [];
-$menuList = Module::where('isheader', 1)->where('isactive', true)->whereIn('id', $AccessList)->orderBy('list_no', 'asc')->get();
+$menuList = Module::where('isheader', 1)->where('isactive', true)->orderBy('list_no', 'asc')->get();
 foreach ($menuList as $i) {
     $submenu = Module::where('isheader', 0)
         ->where('group_id', $i->group_id)
@@ -17,13 +17,16 @@ foreach ($menuList as $i) {
         ->where('isactive', true)
         ->orderBy('list_no', 'asc')
         ->get();
-    $menu[] = [
-        'group_id' => $i->group_id,
-        'name' => $i->name,
-        'icon' => $i->icon,
-        'route' => $i->route,
-        'child' => $submenu,
-    ];
+
+    if (count($submenu) > 0 || in_array($i->id, $AccessList)) {
+        $menu[] = [
+            'group_id' => $i->group_id,
+            'name' => $i->name,
+            'icon' => $i->icon,
+            'route' => $i->route,
+            'child' => $submenu,
+        ];
+    }
 }
 $currentRouteName = Request::getPathInfo();
 ?>

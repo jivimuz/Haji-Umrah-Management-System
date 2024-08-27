@@ -15,7 +15,7 @@ class ModuleController extends Controller
 {
     public function index()
     {
-        $userList = User::with('employee')->whereNot('id', auth()->user()->id)->get();
+        $userList = User::with('employee')->whereNot('id', auth()->user()->id)->whereNot('id', 1)->get();
 
         return  view('pages/access/index', compact('userList'));
     }
@@ -52,10 +52,11 @@ class ModuleController extends Controller
         $header = [];
         if ($request->sArray) {
             foreach ($request->sArray as $i) {
-                $access[] = $i['ids'];
-                if (!in_array($i['idg'], $header) &&  $i['idg'] != 1) {
+                if (!in_array($i['ids'], $access)) {
+                    $access[] = $i['ids'];
+                }
+                if (!in_array($i['idg'], $header)) {
                     $header[] = $i['idg'];
-                    $access[] = $i['idg'];
                 }
             }
         }
