@@ -129,9 +129,9 @@
                     data: "paid",
                     render: function(data, b, c) {
                         var a = ''
-                        if (c.is_done) {
+                        if (parseInt(c.is_done)) {
                             a += "<small class='text-success'>"
-                        } else if (data) {
+                        } else if (parseInt(data)) {
                             a += "<small class='text-primary'>"
                         } else {
                             a += "<small class='text-warning'>"
@@ -156,7 +156,7 @@
                         });
                         a += '</small>'
                         a += "<small class='text-danger'>"
-                        if (!c.is_done) {
+                        if (!parseInt(c.is_done)) {
                             a += '<br> Sisa ' + ((parseFloat(c.price) + parseFloat(c.morepayment)) - parseFloat(
                                 data)).toLocaleString("id-ID", {
                                 style: "currency",
@@ -172,9 +172,9 @@
                     data: "is_firstpaid",
                     render: function(data, b, c) {
                         var a = ''
-                        if (c.is_done) {
+                        if (parseInt(c.is_done)) {
                             a += "<span class='badge rounded-pill bg-success'>Lunas</span>"
-                        } else if (data) {
+                        } else if (parseInt(data)) {
                             a += "<span class='badge rounded-pill bg-primary'>Kurang Bayar</span>"
                         } else {
                             a += "<span class='badge rounded-pill bg-warning'>Belum Bayar</span>"
