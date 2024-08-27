@@ -319,309 +319,166 @@
     @section('script')
         <script>
             $(document).ready(function() {
-                LoadPage()
                 setTimeout(() => {
                     LoadPage()
                 }, 2000);
             })
 
-            function LoadPage() {
-                (function(jQuery) {
-                    "use strict";
-                    let lastDate = 0
-                    let TICKINTERVAL = 864e5;
-                    let XAXISRANGE = 7776e5;
-                    const chartFunction = {
-                        chartDummySearies: (e, t, refData) => {
-                            let data = refData
-                            const a = e + TICKINTERVAL;
-                            lastDate = a;
-                            for (let n = 0; n < data.length - 50; n++) data[n].x = a - XAXISRANGE -
-                                TICKINTERVAL, data[
-                                    n].y = 0;
-                            data.push({
-                                x: a,
-                                y: Math.floor(Math.random() * (t.max - t.min + 1)) + t.min
-                            })
-                            return data
+            function renderChart(elementId, data) {
+                const options = {
+                    series: [{
+                            type: 'column',
+                            name: 'Laki-laki',
+                            data: data.jl,
+                        }, {
+                            type: 'column',
+                            name: 'Perempuan',
+                            data: data.jp
                         },
-                        generateDayWiseTimeSeries(baseval, count, yrange) {
-                            let i = 0;
-                            let series = [];
-                            while (i < count) {
-                                let x = baseval;
-                                let y =
-                                    Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-                                series.push([x, y]);
-                                baseval += 86400000;
-                                i++;
-                            }
-                            return series;
+                        {
+                            type: 'line',
+                            curve: 'smooth',
+                            name: 'higher',
+                            data: data.tt
                         }
-                    }
-                    if (jQuery('#admin-chart-1').length) {
-                        $.ajax({
-                            url: "{{ url('getJamaahUmrahInYear') }}",
-                            method: 'post',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    ],
+                    chart: {
+                        height: 350,
+                        type: 'line',
+                        animations: {
+                            enabled: true,
+                            easing: 'easeinout',
+                            speed: 800,
+                            animateGradually: {
+                                enabled: false,
+                                delay: 150
                             },
-
-                            success: function(data) {
-                                $('#earn').attr('class', data.earn > 0 ? 'text-success' : 'text-danger')
-                                $('#earn').html(parseFloat(data.earn).toLocaleString("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR"
-                                }))
-                                $('#ulp').html(data.cjp + "/" + data.cjl)
-                                $('#utp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
-
-                                const options = {
-                                    series: [{
-                                            type: 'column',
-                                            name: 'Laki-laki',
-                                            data: data.jl,
-                                        }, {
-                                            type: 'column',
-                                            name: 'Perempuan',
-                                            data: data.jp
-                                        },
-                                        {
-                                            type: 'line',
-                                            curve: 'smooth',
-                                            name: 'higher',
-                                            data: data.tt
-                                        }
-                                    ],
-
-                                    chart: {
-                                        height: 350,
-                                        type: 'line',
-                                        animations: {
-                                            enabled: true,
-                                            easing: 'easeinout',
-                                            speed: 800,
-                                            animateGradually: {
-                                                enabled: false,
-                                                delay: 150
-                                            },
-                                            dynamicAnimation: {
-                                                enabled: true,
-                                                speed: 350
-                                            }
-                                        },
-                                        zoom: {
-                                            enabled: false,
-                                        },
-                                        toolbar: {
-                                            show: false
-                                        }
-                                    },
-                                    tooltip: {
-                                        enabled: true,
-                                    },
-                                    stroke: {
-                                        width: [0, 2]
-                                    },
-                                    dataLabels: {
-                                        enabled: true,
-                                        enabledOnSeries: [1],
-                                        offsetX: 3.0,
-                                        offsetY: -1.6,
-                                        style: {
-                                            fontSize: '1px',
-                                            fontFamily: 'Helvetica, Arial, sans-serif',
-                                            fontWeight: 'bold',
-                                        },
-                                        background: {
-                                            enabled: true,
-                                            foreColor: '#fff',
-                                            color: '#fff',
-                                            padding: 10,
-                                            borderRadius: 10,
-                                            borderWidth: 0,
-                                            borderColor: '#fff',
-                                            opacity: 1,
-                                        }
-
-                                    },
-                                    colors: ["#ECC812", "#EA6A12", "#8EEC12"],
-                                    plotOptions: {
-                                        bar: {
-                                            horizontal: false,
-                                            columnWidth: '16%',
-                                            endingShape: 'rounded',
-                                            borderRadius: 5,
-                                        },
-                                    },
-                                    legend: {
-                                        show: false,
-                                        offsetY: -25,
-                                        offsetX: -5
-                                    },
-                                    xaxis: {
-                                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                                            'Jul', 'Aug',
-                                            'Sep', 'Oct', 'Nov',
-                                            'Dec'
-                                        ],
-                                        labels: {
-                                            minHeight: 20,
-                                            maxHeight: 20,
-                                        }
-                                    },
-                                    yaxis: {
-                                        labels: {
-                                            minWidth: 20,
-                                            maxWidth: 20,
-                                        }
-                                    },
-                                };
-
-                                const chart = new ApexCharts(document.querySelector("#admin-chart-1"),
-                                    options);
-                                chart.render();
-                            },
-                            error: function(xhr, status, error) {
-                                Toast.fire({
-                                    icon: "error",
-                                    title: JSON.parse(xhr.responseText).error
-                                });
-
+                            dynamicAnimation: {
+                                enabled: true,
+                                speed: 350
                             }
+                        },
+                        zoom: {
+                            enabled: false,
+                        },
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                    },
+                    stroke: {
+                        width: [0, 2]
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        enabledOnSeries: [1],
+                        offsetX: 3.0,
+                        offsetY: -1.6,
+                        style: {
+                            fontSize: '1px',
+                            fontFamily: 'Helvetica, Arial, sans-serif',
+                            fontWeight: 'bold',
+                        },
+                        background: {
+                            enabled: true,
+                            foreColor: '#fff',
+                            color: '#fff',
+                            padding: 10,
+                            borderRadius: 10,
+                            borderWidth: 0,
+                            borderColor: '#fff',
+                            opacity: 1,
+                        }
+                    },
+                    colors: ["#ECC812", "#EA6A12", "#8EEC12"],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '16%',
+                            endingShape: 'rounded',
+                            borderRadius: 5,
+                        },
+                    },
+                    legend: {
+                        show: false,
+                        offsetY: -25,
+                        offsetX: -5
+                    },
+                    xaxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        labels: {
+                            minHeight: 20,
+                            maxHeight: 20,
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            minWidth: 20,
+                            maxWidth: 20,
+                        }
+                    },
+                };
+
+                const chart = new ApexCharts(document.querySelector(elementId), options);
+                chart.render();
+            }
+
+            function LoadPage() {
+                $.ajax({
+                    url: "{{ url('getJamaahUmrahInYear') }}",
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    data: {
+                        branch_id: $('#branch_id').val()
+                    },
+                    success: function(data) {
+                        console.log(data)
+                        let tot = parseFloat(data.earn)
+                        $('#earn').html(tot.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR"
+                        }))
+                        $('#earn').attr('class', parseFloat(data.earn) > 0 ? 'text-success' : 'text-danger')
+                        $('#ulp').html(data.cjp + "/" + data.cjl)
+                        $('#utp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
+
+                        renderChart("#admin-chart-1", data);
+                    },
+                    error: function(xhr, status, error) {
+                        Toast.fire({
+                            icon: "error",
+                            title: JSON.parse(xhr.responseText).error
                         });
                     }
+                });
 
-                    if (jQuery('#admin-chart-2').length) {
-                        $.ajax({
-                            url: "{{ url('getJamaahHajiInYear') }}",
-                            method: 'post',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
+                $.ajax({
+                    url: "{{ url('getJamaahHajiInYear') }}",
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    data: {
+                        branch_id: $('#branch_id').val()
+                    },
+                    success: function(data) {
+                        $('#hlp').html(data.cjp + "/" + data.cjl)
+                        $('#htp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
 
-                            success: function(data) {
-                                $('#hlp').html(data.cjp + "/" + data.cjl)
-                                $('#htp').html(parseFloat(data.cjl) + parseFloat(data.cjp))
-
-                                const options = {
-                                    series: [{
-                                            type: 'column',
-                                            name: 'Laki-laki',
-                                            data: data.jl,
-                                        }, {
-                                            type: 'column',
-                                            name: 'Perempuan',
-                                            data: data.jp
-                                        },
-                                        {
-                                            type: 'line',
-                                            curve: 'smooth',
-                                            name: 'higher',
-                                            data: data.tt
-                                        }
-                                    ],
-
-                                    chart: {
-                                        height: 350,
-                                        type: 'line',
-                                        animations: {
-                                            enabled: true,
-                                            easing: 'easeinout',
-                                            speed: 800,
-                                            animateGradually: {
-                                                enabled: false,
-                                                delay: 150
-                                            },
-                                            dynamicAnimation: {
-                                                enabled: true,
-                                                speed: 350
-                                            }
-                                        },
-                                        zoom: {
-                                            enabled: false,
-                                        },
-                                        toolbar: {
-                                            show: false
-                                        }
-                                    },
-                                    tooltip: {
-                                        enabled: true,
-                                    },
-                                    stroke: {
-                                        width: [0, 2]
-                                    },
-                                    dataLabels: {
-                                        enabled: true,
-                                        enabledOnSeries: [1],
-                                        offsetX: 3.0,
-                                        offsetY: -1.6,
-                                        style: {
-                                            fontSize: '1px',
-                                            fontFamily: 'Helvetica, Arial, sans-serif',
-                                            fontWeight: 'bold',
-                                        },
-                                        background: {
-                                            enabled: true,
-                                            foreColor: '#fff',
-                                            color: '#fff',
-                                            padding: 10,
-                                            borderRadius: 10,
-                                            borderWidth: 0,
-                                            borderColor: '#fff',
-                                            opacity: 1,
-                                        }
-
-                                    },
-                                    colors: ["#ECC812", "#EA6A12", "#8EEC12"],
-                                    plotOptions: {
-                                        bar: {
-                                            horizontal: false,
-                                            columnWidth: '16%',
-                                            endingShape: 'rounded',
-                                            borderRadius: 5,
-                                        },
-                                    },
-                                    legend: {
-                                        show: false,
-                                        offsetY: -25,
-                                        offsetX: -5
-                                    },
-                                    xaxis: {
-                                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                                            'Jul', 'Aug',
-                                            'Sep', 'Oct', 'Nov',
-                                            'Dec'
-                                        ],
-                                        labels: {
-                                            minHeight: 20,
-                                            maxHeight: 20,
-                                        }
-                                    },
-                                    yaxis: {
-                                        labels: {
-                                            minWidth: 20,
-                                            maxWidth: 20,
-                                        }
-                                    },
-                                };
-
-                                const chart2 = new ApexCharts(document.querySelector("#admin-chart-2"),
-                                    options);
-                                chart2.render();
-                            },
-                            error: function(xhr, status, error) {
-                                Toast.fire({
-                                    icon: "error",
-                                    title: JSON.parse(xhr.responseText).error
-                                });
-
-                            }
+                        renderChart("#admin-chart-2", data);
+                    },
+                    error: function(xhr, status, error) {
+                        Toast.fire({
+                            icon: "error",
+                            title: JSON.parse(xhr.responseText).error
                         });
                     }
+                });
 
-                })(jQuery)
 
                 getList()
                 get40Days()
