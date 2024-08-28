@@ -78,8 +78,8 @@
                                                 IDR
                                             </div>
                                             <div class="text-end">
-                                                <h2 class="counter"id="earn" style="text-decoration-line: underline">Rp. 0
-                                                </h2>
+                                                <h3 class="counter"id="earn" style="text-decoration-line: underline">Rp. 0
+                                                </h3>
                                                 Current Asset
                                             </div>
                                         </div>
