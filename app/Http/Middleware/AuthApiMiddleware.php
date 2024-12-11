@@ -1,2 +1,38 @@
 <?php
- namespace App\Http\Middleware; use Closure; use Illuminate\Support\Facades\Auth; use App\Models\JwtToken; use App\Models\Serial; use Carbon\Carbon; use Illuminate\Support\Facades\DB; use Illuminate\Support\Facades\Http; class AuthApiMiddleware { public function handle($request, Closure $next) { if ($request->is("\141\160\151\57\52")) { if (!$request->is("\x61\x70\x69\x2f\141\165\164\x68\57\x72\145\x67\151\x73\164\x65\x72") && !$request->is("\141\160\151\57\141\x75\164\x68\57\x6c\157\147\151\156")) { if (!Auth::guard("\141\x70\x69")->check()) { return response()->json(array("\x73\x74\141\x74\x75\163" => false, "\155\145\x73\x73\x61\147\145" => "\125\156\141\165\x74\x68\x6f\162\151\172\145\x64"), 401); } if (!JwtToken::fnIsTokenActive($request->bearerToken())) { return response()->json(array("\163\164\141\164\x75\x73" => false, "\155\x65\163\x73\141\147\145" => "\125\156\x61\165\164\x68\157\x72\x69\x7a\x65\x64"), 401); } } } if (!$request->is("\x73\x65\162\151\141\154\101\143\164\151\x76\x61\x74\151\157\156")) { $type = env("\124\131\x50\105\x5f\114\117\103\x41\x4c\x5f\123\105\x52\126\105\x52", 0); if (!$type == 2) { $serial = Serial::first(); if ($type == 0) { $endpoint = env("\x41\x55\124\x48\x5f\x53\x45\122\x56\105\122", "\x68\164\x74\x70\x73\x3a\x2f\57\x73\145\162\151\141\154\155\141\x6e\x61\x67\145\162\x2e\x61\163\x76\x61\x74\157\165\162\56\x73\x69\164\x65\57\x61\165\x74\x68\157\162\x69\172\141\x74\x69\x6f\x6e"); $response = Http::get($endpoint, array("\163\145\x72\151\141\154\x5f\143\x6f\x64\145" => $serial ? $serial->serial_code : "\55")); $data = $response->json(); $now = Carbon::now(); $twoWeeksLater = $now->copy()->addWeeks(2); if ($data && isset($data["\x64\141\164\141"]["\166\x61\154\151\144\137\x75\x6e\164\x69\154"])) { $expiryDate = Carbon::parse($data["\x64\x61\164\x61"]["\x76\141\x6c\151\x64\137\165\156\x74\x69\x6c"]); DB::table("\x73\145\x72\151\x61\x6c")->update(array("\166\x61\154\x69\x64\x5f\165\156\164\x69\154" => $data["\144\x61\x74\141"]["\x76\x61\154\x69\x64\x5f\165\x6e\x74\x69\154"])); if ($expiryDate->lessThanOrEqualTo(Carbon::yesterday()) && !$request->is("\145\162\162\x6f\162")) { return redirect()->route("\x65\162\x72\x6f\162")->with("\x69\x73\105\x78\160\151\162\145\x64", true); } if ($expiryDate->lessThanOrEqualTo($twoWeeksLater)) { session()->flash("\145\170\x70\x69\x72\x65\144\101\154\x65\162\164", true); session()->flash("\x65\x78\x70\x69\162\x65\x64\104\141\164\x65", "\x41\x70\x70\x20\x77\151\x6c\154\40\x62\145\x20\142\154\157\143\x6b\145\144\40\x61\164\x20" . $data["\x64\141\x74\x61"]["\166\x61\154\x69\144\137\x75\x6e\164\x69\154"]); } } } if (!$serial && !$request->is("\145\162\x72\157\x72")) { return redirect()->route("\145\162\x72\x6f\x72")->with("\x69\x73\x45\170\x70\151\162\145\x64", true); } $serial = Serial::first(); $expiryDate = Carbon::parse($serial->valid_until); if ($expiryDate->lessThanOrEqualTo(Carbon::yesterday()) && !$request->is("\145\162\x72\x6f\x72")) { return redirect()->route("\145\162\x72\157\162")->with("\151\x73\105\x78\160\151\162\x65\144", true); } if ($expiryDate->lessThanOrEqualTo($twoWeeksLater)) { session()->flash("\145\x78\x70\x69\x72\x65\144\x41\x6c\x65\x72\x74", true); session()->flash("\145\170\160\x69\x72\145\x64\104\x61\x74\145", "\101\x70\160\40\167\x69\x6c\154\40\x62\145\x20\x62\x6c\157\143\153\145\144\40\x61\x74\40" . $serial->valid_until); } } } return $next($request); } }
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Support\Facades\Auth;
+
+use function Laravel\Prompts\error;
+
+use App\Models\JwtToken;
+
+class AuthApiMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($request->is('api/*')) {
+            if (!$request->is('api/auth/register') && !$request->is('api/auth/login')) {
+                if (!Auth::guard('api')->check()) {
+                    return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+                }
+
+                // check for in active token
+                if (!JwtToken::fnIsTokenActive($request->bearerToken())) {
+                    return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+                }
+            }
+        }
+
+        return $next($request);
+    }
+}
